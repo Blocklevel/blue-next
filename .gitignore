@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+*.tgz
+lerna-debug.log
+npm-debug.log
