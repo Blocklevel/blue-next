@@ -1,0 +1,2 @@
+## blue-next
+Blue monorepo
