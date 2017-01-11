@@ -1,0 +1,75 @@
+/**
+ * Reset Border Padding Margin
+ */
+@define-mixin reset-bmp {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+@define-mixin test $font {
+  content: $font;
+}
+
+/**
+ * List items without the list item styles
+ */
+@define-mixin reset-list {
+  @mixin reset-bmp;
+  list-style: none;
+}
+
+/**
+ * Full Input Reset
+ */
+@define-mixin reset-input {
+  display: inline-block;
+  border: 0;
+  padding: 0;
+  background: none;
+  -webkit-appearance: none;
+
+  &:focus { outline: 0; }
+
+  &::-moz-focus-inner,
+  &[type=reset]::-moz-focus-inner,
+  &[type=button]::-moz-focus-inner,
+  &[type=submit]::-moz-focus-inner,
+  &::-moz-focus-inner,
+  &[type=file] > [type=button]::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+/**
+ * A link that looks and acts like the text it is contained within
+ */
+@define-mixin unstyled-link {
+  color: inherit;
+  text-decoration: inherit;
+  cursor: inherit;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+/**
+ * Clearfix, For clearing floats like a boss h5bp.com/q
+ */
+@define-mixin clearfix {
+  *zoom: 1;
+
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+    line-height: 0;
+  }
+
+  &::after {
+    clear: both;
+  }
+}

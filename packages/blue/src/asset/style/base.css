@@ -1,0 +1,33 @@
+/**
+ * A modern, HTML5-ready alternative to CSS resets
+ * https://necolas.github.io/normalize.css/
+ */
+@import 'normalize.css';
+
+/**
+ * Universal Box Sizing with Inheritance
+ * https://css-tricks.com/box-sizing/
+ */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background: $black;
+}
+
+/**
+ * Install font faces
+ */
+@each $font in ($(fonts)) {
+  @font-face {
+    font-family: $font;
+    font-path: 'font/$(font)';
+  }
+}

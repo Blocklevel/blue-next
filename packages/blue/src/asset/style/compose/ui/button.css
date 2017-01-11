@@ -1,0 +1,27 @@
+/**
+ * Default button styles. Compose this to create a new button.
+ */
+.button {
+  outline: none;
+  background-color: transparent;
+  border: none;
+}
+
+/**
+ * Primary button
+ * Example of a button. Define your own buttons here.
+ */
+.primary {
+  composes: button;
+  cursor: pointer;
+  margin: 30px *;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: rgba($black, 0.25);
+  font-size: responsive 1.2rem 1.5rem;
+  font-range: 320px 1024px;
+
+  &:hover {
+    background-color: rgba($black, 0.33);
+  }
+}
