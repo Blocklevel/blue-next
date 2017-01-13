@@ -3,3 +3,4 @@ node_modules/
 *.tgz
 lerna-debug.log
 npm-debug.log
+.tern-project
