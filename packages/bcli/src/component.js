@@ -15,10 +15,11 @@ module.exports = co.wrap(function * (options) {
   spinner.text = `Create a new ${options.type}`
   spinner.start()
 
+  const isBlue = utils.hasAppConfig()
   const name = _.kebabCase(options.name)
   const blueStructure = `${paths.appRoot}/${options.type}/${name}`
   const currentFolder = `${paths.appDirectory}/${name}`
-  const dest = options.location === 'blue' ? blueStructure : currentFolder
+  const dest = isBlue ? blueStructure : currentFolder
   const exists = yield pathExists(dest)
 
   if (exists && !options.force) {
@@ -43,7 +44,7 @@ module.exports = co.wrap(function * (options) {
   spinner.succeed()
   console.log(`\n${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!`, emoji.heart)
 
-  if (options.location === 'blue') {
+  if (isBlue) {
     console.log(`\nCopy the import line for your ${options.type}:`)
     console.log(
       chalk.italic(`\n   import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
