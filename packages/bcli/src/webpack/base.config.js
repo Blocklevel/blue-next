@@ -45,7 +45,6 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        // vue-loader is installed in the project itself because it can't be coupled with the cli
         loader: 'vue-loader'
       },
       {
@@ -60,6 +59,9 @@ module.exports = {
         {
           loader: 'babel-loader',
           query: babelOptions
+        },
+        {
+          loader: 'eslint-loader'
         }
       ])
     }
