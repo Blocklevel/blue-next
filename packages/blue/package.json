@@ -1,7 +1,25 @@
 {
-  "name": "@blockleve/blue",
+  "name": "@blocklevel/blue",
   "version": "0.6.1",
+  "description": "Blue framework scaffold",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blocklevel/blue-next/tree/master/packages/blue"
+  },
+  "bugs": {
+    "url": "https://github.com/Blocklevel/blue-next/issues"
+  },
+  "main": "index.js",
+  "homepage": "https://github.com/Blocklevel/blue-next#readme",
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "scaffold",
+    "blue",
+    "blocklevel"
+  ]
 }

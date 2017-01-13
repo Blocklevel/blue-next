@@ -1,0 +1,15 @@
+{
+  "name": "{{ name }}",
+  "scripts": {
+    "dev": "bcli start"
+  },
+  "dependencies": {
+    "vue": "2.1.5",
+    "vue-i18n-manager": "^2.2.6",
+    "vue-analytics": "^1.0.2"
+  },
+  "devDependencies": {
+    "vue-loader": "10.0.2",
+    "vue-template-compiler": "2.1.5"
+  }
+}
