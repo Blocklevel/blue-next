@@ -1,5 +1,7 @@
 'use strict'
 const paths = require('../commons/paths')
+const combineLoaders = require('webpack-combine-loaders')
+const babelOptions = require('./babelOptions')
 
 module.exports = {
   context: paths.appDirectory,
@@ -34,20 +36,9 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: [
-            [
-              require.resolve('babel-preset-es2015'),
-              { module: false }
-            ],
-            require.resolve('babel-preset-stage-2')
-          ],
-          plugins: [
-            require.resolve('babel-plugin-transform-runtime')
-          ]
-        }
+        query: babelOptions
       },
       {
         test: /\.vue$/,
@@ -59,6 +50,16 @@ module.exports = {
         loader: require.resolve('html-loader')
       }
     ]
+  },
+  vue: {
+    loaders: {
+      js: combineLoaders([
+        {
+          loader: 'babel-loader',
+          query: babelOptions
+        }
+      ])
+    }
   },
   plugins: []
 }

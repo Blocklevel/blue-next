@@ -16,7 +16,7 @@ module.exports = {
   appDirectory: appDirectory,
   appBuild: resolveApp('build'),
   appStatic: resolveApp('./static'),
-  appEntry: './src/app/index.js',
+  appEntry: './src/bootstrap.js',
   appHTMLIndex: resolveApp('./index.html'),
   appPackageJSON: resolveApp('package.json'),
   appConfig: resolveApp('bcli.config.js'),
