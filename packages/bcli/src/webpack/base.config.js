@@ -64,6 +64,10 @@ module.exports = {
           loader: 'eslint-loader'
         }
       ])
+    },
+    cssModules: {
+      localIdentName: '[name]__[local]__[hash:base64:5]',
+      camelCase: true
     }
   },
   plugins: []

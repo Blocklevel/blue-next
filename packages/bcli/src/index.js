@@ -35,7 +35,7 @@ module.exports = co.wrap(function * (options) {
     }
   }
 
-  const template = `${paths.cliNodeModules}/@blocklevel/blue/dist`
+  const template = `${paths.cliTemplates}/blue`
   const data = Object.assign({
     name,
     author: yield utils.getGitUser(),
