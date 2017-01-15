@@ -1,21 +1,25 @@
 module.exports = {
-  'root': true,
-  'parser': 'babel-eslint',
-  'extends': 'standard',
-  'ecmaFeatures': {
-    'module': true,
+  root: true,
+  parser: 'babel-eslint',
+  extends: 'standard',
+  ecmaFeatures: {
+    experimentalObjectRestSpread: true,
+    jsx: true,
+    module: true
   },
-  'settings': {
+  settings: {
     'import/resolver': 'webpack',
   },
-  'env': {
-    'browser': true
+  plugins: ['vue'],
+  env: {
+    browser: true
   },
-  'rules': {
+  rules: {
     'no-console': 1,
     'no-unused-vars': 1,
     'no-debugger': 1,
     'no-use-before-define': 1,
-    'max-len': [2, { 'code': 100, 'ignoreUrls': true }]
+    'max-len': [2, { 'code': 100, 'ignoreUrls': true }],
+    'vue/jsx-uses-vars': 2
   }
 }

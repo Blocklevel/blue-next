@@ -1,5 +1,5 @@
 module.exports = {
-  port: '8080',
+  port: 8080,
   stats: {
     hash: false,
     version: false,
@@ -11,8 +11,8 @@ module.exports = {
     reasons: false,
     children: false,
     source: false,
-    errors: true,
-    errorDetails: true,
+    errors: false,
+    errorDetails: false,
     warnings: false,
     publicPath: false,
     colors: true,

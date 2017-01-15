@@ -1,18 +1,17 @@
 'use strict'
-const _ = require('lodash')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const utils = require('./commons/utils')
 const paths = require('./commons/paths')
 const webpack = require('webpack')
-const webpackBaseConfig = require('./webpack/base.config')
-const envConfig = require('./webpack/config.dev')
+const envConfig = require('./webpack/dev')
 const WebpackDevServer = require('webpack-dev-server')
+const merge = require('webpack-merge')
 const detectPort = require('./detect-port')
 const co = require('co')
 
 module.exports = co.wrap(function * () {
-  const config = _.merge({}, envConfig, utils.getAppConfig())
-  const webpackConfig = _.merge({}, webpackBaseConfig, config)
+  const appConfig = utils.getAppConfig()
+  const webpackConfig = merge.smart({}, envConfig, appConfig.options)
   const port = yield detectPort(webpackConfig.devServer.port)
   const serverUrl = `http://localhost:${port}`
 
@@ -22,7 +21,7 @@ module.exports = co.wrap(function * () {
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: [`'${webpackConfig.title}' is running on http://localhost:${port}\n`]
+        messages: [`'${appConfig.title}' is running on http://localhost:${port}\n`]
       }
     })
   )

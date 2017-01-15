@@ -1,7 +1,7 @@
 'use strict'
 const paths = require('../commons/paths')
 const combineLoaders = require('webpack-combine-loaders')
-const babelOptions = require('./babelOptions')
+const webpackModule = require('./module')
 
 module.exports = {
   context: paths.appDirectory,
@@ -14,14 +14,12 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
-    root: paths.appSrc,
-    extensions: ['', '.js', '.vue', '.css'],
+    extensions: ['.js', '.vue', '.css'],
     alias: {
-      // Vue is installed in the project itself because it can't be coupled with the cli
       vue: 'vue/dist/vue.js',
       component: `${paths.appRoot}/component`,
-      store: `${paths.appRoot}/store/modules`,
-      page: `${paths.appRoot}/page`
+      page: `${paths.appRoot}/page`,
+      store: `${paths.appRoot}/store/modules`
     },
     modules: [
       paths.appDirectory,
@@ -30,45 +28,12 @@ module.exports = {
     ]
   },
   resolveLoader: {
-    modulesDirectories: [
+    modules: [
+      paths.appRoot,
       paths.appNodeModules,
       paths.cliNodeModules
     ]
   },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: babelOptions
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.html$/,
-        loader: require.resolve('html-loader')
-      }
-    ]
-  },
-  vue: {
-    loaders: {
-      js: combineLoaders([
-        {
-          loader: 'babel-loader',
-          query: babelOptions
-        },
-        {
-          loader: 'eslint-loader'
-        }
-      ])
-    },
-    cssModules: {
-      localIdentName: '[name]__[local]__[hash:base64:5]',
-      camelCase: true
-    }
-  },
+  module: webpackModule,
   plugins: []
 }

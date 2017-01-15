@@ -1,13 +1,16 @@
 'use strict'
-const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = [
   new webpack.DefinePlugin({
-    __DEV__: true,
+    __DEV__: false,
     'process.env': {
-      NODE_ENV: '"development"'
+      NODE_ENV: '"production"'
     }
+  }),
+  new webpack.LoaderOptionsPlugin({
+    minimize: true
   }),
   new HtmlWebpackPlugin({
     filename: 'index.html',
