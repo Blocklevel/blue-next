@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-blocklevel",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Eslint configuration for Blocklevel projects",
   "main": "index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
