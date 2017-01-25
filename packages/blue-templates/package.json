@@ -1,14 +1,11 @@
 {
-  "name": "@blocklevel/blue",
+  "name": "blue-templates",
   "version": "0.6.3",
-  "description": "Blue framework scaffold",
-  "publishConfig": {
-    "access": "public"
-  },
+  "description": "Blue framework templates",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Blocklevel/blue-next/tree/master/packages/blue"
+    "url": "https://github.com/Blocklevel/blue-next/tree/master/packages/blue-templates"
   },
   "bugs": {
     "url": "https://github.com/Blocklevel/blue-next/issues"

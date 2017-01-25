@@ -24,7 +24,7 @@
     "bcli": "./bin/cli.js"
   },
   "dependencies": {
-    "@blocklevel/blue": "^0.6.3",
+    "blue-templates": "^0.6.3",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
