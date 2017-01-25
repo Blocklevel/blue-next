@@ -12,10 +12,6 @@ module.exports = co.wrap(function * () {
       message: 'What would you like to do?',
       choices: [
         {
-          name: 'Create a new awesome project',
-          value: 'project'
-        },
-        {
           name: 'Create a new component',
           value: 'component'
         },
@@ -26,6 +22,10 @@ module.exports = co.wrap(function * () {
         {
           name: 'Create a new Vuex store module',
           value: 'store'
+        },
+        {
+          name: chalk.gray('Create a new awesome project (wip)'),
+          value: 'project'
         },
         {
           name: 'Install frequently used npm packages',
