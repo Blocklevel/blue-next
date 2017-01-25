@@ -34,7 +34,6 @@ const vueHooks = {
 
 const fileLocation = {
   when: function () {
-    // need to call it like this because of scope issue
     return !require('./utils').hasAppConfig()
   },
   type: 'list',

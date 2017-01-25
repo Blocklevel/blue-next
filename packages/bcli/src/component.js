@@ -44,7 +44,7 @@ module.exports = co.wrap(function * (options) {
   spinner.succeed()
   console.log(`\n${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!`, emoji.heart)
 
-  if (isBlue) {
+  if (options.location === 'blue') {
     console.log(`\nCopy the import line for your ${options.type}:`)
     console.log(
       chalk.italic(`\n   import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
