@@ -1,6 +1,6 @@
 {
   "name": "bcli",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Blocklevel Command-line Interface",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
@@ -24,7 +24,7 @@
     "bcli": "./bin/cli.js"
   },
   "dependencies": {
-    "blue-templates": "^0.6.3",
+    "blue-templates": "^0.6.4",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
