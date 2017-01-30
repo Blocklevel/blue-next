@@ -1,6 +1,6 @@
 {
   "name": "bcli",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "Blocklevel Command-line Interface",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
