@@ -15,7 +15,7 @@ module.exports = co.wrap(function * (options) {
   spinner.text = 'Create a new Vuex store module'
   spinner.start()
 
-  const isBlue = options.location === 'blue' // utils.hasAppConfig()
+  const isBlue = utils.hasAppConfig()
   const name = _.kebabCase(options.name)
   const blueStructure = `${paths.appRoot}/store/modules/${name}`
   const currentFolder = `${paths.appDirectory}/${name}`

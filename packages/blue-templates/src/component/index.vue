@@ -4,6 +4,6 @@
 
 <template>
   <div :class="$style.{{ type }}">
-
+    {{ name }} {{ type }}
   </div>
 </template>
