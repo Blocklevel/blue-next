@@ -1,7 +1,8 @@
-import template from './index.html'
-import store from 'src/app/store'
-import router from 'src/app/router'
+import Vue from 'vue'
+import App from './app.vue'
 
-export default {
-  template
-}
+export default Vue.extend({
+  render (h) {
+    return h(App)
+  }
+})

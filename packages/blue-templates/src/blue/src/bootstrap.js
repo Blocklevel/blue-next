@@ -1,39 +1,21 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource'
 import VueI18nManager from 'vue-i18n-manager'
-import VueAnalytics from 'vue-analytics'
+import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync'
 
+import store from './app/store'
+import routes from './app/routes'
 import App from './app'
-import router from 'src/app/router'
-import store from 'src/app/store'
 
 /**
-* Initialize base application styles
-*/
-require('./asset/style/base.css')
-
-/**
- * The debug mode is available globally in the Vue.config.debug property
+ * Initialize vue-resource plugin to manage application routing
  */
-Vue.config.debug = process.env.debug
+Vue.use(VueRouter)
 
-/**
- * Initialize vue-resource plugin to manage http requests
- */
-Vue.use(VueResource)
-
-Vue.http.headers.common.Accept = 'application/json'
-
-/**
- * Analytics
- */
-Vue.use(VueAnalytics, { router })
-
-/**
- * Create new app instance
- */
-const app = new Vue(App)
+const router = new VueRouter({
+  mode: 'history',
+  routes
+})
 
 /**
  * Sync store and router
@@ -47,10 +29,18 @@ Vue.use(VueI18nManager, {
   store,
   router,
   config: {
-    path: `${process.env.publicPath}static/lang`
+    path: 'static/lang'
   }
 })
 
-Vue.initI18nManager().then(() => {
-  app.$mount('#app')
+Vue.initI18nManager()
+
+/**
+ * Create new app instance
+ */
+const app = new App({
+  store,
+  router
 })
+
+app.$mount('#app')

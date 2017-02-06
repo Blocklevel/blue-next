@@ -16,7 +16,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.css'],
     alias: {
-      vue: 'vue/dist/vue.js',
       component: `${paths.appRoot}/component`,
       page: `${paths.appRoot}/page`,
       store: `${paths.appRoot}/store/modules`
