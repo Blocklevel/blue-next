@@ -59,6 +59,5 @@ module.exports = co.wrap(function * (options) {
   console.log('\nWebsite!', emoji.heart)
   console.log('\nNew project', chalk.bold(name), 'was created successfully!')
   console.log(chalk.bold('\nTo get started:\n'))
-  console.log(chalk.italic(`  cd ${folderName}\n`))
-  console.log(chalk.italic('  npm run dev'))
+  console.log(chalk.italic(`  cd ${folderName} && npm run dev`))
 })
