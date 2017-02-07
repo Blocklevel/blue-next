@@ -1,0 +1,22 @@
+@import "https://fonts.googleapis.com/css?family=Pacifico";
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #203880;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  font-family: 'Pacifico', cursive;
+  color: white;
+}
