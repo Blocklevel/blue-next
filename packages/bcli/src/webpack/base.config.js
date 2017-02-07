@@ -1,7 +1,7 @@
 'use strict'
 const paths = require('../commons/paths')
 const combineLoaders = require('webpack-combine-loaders')
-const webpackModule = require('./module')
+const rules = require('./rules')
 
 module.exports = {
   context: paths.appDirectory,
@@ -33,6 +33,6 @@ module.exports = {
       paths.cliNodeModules
     ]
   },
-  module: webpackModule,
+  module: rules,
   plugins: []
 }
