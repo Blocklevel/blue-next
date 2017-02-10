@@ -16,5 +16,6 @@ cli.command('store', 'Create a new Vuex store module')
 cli.command('packages', 'Install frequently used npm packages')
 cli.command('start', 'Run the webpack dev server')
 cli.command('share', 'Share the current local revision with ngrok')
+cli.command('build', 'Bundles the application for production')
 
 cli.parse()
