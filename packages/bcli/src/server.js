@@ -13,7 +13,8 @@ module.exports = co.wrap(function * () {
   const appConfig = utils.getAppConfig()
   const webpackConfig = merge.smart({}, envConfig, appConfig.options)
   const port = yield detectPort(webpackConfig.devServer.port)
-  const serverUrl = `http://localhost:${port}`
+  const host = webpackConfig.devServer.host
+  const serverUrl =`http://${host}:${port}`
 
   // Add the FriendlyErrorsWebpackPlugin after everything is sorted.
   // We need this to be able to change server port in runtime and
@@ -21,7 +22,7 @@ module.exports = co.wrap(function * () {
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: [`'${appConfig.title}' is running on http://localhost:${port}\n`]
+        messages: [`'${appConfig.title}' is running on ${serverUrl}\n`]
       }
     })
   )
@@ -33,5 +34,5 @@ module.exports = co.wrap(function * () {
 
   // start the server!
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
-  server.listen(port)
+  server.listen(port, host)
 })

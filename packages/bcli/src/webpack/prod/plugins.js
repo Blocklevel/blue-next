@@ -9,9 +9,11 @@ module.exports = [
       NODE_ENV: '"production"'
     }
   }),
+
   new webpack.LoaderOptionsPlugin({
     minimize: true
   }),
+
   new HtmlWebpackPlugin({
     filename: 'index.html',
     template: 'index.html',

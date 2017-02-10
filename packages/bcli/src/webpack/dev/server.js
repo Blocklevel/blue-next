@@ -1,5 +1,6 @@
 module.exports = {
   port: 8080,
+  host: 'localhost',
   stats: {
     hash: false,
     version: false,

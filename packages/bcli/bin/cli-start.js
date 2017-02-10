@@ -4,7 +4,7 @@ const _ = require('lodash')
 
 module.exports = function (input, flags) {
   const options = _.assignIn(flags, {
-    dev: true
+    env: 'dev'
   })
 
   runServer(options)
