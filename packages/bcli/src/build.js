@@ -16,7 +16,22 @@ module.exports = co.wrap(function * (options) {
   spinner.text = `Building "${appConfig.title}" project`
   spinner.start()
 
-  webpack(webpackConfig, function (e) {
+  webpack(webpackConfig, function (error, stats) {
+    if (error) {
+      spinner.fail()
+      return
+    }
+
     spinner.succeed()
+
+    console.log('')
+
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n')
   })
 })

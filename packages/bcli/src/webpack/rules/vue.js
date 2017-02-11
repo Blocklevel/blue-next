@@ -1,11 +1,18 @@
 const combineLoaders = require('webpack-combine-loaders')
 const paths = require('../../commons/paths')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   test: /\.vue$/,
   loader: 'vue-loader',
   options: {
     loaders: {
+      /**
+       * For the vue-loader documentation this is the way to go
+       * but it's super ugly and, when there's an error, the file path
+       * has this huge string attached to it.
+       * @todo: open an issue to vue-loader to see if there's a more elegant solution
+       */
       js: combineLoaders([
         require('./babel'),
         require('./eslint')
