@@ -24,6 +24,22 @@ module.exports = co.wrap(function * (input, flags) {
       validate: function (answer) {
         return answer !== ''
       }
+    },
+    {
+      type: 'list',
+      name: 'cssPreprocessor',
+      message: 'Which css preprocessor would you like to use?',
+      choices: [
+        {
+          name: 'PostCSS',
+          value: 'postcss'
+        },
+        {
+          name: 'Sass',
+          value: 'sass'
+        },
+      ],
+      default: 'postcss'
     }
   ])
 

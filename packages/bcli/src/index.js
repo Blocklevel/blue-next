@@ -15,7 +15,7 @@ const spinner = ora()
 
 module.exports = co.wrap(function * (options) {
   console.log('') // extra space
-  spinner.text = 'Create a new awesome project'
+  spinner.text = 'Create a new project'
   spinner.start()
 
   const name = _.kebabCase(options.projectName)
@@ -27,30 +27,37 @@ module.exports = co.wrap(function * (options) {
     spinner.fail()
     console.error(chalk.red('\n Looks like the project already exists\n'))
 
-    const confirm = yield inquirer.prompt([commonQuestions.force])
+    const confirm = yield inquirer.prompt([
+      commonQuestions.force
+    ])
 
     if (!confirm.force) {
       console.log(chalk.bold.yellow('\nNo problem!'))
       return
     }
+
+    console.log('')
   }
 
-  const template = `${paths.cliTemplates}/blue`
+  const blue = `${paths.cliTemplates}/blue`
+  const cssPreprocessor = `${paths.cliTemplates}/pre-processor/${options.cssPreprocessor}`
+
   const data = Object.assign({
     name,
     author: yield utils.getGitUser(),
+    customCssPreprocessor: options.cssPreprocessor !== 'postcss',
+    cssPreprocessor: options.cssPreprocessor,
     dependencies: options.dependencies
   }, options)
 
-  // copy and interpolate all template files
-  yield copy(template, dest, { data })
+  yield copy(blue, dest, { data })
+  yield copy(cssPreprocessor, `${dest}/src/asset/style`, data)
 
   spinner.succeed()
 
   spinner.text = 'Install dependencies'
   spinner.start()
 
-  // change directory context and install all dependencies
   process.chdir(dest)
   yield execa.shell('npm install')
 
