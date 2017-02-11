@@ -23,6 +23,8 @@ module.exports = {
   appSrc: resolveApp('src'),
   appRoot: resolveApp('src/app'),
   appNodeModules: resolveApp('node_modules'),
+  appStyle: resolveApp('src/asset/style'),
+
   // The CLI
   cliTemplates: resolveCli('../../node_modules/blue-templates/src'),
   cliNodeModules: resolveCli('../../node_modules')

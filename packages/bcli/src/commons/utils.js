@@ -5,7 +5,7 @@ const co = require('co')
 const inquirer = require('inquirer')
 const commonQuestions = require('./questions')
 const chalk = require('chalk')
-const fs = require('fs-extra')
+const fs = require('fs')
 
 const checkType = function (type, value, fallback) {
   return typeof value === type ? value : fallback
@@ -47,6 +47,18 @@ const confirmPrompt = co.wrap(function * () {
     return
   }
 })
+
+/**
+ * Require a list of files from a folder
+ * @param  {String} folder
+ * @return {Array<Object>}
+ */
+const requireFromFolder = function (folder) {
+  const files = fs.readdirSync(folder)
+  return _.map(files, file => {
+    return require(`${folder}/${file}`)
+  })
+}
 
 /**
  * Returns an array of event objects in the correct format so we can loop over it later
@@ -126,5 +138,6 @@ module.exports = {
   renameFiles,
   checkType,
   getAppConfig,
-  hasAppConfig
+  hasAppConfig,
+  requireFromFolder
 }
