@@ -23,7 +23,6 @@ module.exports = co.wrap(function * (options) {
     }
 
     spinner.succeed()
-
     console.log('')
 
     process.stdout.write(stats.toString({

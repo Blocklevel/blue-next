@@ -25,10 +25,6 @@ module.exports = {
       camelCase: true
     },
     postcss: function () {
-      const mixinsDir = `${paths.appStyle}/mixin`
-      const variables = `${paths.appStyle}/config/variables.js`
-      const globPath = [`${paths.appSrc}/**/*.css`, `${paths.appSrc}/**/*.vue`]
-
       return [
         /**
          * PostCSS plugin for Sass-like variables, conditionals, and iteratives
@@ -42,14 +38,6 @@ module.exports = {
          * Plugin to inline @import rules content
          */
         require('postcss-import'),
-
-        /**
-         * PostCSS plugin for Sass-like variables, conditionals, and iteratives
-         * https://github.com/jonathantneal/postcss-advanced-variables
-         */
-        require('postcss-advanced-variables')({
-          variables
-        }),
 
         /**
          * A little bag of CSS superpowers
@@ -71,7 +59,7 @@ module.exports = {
          * https://github.com/postcss/postcss-mixins
          */
         require('postcss-mixins')({
-          mixinsDir
+          mixinsDir: `${paths.appStyle}/mixin`
         }),
 
         /**
