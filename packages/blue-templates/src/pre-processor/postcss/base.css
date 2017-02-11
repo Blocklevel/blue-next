@@ -25,9 +25,9 @@ body {
 /**
  * Install font faces
  */
-@each $font in ($(fonts)) {
+/*@each $font in ($(fonts)) {
   @font-face {
     font-family: $font;
     font-path: 'font/$(font)';
   }
-}
+}*/
