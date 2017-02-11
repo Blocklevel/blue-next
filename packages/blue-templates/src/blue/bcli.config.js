@@ -1,5 +1,5 @@
 module.exports = {
-  title: '{{ name }}',
+  title: '{{ name }}'{{#if customCssPreprocessor}},{{/if}}
   {{#if customCssPreprocessor}}
   options: {
     css: {
