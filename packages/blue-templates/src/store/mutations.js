@@ -8,10 +8,9 @@ export default {
   [events.{{value}}] (state, payload) {
 
   }{{#if isNotLastItem}},{{/if}}
-{{/each}}
-{{#if noEvents}}
+  {{else}}
   // [events.FOO] (state, payload) {
   //
   // }
-{{/if}}
+{{/each}}
 }

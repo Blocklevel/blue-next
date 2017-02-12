@@ -42,6 +42,22 @@ module.exports = co.wrap(function * (input, flags) {
         return answer !== ''
       }
     },
+    {
+      type: 'list',
+      name: 'namespaced',
+      message: 'Would you like a namespaced module?',
+      choices: [
+        {
+          name: 'No, thanks!',
+          value: false
+        },
+        {
+          name: 'Oh, yes!',
+          value: true
+        },
+      ],
+      default: false
+    },
     commonQuestions.fileLocation
   ])
 

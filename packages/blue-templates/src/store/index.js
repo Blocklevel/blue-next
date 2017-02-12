@@ -8,4 +8,12 @@ import actions from './actions'
  * @author {{author.name}} <{{author.email}}>
  * @type {Object}
  */
-export default { state, mutations, getters, actions }
+export default {
+  {{#if hasNamespace}}
+  namespaced: true,
+  {{/if}}
+  state,
+  mutations,
+  getters,
+  actions
+}

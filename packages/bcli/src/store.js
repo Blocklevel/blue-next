@@ -34,6 +34,7 @@ module.exports = co.wrap(function * (options) {
     name,
     author: yield utils.getGitUser(),
     noEvents: !options.addEvents,
+    hasNamespace: options.namespaced,
     events: utils.getEvents(options.eventsList)
   }
 
