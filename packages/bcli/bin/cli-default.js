@@ -24,12 +24,20 @@ module.exports = co.wrap(function * () {
           value: 'store'
         },
         {
-          name: chalk.gray('Create a new awesome project (wip)'),
+          name: `Create a new project ${chalk.red("(no build yet)")}`,
           value: 'project'
         },
         {
           name: 'Install frequently used npm packages',
           value: 'packages'
+        },
+        {
+          name: 'Start the development server',
+          value: 'start'
+        },
+        {
+          name: chalk.gray('Build my application (wip)'),
+          value: 'build'
         },
         {
           name: 'Share the current local revision with ngrok',
