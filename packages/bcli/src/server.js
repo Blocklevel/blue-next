@@ -7,7 +7,6 @@ const WebpackDevServer = require('webpack-dev-server')
 const merge = require('webpack-merge')
 const detectPort = require('./detect-port')
 const co = require('co')
-const emoji = require('node-emoji').emoji
 
 module.exports = co.wrap(function * (options) {
   const config = yield utils.getConfig(options.env)
