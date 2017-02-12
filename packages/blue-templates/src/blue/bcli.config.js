@@ -1,12 +1,12 @@
 module.exports = {
-  title: '{{ name }}'{{#if customCssPreprocessor}},{{/if}}
-  {{#if customCssPreprocessor}}
-  options: {
+  title: '{{ name }}',
+  settings: {
+    {{#if customCssPreprocessor}}
     css: {
       // Please read the doc before any changes on this line
       // https://github.com/Blocklevel/blue-next#blue-next
       preProcessor: '{{ cssPreprocessor }}'
     }
+    {{/if}}
   }
-  {{/if}}
 }

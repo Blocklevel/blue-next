@@ -3,15 +3,14 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const utils = require('./commons/utils')
 const paths = require('./commons/paths')
 const webpack = require('webpack')
-const envConfig = require('./webpack/dev')
 const WebpackDevServer = require('webpack-dev-server')
 const merge = require('webpack-merge')
 const detectPort = require('./detect-port')
 const co = require('co')
 
-module.exports = co.wrap(function * () {
-  const appConfig = utils.getAppConfig()
-  const webpackConfig = merge.smart({}, envConfig, appConfig.options)
+module.exports = co.wrap(function * (options) {
+  const config = yield utils.getConfig(options.env)
+  const webpackConfig = config.webpack
   const port = yield detectPort(webpackConfig.devServer.port)
   const host = webpackConfig.devServer.host
   const serverUrl =`http://${host}:${port}`
@@ -22,7 +21,7 @@ module.exports = co.wrap(function * () {
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: [`'${appConfig.title}' is running on ${serverUrl}\n`]
+        messages: [`'${config.app.title}' is running on ${serverUrl}\n`]
       }
     })
   )

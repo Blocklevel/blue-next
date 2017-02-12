@@ -1,5 +1,5 @@
 'use strict'
-const config = require('../base.config')
+const config = require('../../base.config')
 const serverOptions = require('./server')
 const plugins = require('./plugins')
 const merge = require('webpack-merge')

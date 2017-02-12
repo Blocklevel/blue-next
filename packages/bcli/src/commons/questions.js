@@ -34,7 +34,7 @@ const vueHooks = {
 
 const fileLocation = {
   when: function () {
-    return !require('./utils').hasAppConfig()
+    return !require('./utils').hasConfig()
   },
   type: 'list',
   name: 'location',

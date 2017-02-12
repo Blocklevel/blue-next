@@ -35,7 +35,7 @@ module.exports = co.wrap(function * (input, flags) {
           value: 'postcss'
         },
         {
-          name: 'Sass',
+          name:  chalk.gray('Sass (wip)'),
           value: 'sass'
         },
       ],

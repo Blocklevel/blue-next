@@ -27,5 +27,6 @@ module.exports = {
 
   // The CLI
   cliTemplates: resolveCli('../../node_modules/blue-templates/src'),
-  cliNodeModules: resolveCli('../../node_modules')
+  cliNodeModules: resolveCli('../../node_modules'),
+  cliEnv: resolveCli('../webpack/env')
 }
