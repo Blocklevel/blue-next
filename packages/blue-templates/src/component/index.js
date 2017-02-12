@@ -5,25 +5,21 @@
 export default {
   name: '{{ name }}'{{#if basic }},
 
+  props: {
+
+  },
+
   data () {
     return {
 
     }
   },
 
-  watch: {
-
-  },
-
-  methods: {
-
-  },
-
   computed: {
 
   },
 
-  mounted () {
+  methods: {
 
   }{{/if}}
 }
