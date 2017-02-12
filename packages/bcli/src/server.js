@@ -7,6 +7,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const merge = require('webpack-merge')
 const detectPort = require('./detect-port')
 const co = require('co')
+const emoji = require('node-emoji').emoji
 
 module.exports = co.wrap(function * (options) {
   const config = yield utils.getConfig(options.env)
@@ -33,5 +34,7 @@ module.exports = co.wrap(function * (options) {
 
   // start the server!
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
-  server.listen(port, host)
+  server.listen(port, host, function () {
+    console.log(`\n   Starting the server...`)
+  })
 })
