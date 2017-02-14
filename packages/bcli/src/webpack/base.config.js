@@ -8,7 +8,10 @@ const rulesFolder = path.resolve(__dirname, './rules/')
 module.exports = {
   context: paths.appDirectory,
   entry: {
-    app: [paths.appEntry]
+    app: [
+      'babel-polyfill',
+      paths.appEntry
+    ]
   },
   output: {
     path: paths.appBuild,
