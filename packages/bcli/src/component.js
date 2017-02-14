@@ -15,7 +15,7 @@ module.exports = co.wrap(function * (options) {
   spinner.text = `Create a new ${options.type}`
   spinner.start()
 
-  const isBlue = yield utils.hasAppConfig()
+  const isBlue = utils.hasConfig() || options.location === 'blue'
   const name = _.kebabCase(options.name)
   const blueStructure = `${paths.appRoot}/${options.type}/${name}`
   const currentFolder = `${paths.appDirectory}/${name}`
