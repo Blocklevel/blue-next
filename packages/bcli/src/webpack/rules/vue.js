@@ -9,10 +9,11 @@ const vue = {
   options: {
     loaders: {
       /**
+       * @todo:
        * For the vue-loader documentation this is the way to go
        * but it's super ugly and, when there's an error, the file path
        * has this huge string attached to it.
-       * @todo: open an issue to vue-loader to see if there's a more elegant solution
+       * Maybe open an issue to vue-loader to see if there's a more elegant solution
        */
       js: combineLoaders([
         require('./babel'),
@@ -88,11 +89,9 @@ const cssModules = {
 }
 
 /**
- * @todo: Probably we need to switch the all webpack setup to a promise chain
- * so that we can pass parameters from the bli.config file
- * For now it only returns the CSS-modules and PostCSS setup merged with vue-loader setup
- * but we need to add the Sass options.
- * Bcli.config already sets the cssPreprocess value if it's not default
+ * @todo
+ * Bcli.config already sets the cssPreprocess value if it's not default so we can read that
+ * value and use the selected pre-processor
  * see https://github.com/Blocklevel/blue-next/commit/54913f8bfbd2f4a3fa41fa5b53fb030b7ab1c6bf
  */
 vue.options = Object.assign({}, vue.options, { cssModules, postcss })
