@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV === 'dev'
 
-let plugins = debug ? plugins = [createLogger()] : []
+let plugins = debug ? [createLogger()] : []
 let modules = {}
 
 const modulesFolder = require.context('./modules', true, /index.js$/)
