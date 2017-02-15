@@ -9,13 +9,20 @@ Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV === 'dev'
 
-let plugins = debug ? [createLogger()] : []
+const plugins = []
+
+if (debug) {
+  plugins.push(createLogger())
+}
+
 let modules = {}
 
+// Load all store modules in the '/modules' folder
 const modulesFolder = require.context('./modules', true, /index.js$/)
+
+// Add all modules to the 'modules' object
 modulesFolder.keys().forEach(module => {
   const name = module.split('/')[1]
-
   modules = {
     ...modules,
     [name]: modulesFolder(module).default
