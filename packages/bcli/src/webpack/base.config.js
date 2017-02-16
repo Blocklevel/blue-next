@@ -9,7 +9,6 @@ module.exports = {
   context: paths.appDirectory,
   entry: {
     app: [
-      'babel-polyfill',
       paths.appEntry
     ]
   },
@@ -23,7 +22,8 @@ module.exports = {
     alias: {
       component: `${paths.appRoot}/component`,
       page: `${paths.appRoot}/page`,
-      store: `${paths.appRoot}/store/modules`
+      store: `${paths.appRoot}/store/modules`,
+      asset: `${paths.appSrc}/asset`
     },
     modules: [
       paths.appDirectory,
