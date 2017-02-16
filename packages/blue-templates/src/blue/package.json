@@ -3,14 +3,5 @@
   "scripts": {
     "dev": "bcli start",
     "build": "bcli build"
-  },
-  "dependencies": {
-    "vue": "2.1.10",
-    "vue-i18n-manager": "^2.2.6",
-    "vue-analytics": "^1.0.2"
-  },
-  "devDependencies": {
-    "vue-loader": "9.9.5",
-    "vue-template-compiler": "2.1.10"
   }
 }

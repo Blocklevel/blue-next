@@ -1,3 +1,5 @@
+import 'es6-promise/auto'
+
 import Vue from 'vue'
 import VueI18nManager from 'vue-i18n-manager'
 import VueRouter from 'vue-router'

@@ -24,7 +24,7 @@ module.exports = co.wrap(function * (options) {
 
     process.stdout.write(stats.toString({
       colors: true,
-      modules: false,
+      modules: true,
       children: false,
       chunks: false,
       chunkModules: false
