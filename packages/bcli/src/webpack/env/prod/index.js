@@ -5,7 +5,7 @@ const plugins = require('./plugins')
 const rules = require('./rules')
 
 module.exports = merge.smart({}, config, {
-  devtool: 'source-map',
+  devtool: false,
   plugins: config.plugins.concat(plugins),
   module: {
     rules
