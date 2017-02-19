@@ -4,7 +4,7 @@
 <template>
   <div :class="$style.page">
     <div :class="$style.content">
-      <h1 :class="$style.title">Blue</h1>
+      <h1 :class="$style.title" v-html="$t('app')"></h1>
     </div>
   </div>
 </template>

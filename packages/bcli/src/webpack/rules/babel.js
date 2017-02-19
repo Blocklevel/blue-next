@@ -8,7 +8,7 @@ module.exports = {
       require.resolve('babel-preset-stage-2')
     ],
     plugins: [
-      require.resolve('babel-plugin-transform-runtime')
+      require.resolve('babel-plugin-transform-regenerator')
     ]
   }
 }

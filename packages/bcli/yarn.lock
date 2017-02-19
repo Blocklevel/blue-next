@@ -743,12 +743,6 @@ babel-plugin-transform-regenerator@^6.22.0:
   dependencies:
     regenerator-transform "0.9.8"
 
-babel-plugin-transform-runtime@^6.15.0:
-  version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-runtime/-/babel-plugin-transform-runtime-6.23.0.tgz#88490d446502ea9b8e7efb0fe09ec4d99479b1ee"
-  dependencies:
-    babel-runtime "^6.22.0"
-
 babel-plugin-transform-strict-mode@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-strict-mode/-/babel-plugin-transform-strict-mode-6.22.0.tgz#e008df01340fdc87e959da65991b7e05970c8c7c"
@@ -913,9 +907,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blue-templates@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-0.9.0.tgz#cbd7a037b3f5ee6102092fe5ddcec2b277e1358c"
+blue-templates@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-0.9.1.tgz#6b78096dcc13cbcf9ae97bfc643911edb0be79e6"
 
 bluebird@^3.1.1, bluebird@^3.4.7:
   version "3.4.7"

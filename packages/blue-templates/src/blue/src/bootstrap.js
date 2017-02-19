@@ -1,5 +1,3 @@
-import 'es6-promise/auto'
-
 import Vue from 'vue'
 import VueI18nManager from 'vue-i18n-manager'
 import VueRouter from 'vue-router'
@@ -25,24 +23,58 @@ const router = new VueRouter({
 sync(store, router)
 
 /**
- * I18N manager
+ * Internationalization and localization
  */
+const context = require.context('../static/lang', true, /\.json$/)
+let translations = {}
+
+context.keys().forEach(language => {
+  const name = language.split('.')[1].replace('/', '')
+
+  translations = {
+    ...translations,
+    [name]: context(language)
+  }
+})
+
 Vue.use(VueI18nManager, {
   store,
   router,
   config: {
-    path: 'static/lang'
+    persistent: false,
+    translations,
+    languages: [
+      {
+        name: 'English',
+        code: 'en_GB',
+        urlPrefix: 'en',
+        translationKey: 'en'
+      }
+    ]
   }
 })
 
+/**
+ * Start the i18n manager
+ */
 Vue.initI18nManager()
 
 /**
- * Create new app instance
+ * Creates and mounts the app
  */
-const app = new App({
-  store,
-  router
-})
+const mount = () => {
+  const app = new App({ store, router })
+  app.$mount('#app')
+}
 
-app.$mount('#app')
+/**
+ * Check if promises are available or not, then mount the application
+ */
+if (!window.Promise) {
+  require.ensure([], () => {
+    require('es6-promise')
+    mount()
+  })
+} else {
+  mount()
+}

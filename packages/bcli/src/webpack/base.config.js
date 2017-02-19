@@ -8,13 +8,12 @@ const rulesFolder = path.resolve(__dirname, './rules/')
 module.exports = {
   context: paths.appDirectory,
   entry: {
-    app: [
-      paths.appEntry
-    ]
+    app: [paths.appEntry]
   },
   output: {
     path: paths.appBuild,
     publicPath: '/',
+    chunkFilename: '[chunkhash:8].chunk.js',
     filename: '[name].js'
   },
   resolve: {
