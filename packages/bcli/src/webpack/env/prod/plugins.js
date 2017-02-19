@@ -41,6 +41,10 @@ module.exports = [
       minRatio: 0.8
   }),
 
-  new ExtractTextPlugin('styles.css')
+  new ExtractTextPlugin({
+    filename: '[name].css',
+    ignoreOrder: true,
+    allChunks: true
+  })
 
 ]
