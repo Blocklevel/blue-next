@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: paths.appBuild,
     publicPath: '/',
-    chunkFilename: '[chunkhash:8].chunk.js',
+    chunkFilename: 'chunks/[chunkhash:8].js',
     filename: '[name].js'
   },
   resolve: {
