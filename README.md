@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/bcli.svg)](https://badge.fury.io/js/bcli) [![npm](https://img.shields.io/npm/dt/bcli.svg)](https://www.npmjs.com/package/bcli)
+
 # blue-next
 
 Blue monorepo
