@@ -42,7 +42,7 @@ module.exports = [
   }),
 
   new ExtractTextPlugin({
-    filename: '[name].css',
+    filename: '[hash:8]/[name].css',
     ignoreOrder: true,
     allChunks: true
   })

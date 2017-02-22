@@ -11,10 +11,10 @@ module.exports = {
     app: [paths.appEntry]
   },
   output: {
-    path: paths.appBuild,
-    publicPath: '/',
-    chunkFilename: 'chunks/[chunkhash:8].js',
-    filename: '[name].js'
+    path: `${paths.appBuild}`,
+    publicPath: '/[hash:8]',
+    chunkFilename: '[hash:8]/chunks/[chunkhash:8].js',
+    filename: '[hash:8]/[name].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.css'],
@@ -25,16 +25,16 @@ module.exports = {
       asset: `${paths.appSrc}/asset`
     },
     modules: [
-      paths.appDirectory,
+      paths.cliNodeModules,
       paths.appNodeModules,
-      paths.cliNodeModules
+      paths.appDirectory
     ]
   },
   resolveLoader: {
     modules: [
-      paths.appRoot,
+      paths.cliNodeModules,
       paths.appNodeModules,
-      paths.cliNodeModules
+      paths.appRoot
     ]
   },
   module: {
