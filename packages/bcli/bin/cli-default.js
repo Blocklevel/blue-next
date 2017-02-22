@@ -24,7 +24,7 @@ module.exports = co.wrap(function * () {
           value: 'store'
         },
         {
-          name: `Create a new project ${chalk.red("(no build yet)")}`,
+          name: 'Create a new project',
           value: 'project'
         },
         {
@@ -36,7 +36,7 @@ module.exports = co.wrap(function * () {
           value: 'start'
         },
         {
-          name: chalk.gray('Build my application (wip)'),
+          name: 'Build my application',
           value: 'build'
         },
         {

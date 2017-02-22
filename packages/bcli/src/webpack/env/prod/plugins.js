@@ -46,5 +46,4 @@ module.exports = [
     ignoreOrder: true,
     allChunks: true
   })
-
 ]
