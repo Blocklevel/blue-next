@@ -5,6 +5,8 @@ const path = require('path')
 const utils = require('../commons/utils')
 const rulesFolder = path.resolve(__dirname, './rules/')
 
+process.noDeprecation = true
+
 module.exports = {
   context: paths.appDirectory,
   entry: {
