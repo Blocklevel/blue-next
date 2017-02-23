@@ -1,7 +1,6 @@
 'use strict'
 const inquirer = require('inquirer')
 const co = require('co')
-const emoji = require('node-emoji').emoji
 const chalk = require('chalk')
 
 module.exports = co.wrap(function * () {
@@ -53,7 +52,7 @@ module.exports = co.wrap(function * () {
   ])
 
   if (!answer.task) {
-    console.log(chalk.bold('\nSee you!'), emoji.rocket)
+    console.log(chalk.bold('\nSee you!'))
     return
   }
 

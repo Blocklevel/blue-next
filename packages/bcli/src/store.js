@@ -5,7 +5,6 @@ const copy = require('graceful-copy')
 const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
-const emoji = require('node-emoji').emoji
 const utils = require('./commons/utils')
 const paths = require('./commons/paths')
 const spinner = ora()
@@ -41,5 +40,5 @@ module.exports = co.wrap(function * (options) {
   yield copy(template, dest, { data })
 
   spinner.succeed()
-  console.log(`\nVuex store module ${chalk.yellow.bold(name)} created!`, emoji.heart)
+  console.log(`\n  Vuex store module ${chalk.yellow.bold(name)} created!`)
 })

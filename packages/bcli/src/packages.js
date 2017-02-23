@@ -20,5 +20,5 @@ module.exports = co.wrap(function * (options) {
   }
 
   spinner.succeed()
-  console.log(`\nPackages installed!`, emoji.heart)
+  console.log('\n   Packages installed!')
 })

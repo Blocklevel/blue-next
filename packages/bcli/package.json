@@ -5,17 +5,17 @@
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Blocklevel/bcli"
+    "url": "https://github.com/Blocklevel/blue-next"
   },
   "bugs": {
-    "url": "https://github.com/Blocklevel/bcli/issues"
+    "url": "https://github.com/Blocklevel/blue-next/issues"
   },
-  "homepage": "https://github.com/Blocklevel/bcli#readme",
+  "homepage": "https://github.com/Blocklevel/blue-next#readme",
   "license": "MIT",
   "keywords": [
     "vue",
+    "blue",
     "bcli",
-    "blocklevel-cli",
     "blocklevel",
     "cli"
   ],
@@ -60,10 +60,8 @@
     "inquirer": "^3.0.1",
     "lodash": "^4.17.4",
     "ngrok": "^2.2.4",
-    "node-emoji": "^1.4.3",
     "ora": "^1.1.0",
     "path-exists": "^3.0.0",
-    "pify": "^2.3.0",
     "postcss-advanced-variables": "^1.2.2",
     "postcss-cssnext": "^2.9.0",
     "postcss-custom-media": "^5.0.1",

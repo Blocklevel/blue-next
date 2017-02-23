@@ -5,7 +5,6 @@ const copy = require('graceful-copy')
 const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
-const emoji = require('node-emoji').emoji
 const utils = require('./commons/utils')
 const paths = require('./commons/paths')
 const spinner = ora()
@@ -42,12 +41,12 @@ module.exports = co.wrap(function * (options) {
   utils.renameFiles(dest, name)
 
   spinner.succeed()
-  console.log(`\n${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!`, emoji.heart)
+  console.log(`\n  ${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!`)
 
   if (isBlue) {
-    console.log(`\nCopy the import line for your ${options.type}:`)
+    console.log(`\n  Copy the import line for your ${options.type}:`)
     console.log(
-      chalk.italic(`\n   import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
+      chalk.italic(`\n     import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
     )
   }
 })

@@ -7,7 +7,6 @@ const execa = require('execa')
 const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
-const emoji = require('node-emoji').emoji
 const utils = require('./commons/utils')
 const paths = require('./commons/paths')
 const commonQuestions = require('./commons/questions')
@@ -63,8 +62,8 @@ module.exports = co.wrap(function * (options) {
 
   spinner.succeed()
 
-  console.log('\nWebsite!', emoji.heart)
-  console.log('\nNew project', chalk.bold(name), 'was created successfully!')
-  console.log(chalk.bold('\nTo get started:\n'))
-  console.log(chalk.italic(`  cd ${folderName} && npm run dev`))
+  console.log(chalk.bold('\n   Website!!!'))
+  console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
+  console.log(chalk.bold('\n   To get started:\n'))
+  console.log(chalk.italic(`     cd ${folderName} && npm run dev`))
 })
