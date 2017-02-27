@@ -14,6 +14,10 @@ module.exports = co.wrap(function * (options) {
   spinner.text = `Create a new ${options.type}`
   spinner.start()
 
+  /**
+   * TODO Make the 'isBlue' check in a util function that is usable everywhere
+   * @type {Boolean}
+   */
   const isBlue = utils.hasConfig() || options.location === 'blue'
   const name = _.kebabCase(options.name)
   const blueStructure = `${paths.appRoot}/${options.type}/${name}`

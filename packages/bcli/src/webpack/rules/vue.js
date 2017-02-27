@@ -9,8 +9,7 @@ const vue = {
   options: {
     loaders: {
       /**
-       * @todo:
-       * For the vue-loader documentation this is the way to go
+       * TODO For the vue-loader documentation this is the way to go
        * but it's super ugly and, when there's an error, the file path
        * has this huge string attached to it.
        * Maybe open an issue to vue-loader to see if there's a more elegant solution
@@ -89,8 +88,7 @@ const cssModules = {
 }
 
 /**
- * @todo
- * Bcli.config already sets the cssPreprocess value if it's not default so we can read that
+ * TODO Bcli.config already sets the cssPreprocess value if it's not default so we can read that
  * value and use the selected pre-processor
  * see https://github.com/Blocklevel/blue-next/commit/54913f8bfbd2f4a3fa41fa5b53fb030b7ab1c6bf
  */

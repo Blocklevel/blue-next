@@ -5,6 +5,13 @@ const path = require('path')
 const utils = require('../commons/utils')
 const rulesFolder = path.resolve(__dirname, './rules/')
 
+/**
+ * TODO remove noDeprecation flag when issue is closed
+ *
+ * Flag that removes the issue on webpack/utils-loader
+ * see https://github.com/webpack/loader-utils/issues/56
+ * @type {Boolean}
+ */
 process.noDeprecation = true
 
 module.exports = {

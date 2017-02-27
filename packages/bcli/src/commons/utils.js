@@ -143,7 +143,7 @@ const getConfig = co.wrap(function * (env) {
   delete appConfig.settings
 
   /**
-   * @todo: The bcli.config file for now returns only a title and the rest is part
+   * TODO The bcli.config file for now returns only a title and the rest is part
    * of the webpack configuration.
    * We should decide how to handle data that is for webpack from the rest.
    * Webpack v2.x is very strict with parameters: it's not possible to pass
