@@ -6,9 +6,10 @@ const inquirer = require('inquirer')
 const commonQuestions = require('./questions')
 const chalk = require('chalk')
 const fs = require('fs')
-const merge = require('webpack-merge')
-const pathExists = require('path-exists')
 
+/**
+ * Check value type
+ */
 const checkType = function (type, value, fallback) {
   return typeof value === type ? value : fallback
 }
@@ -103,57 +104,6 @@ const renameFiles = function (destination, filename) {
   })
 }
 
-/**
- * Detects the bcli.config.js file
- * It returns the file content if detected, otherwise returns false
- * @return {Object|Boolean}
- */
-const hasConfig = function () {
-  try {
-    return require(paths.appConfig)
-  } catch (error) {
-    return false
-  }
-}
-
-/**
- * If the bcli.config.js exits, it returns the env configuration
- * merged with the webpack configuration
- * @param  {String} env
- * @return {Object} new configuration
- */
-const getConfig = co.wrap(function * (env) {
-  const appConfig = hasConfig()
-
-  if (!appConfig) {
-    console.log(chalk.red(`\nYou need to be in the root folder of a Blue project.`))
-    process.exit(1)
-  }
-
-  const envPath = `${paths.cliEnv}/${env}`
-  const exists = yield pathExists(envPath)
-
-  if (!exists) {
-    return {}
-  }
-
-  const envConfig = require(envPath)
-  const webpackConfig = merge.smart({}, envConfig, appConfig.settings)
-
-  delete appConfig.settings
-
-  /**
-   * TODO The bcli.config file for now returns only a title and the rest is part
-   * of the webpack configuration.
-   * We should decide how to handle data that is for webpack from the rest.
-   * Webpack v2.x is very strict with parameters: it's not possible to pass
-   * parameters that are not part of Webpack configuration
-   */
-  return {
-    app: appConfig,
-    webpack: webpackConfig
-  }
-})
 
 module.exports = {
   getGitUser,
@@ -161,7 +111,5 @@ module.exports = {
   getEvents,
   renameFiles,
   checkType,
-  getConfig,
-  hasConfig,
   requireFromFolder
 }

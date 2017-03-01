@@ -7,9 +7,10 @@ const WebpackDevServer = require('webpack-dev-server')
 const merge = require('webpack-merge')
 const detectPort = require('./detect-port')
 const co = require('co')
+const bcliConfig = require('./commons/config')
 
 module.exports = co.wrap(function * (options) {
-  const config = yield utils.getConfig(options.env)
+  const config = bcliConfig.get()
   const webpackConfig = config.webpack
   const port = yield detectPort(webpackConfig.devServer.port)
   const host = webpackConfig.devServer.host
@@ -21,7 +22,10 @@ module.exports = co.wrap(function * (options) {
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: [`'${config.app.title}' is running on ${serverUrl}\n`]
+        messages: [
+          `'${config.app.title}' is running on ${serverUrl}\n`,
+          config.app
+        ]
       }
     })
   )
@@ -29,7 +33,7 @@ module.exports = co.wrap(function * (options) {
   // add webpack-dev-server to the webpack entry point
   // webpack-dev-server needs to point to the cli node_modules folder or won't be recognized
   const devServerPath = `${paths.cliNodeModules}/webpack-dev-server/client?${serverUrl}`
-  webpackConfig.entry.app.unshift(devServerPath)
+  webpackConfig.entry['devServer'] = devServerPath
 
   // start the server!
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)

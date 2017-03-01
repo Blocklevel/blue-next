@@ -1,0 +1,30 @@
+// Typography
+//
+// Define your typography here.
+//
+// Style guide: base.typography
+
+
+// Headings
+//
+// App headings.
+//
+// Style guide: base.typography.headings
+.heading {
+  &.h1 {
+    // Your heading styles..
+    border: 1px solid red;
+  }
+}
+
+
+// Copy
+//
+// App copy (paragraphs).
+//
+// Style guide: base.typography.copy
+.copy {
+  &.c1 {
+    // Your paragraph styles..
+  }
+}

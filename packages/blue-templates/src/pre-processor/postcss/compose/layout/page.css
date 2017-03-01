@@ -25,3 +25,13 @@
   position: fixed 0 0 0 0;
   size: 100%;
 }
+
+/**
+ * Centers the element absolutetly in its parent
+ */
+.absolute-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

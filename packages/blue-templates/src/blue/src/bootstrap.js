@@ -8,6 +8,11 @@ import routes from './app/routes'
 import App from './app'
 
 /**
+* Initialize base application styles
+*/
+import 'asset/style/base'
+
+/**
  * Initialize vue-resource plugin to manage application routing
  */
 Vue.use(VueRouter)

@@ -1,0 +1,13 @@
+// Mixins
+@mixin font-face($font-name, $folder-name, $file-name, $font-weight: normal, $font-style: normal) {
+	@font-face {
+		font-family: $font-name;
+		src: url('#{$folder-name}/#{$file-name}.eot');
+		src: url('#{$folder-name}/#{$file-name}.eot?#iefix') format('embedded-opentype'),
+		url('#{$folder-name}/#{$file-name}.woff') format('woff'),
+		url('#{$folder-name}/#{$file-name}.ttf') format('truetype'),
+		url('#{$folder-name}/#{$file-name}.svg##{$font-name}') format('svg');
+		font-weight: $font-weight;
+		font-style: $font-style;
+	}
+}
