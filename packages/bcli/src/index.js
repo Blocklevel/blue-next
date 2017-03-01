@@ -39,13 +39,14 @@ module.exports = co.wrap(function * (options) {
   }
 
   const blue = `${paths.cliTemplates}/blue`
-  const cssPreprocessor = `${paths.cliTemplates}/pre-processor/${options.cssPreprocessor}`
+  // const cssPreprocessor = `${paths.cliTemplates}/pre-processor/${options.cssPreprocessor}`
+  const cssPreprocessor = `${paths.cliTemplates}/pre-processor/postcss`
 
   const data = Object.assign({
     name,
     author: yield utils.getGitUser(),
-    customCssPreprocessor: options.cssPreprocessor !== 'postcss',
-    cssPreprocessor: options.cssPreprocessor,
+    // customCssPreprocessor: options.cssPreprocessor !== 'postcss',
+    // cssPreprocessor: options.cssPreprocessor,
     dependencies: options.dependencies
   }, options)
 
