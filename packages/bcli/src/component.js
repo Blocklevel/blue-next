@@ -8,6 +8,7 @@ const ora = require('ora')
 const utils = require('./commons/utils')
 const paths = require('./commons/paths')
 const spinner = ora()
+const bcliConfig = require('./commons/config')
 
 module.exports = co.wrap(function * (options) {
   console.log('') // extra space
@@ -18,7 +19,7 @@ module.exports = co.wrap(function * (options) {
    * TODO Make the 'isBlue' check in a util function that is usable everywhere
    * @type {Boolean}
    */
-  const isBlue = utils.hasConfig() || options.location === 'blue'
+  const isBlue = bcliConfig.exists() || options.location === 'blue'
   const name = _.kebabCase(options.name)
   const blueStructure = `${paths.appRoot}/${options.type}/${name}`
   const currentFolder = `${paths.appDirectory}/${name}`
