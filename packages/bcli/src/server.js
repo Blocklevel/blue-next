@@ -22,21 +22,23 @@ module.exports = co.wrap(function * (options) {
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: [
-          `'${config.app.title}' is running on ${serverUrl}\n`,
-          config.app
-        ]
+        messages: [`'${config.app.title}' is running on ${serverUrl}\n`]
       }
     })
   )
 
-  // add webpack-dev-server to the webpack entry point
-  // webpack-dev-server needs to point to the cli node_modules folder or won't be recognized
+  // Add webpack-dev-server to the webpack entry point.
+  // webpack-dev-server needs to point to the cli node_modules
+  // folder or won't be recognized
   const devServerPath = `${paths.cliNodeModules}/webpack-dev-server/client?${serverUrl}`
   webpackConfig.entry['devServer'] = devServerPath
 
-  // start the server!
-  const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
+  // Start the server!
+  const server = new WebpackDevServer(
+    webpack(webpackConfig),
+    webpackConfig.devServer
+  )
+
   server.listen(port, host, function () {
     console.log(`\n   Starting the server...`)
   })
