@@ -1,18 +1,7 @@
 const bcliConfig = require('../../commons/config')
 const preProcessor = bcliConfig.getPreProcessor()
-
-// let rule = {}
-
-// if (preProcessor === 'sass') {
-//   rule = {
-//     test: /\.scss$/,
-//     loader: 'style-loader!css-loader!sass-loader'
-//   }
-// }
-
-// if (preProcessor === 'postcss') {
-//
-//
+const paths = require('../../commons/paths')
+const variables = require(`${paths.appStyle}/config/variables.js`)
 
 module.exports = {
   test: /\.css$/,
@@ -25,6 +14,16 @@ module.exports = {
         importLoaders: 1
       }
     },
-    'postcss-loader'
+    {
+      loader: 'postcss-loader',
+      options: {
+        plugins: [
+          require('postcss-advanced-variables')({ variables }),
+          require('postcss-cssnext')({
+            browsers: ['last 3 versions', 'iOS >= 8']
+          })
+        ]
+      }
+    }
   ]
 }

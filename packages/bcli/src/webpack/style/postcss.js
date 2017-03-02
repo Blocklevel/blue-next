@@ -1,15 +1,10 @@
+const webpack = require('webpack')
 const paths = require('../../commons/paths')
 const variables = require(`${paths.appStyle}/config/variables.js`)
 
 module.exports = {
   postcss: [
-    require('postcss-import'),
     require('postcss-advanced-variables')({ variables }),
-    require('rucksack-css')({ shorthandPosition: true }),
-    require('postcss-nested'),
-    require('postcss-mixins'),
-    require('postcss-short'),
-    require('postcss-custom-media'),
     require('postcss-cssnext')({
       browsers: ['last 3 versions', 'iOS >= 8']
     })
