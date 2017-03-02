@@ -1,0 +1,16 @@
+{
+  "name": "blue-scripts",
+  "version": "0.0.0",
+  "description": "Configuration and scripts for Blue",
+  "main": "src/index.js",
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blocklevel/blue-next"
+  },
+  "bugs": {
+    "url": "https://github.com/Blocklevel/blue-next/issues"
+  },
+  "homepage": "https://github.com/Blocklevel/blue-next#readme",
+  "license": "MIT"
+}
