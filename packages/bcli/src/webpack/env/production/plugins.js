@@ -5,13 +5,6 @@ const CompressionPlugin = require("compression-webpack-plugin")
 const webpack = require('webpack')
 
 module.exports = [
-  new webpack.DefinePlugin({
-    __DEV__: false,
-    'process.env': {
-      NODE_ENV: '"production"' // this needs to be production for reducing file size
-    }
-  }),
-
   new webpack.LoaderOptionsPlugin({
     minimize: true
   }),
@@ -23,12 +16,22 @@ module.exports = [
   }),
 
   new webpack.optimize.UglifyJsPlugin({
-    compress: {
+    sourceMap: true,
+    compressor: {
       warnings: false,
-      drop_console: false
+      conditionals: true,
+      unused: true,
+      comparisons: true,
+      sequences: true,
+      dead_code: true,
+      evaluate: true,
+      if_return: true,
+      join_vars: true,
+      negate_iife: false
     },
-    comments: false,
-    minimize: false
+    output: {
+      comments: false
+    }
   }),
 
   new CompressionPlugin({
