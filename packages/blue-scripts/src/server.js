@@ -30,7 +30,7 @@ module.exports = co.wrap(function * (options) {
   // Add webpack-dev-server to the webpack entry point.
   // webpack-dev-server needs to point to the cli node_modules
   // folder or won't be recognized
-  const devServerPath = `${paths.ownNodeModules}/webpack-dev-server/client?${serverUrl}`
+  const devServerPath = `${paths.appNodeModules}/webpack-dev-server/client?${serverUrl}`
   webpackConfig.entry['devServer'] = devServerPath
 
   // Start the server!
