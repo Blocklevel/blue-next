@@ -33,16 +33,16 @@ module.exports = {
       asset: `${paths.appSrc}/asset`
     },
     modules: [
-      paths.ownNodeModules,
       paths.appNodeModules,
-      paths.appDirectory
+      paths.appDirectory,
+      paths.ownNodeModules
     ]
   },
   resolveLoader: {
     modules: [
-      paths.ownNodeModules,
       paths.appNodeModules,
-      paths.appDirectory
+      paths.appDirectory,
+      paths.ownNodeModules
     ]
   },
   module: {
