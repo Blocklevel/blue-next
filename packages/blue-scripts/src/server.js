@@ -2,6 +2,7 @@
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const utils = require('./commons/utils')
 const webpack = require('webpack')
+const paths = require('./commons/paths')
 const WebpackDevServer = require('webpack-dev-server')
 const merge = require('webpack-merge')
 const detectPort = require('./detect-port')
@@ -29,7 +30,7 @@ module.exports = co.wrap(function * (options) {
   // Add webpack-dev-server to the webpack entry point.
   // webpack-dev-server needs to point to the cli node_modules
   // folder or won't be recognized
-  const devServerPath = `webpack-dev-server/client?${serverUrl}`
+  const devServerPath = `${paths.ownNodeModules}/webpack-dev-server/client?${serverUrl}`
   webpackConfig.entry['devServer'] = devServerPath
 
   // Start the server!

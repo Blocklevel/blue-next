@@ -4,10 +4,11 @@ module.exports = {
   exclude: /node_modules/,
   options: {
     presets: [
-      'es2015', 'stage-2'
+      require.resolve('babel-preset-es2015'),
+      require.resolve('babel-preset-stage-2')
     ],
     plugins: [
-      'transform-regenerator'
+      require.resolve('babel-plugin-transform-regenerator')
     ]
   }
 }

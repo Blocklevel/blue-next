@@ -1,6 +1,7 @@
 const paths = require('./paths')
 const merge = require('webpack-merge')
 const fs = require('fs')
+const chalk = require('chalk')
 const _ = require('lodash')
 
 /**
@@ -30,7 +31,7 @@ const get = function (nodeEnv = process.env.NODE_ENV) {
 
   // Configs
   const bcliConfig = require(paths.appConfig)
-  const envConfig = require(`${paths.blueEnv}/${nodeEnv}`)
+  const envConfig = require(`../webpack/env/${nodeEnv}`)
 
   // Merge the env config and the bcli.config.js file
   const webpackConfig = merge.smart({}, envConfig, bcliConfig.webpack)
