@@ -16,8 +16,7 @@ module.exports = co.wrap(function * () {
         return answer !== ''
       }
     },
-    commonQuestions.vueHooks,
-    commonQuestions.fileLocation
+    commonQuestions.vueHooks
   ])
 
   const options = _.assignIn(answer, {

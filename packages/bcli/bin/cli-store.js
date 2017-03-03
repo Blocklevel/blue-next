@@ -57,8 +57,7 @@ module.exports = co.wrap(function * (input, flags) {
         },
       ],
       default: false
-    },
-    commonQuestions.fileLocation
+    }
   ])
 
   const options = Object.assign(answer, flags)

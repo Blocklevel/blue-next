@@ -6,20 +6,17 @@ const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
 const utils = require('./commons/utils')
-const paths = require('./commons/paths')
+const blueTemplates = require('blue-templates')
+
 const spinner = ora()
-const bcliConfig = require('./commons/config')
 
 module.exports = co.wrap(function * (options) {
   console.log('') // extra space
   spinner.text = 'Create a new Vuex store module'
   spinner.start()
 
-  const isBlue = bcliConfig.exists() || options.location === 'blue'
   const name = _.kebabCase(options.name)
-  const blueStructure = `${paths.appRoot}/store/modules/${name}`
-  const currentFolder = `${paths.appDirectory}/${name}`
-  const dest = isBlue ? blueStructure : currentFolder
+  const dest = `${process.cwd()}/src/app/store/modules/${name}`
   const exists = yield pathExists(dest)
 
   if (exists && !options.force) {
@@ -29,7 +26,8 @@ module.exports = co.wrap(function * (options) {
     yield utils.confirmPrompt()
   }
 
-  const template = `${paths.cliTemplates}/store`
+  const template = blueTemplates.getStoreModule()
+
   const data = {
     name,
     author: yield utils.getGitUser(),
@@ -41,5 +39,5 @@ module.exports = co.wrap(function * (options) {
   yield copy(template, dest, { data })
 
   spinner.succeed()
-  console.log(`\n  Vuex store module ${chalk.yellow.bold(name)} created!`)
+  console.log(`\n  Vuex store module ${chalk.yellow.bold(name)} created and autoloaded in your application!`)
 })

@@ -27,18 +27,6 @@ module.exports = co.wrap(function * () {
           value: 'project'
         },
         {
-          name: 'Install frequently used npm packages',
-          value: 'packages'
-        },
-        {
-          name: 'Start the development server',
-          value: 'start'
-        },
-        {
-          name: 'Build my application',
-          value: 'build'
-        },
-        {
           name: 'Share the current local revision with ngrok',
           value: 'share'
         },

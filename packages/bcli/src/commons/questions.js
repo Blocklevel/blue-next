@@ -32,27 +32,7 @@ const vueHooks = {
   default: false
 }
 
-const fileLocation = {
-  when: function () {
-    return !require('./config').exists()
-  },
-  type: 'list',
-  name: 'location',
-  message: 'Where should I drop it?',
-  choices: [
-    {
-      name: 'Make it for Blue',
-      value: 'blue'
-    },
-    {
-      name: 'Drop it here!',
-      value: 'none'
-    }
-  ]
-}
-
 module.exports = {
   force,
-  vueHooks,
-  fileLocation
+  vueHooks
 }

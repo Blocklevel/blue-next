@@ -5,11 +5,12 @@ const chalk = require('chalk')
 const copy = require('graceful-copy')
 const execa = require('execa')
 const pathExists = require('path-exists')
+const utils = require('./commons/utils')
 const co = require('co')
 const ora = require('ora')
-const utils = require('./commons/utils')
-const paths = require('./commons/paths')
 const commonQuestions = require('./commons/questions')
+const blueTemplates = require('blue-templates')
+
 const spinner = ora()
 
 module.exports = co.wrap(function * (options) {
@@ -19,7 +20,7 @@ module.exports = co.wrap(function * (options) {
 
   const name = _.kebabCase(options.projectName)
   const folderName = _.kebabCase(options.folderName)
-  const dest = `${paths.appDirectory}/${folderName}`
+  const dest = `${process.cwd()}/${folderName}`
   const exists = yield pathExists(dest)
 
   if (exists && !options.force) {
@@ -38,15 +39,12 @@ module.exports = co.wrap(function * (options) {
     console.log('')
   }
 
-  const blue = `${paths.cliTemplates}/blue`
-  // const cssPreprocessor = `${paths.cliTemplates}/pre-processor/${options.cssPreprocessor}`
-  const cssPreprocessor = `${paths.cliTemplates}/pre-processor/postcss`
+  const blue = blueTemplates.getBlue()
+  const cssPreprocessor = blueTemplates.getPreProcessor('postcss')
 
   const data = Object.assign({
     name,
     author: yield utils.getGitUser(),
-    // customCssPreprocessor: options.cssPreprocessor !== 'postcss',
-    // cssPreprocessor: options.cssPreprocessor,
     dependencies: options.dependencies
   }, options)
 

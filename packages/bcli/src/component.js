@@ -6,24 +6,17 @@ const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
 const utils = require('./commons/utils')
-const paths = require('./commons/paths')
+const blueTemplates = require('blue-templates')
+
 const spinner = ora()
-const bcliConfig = require('./commons/config')
 
 module.exports = co.wrap(function * (options) {
   console.log('') // extra space
   spinner.text = `Create a new ${options.type}`
   spinner.start()
 
-  /**
-   * TODO Make the 'isBlue' check in a util function that is usable everywhere
-   * @type {Boolean}
-   */
-  const isBlue = bcliConfig.exists() || options.location === 'blue'
   const name = _.kebabCase(options.name)
-  const blueStructure = `${paths.appRoot}/${options.type}/${name}`
-  const currentFolder = `${paths.appDirectory}/${name}`
-  const dest = isBlue ? blueStructure : currentFolder
+  const dest = `${process.cwd()}/src/app/${options.type}/${name}`
   const exists = yield pathExists(dest)
 
   if (exists && !options.force) {
@@ -33,7 +26,7 @@ module.exports = co.wrap(function * (options) {
     yield utils.confirmPrompt()
   }
 
-  const template = `${paths.cliTemplates}/component`
+  const template = blueTemplates.getComponent()
   const data = _.assignIn(options, {
     name,
     author: yield utils.getGitUser()
@@ -48,10 +41,8 @@ module.exports = co.wrap(function * (options) {
   spinner.succeed()
   console.log(`\n  ${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!`)
 
-  if (isBlue) {
-    console.log(`\n  Copy the import line for your ${options.type}:`)
-    console.log(
-      chalk.italic(`\n     import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
-    )
-  }
+  console.log(`\n  Copy the import line for your ${options.type}:`)
+  console.log(
+    chalk.italic(`\n     import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
+  )
 })
