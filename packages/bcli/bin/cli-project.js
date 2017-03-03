@@ -25,22 +25,6 @@ module.exports = co.wrap(function * (input, flags) {
         return answer !== ''
       }
     }
-    // {
-    //   type: 'list',
-    //   name: 'cssPreprocessor',
-    //   message: 'Which css preprocessor would you like to use?',
-    //   choices: [
-    //     {
-    //       name: 'PostCSS',
-    //       value: 'postcss'
-    //     },
-    //     {
-    //       name:  chalk.gray('Sass (wip)'),
-    //       value: 'sass'
-    //     },
-    //   ],
-    //   default: 'postcss'
-    // }
   ])
 
   const options = Object.assign(answer, flags)

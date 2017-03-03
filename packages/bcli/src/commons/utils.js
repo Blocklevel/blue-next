@@ -1,18 +1,10 @@
-const execa = require('execa')
-const paths = require('./paths')
-const _ = require('lodash')
-const co = require('co')
 const inquirer = require('inquirer')
-const commonQuestions = require('./questions')
+const co = require('co')
+const execa = require('execa')
 const chalk = require('chalk')
 const fs = require('fs')
-
-/**
- * Check value type
- */
-const checkType = function (type, value, fallback) {
-  return typeof value === type ? value : fallback
-}
+const questions = require('./questions')
+const _ = require('lodash')
 
 /**
  * Get the credentials of the current git user
@@ -40,28 +32,36 @@ const getGitUser = co.wrap(function * () {
 })
 
 /**
+ * Rename all files in a folder to a single filename
+ * @param  {String} destination
+ * @param  {String} filename
+ */
+const renameFiles = function (destination, filename) {
+  fs.readdir(destination, (readError, files) => {
+    files.forEach(file => {
+      const extention = file.split('.')[1]
+      fs.rename(`${destination}/${file}`, `${destination}/${filename}.${extention}`, (renameError) => {
+        if (renameError) {
+          console.log(renameError)
+        }
+      })
+    })
+  })
+}
+
+/**
  * Confirmation prompt for overriding actions
  */
 const confirmPrompt = co.wrap(function * () {
-  const confirm = yield inquirer.prompt([commonQuestions.force])
+  const confirm = yield inquirer.prompt([
+    questions.force
+  ])
 
   if (!confirm.force) {
     console.log(chalk.bold.yellow('\nNo problem!\n'))
     return
   }
 })
-
-/**
- * Require a list of files from a folder
- * @param  {String} folder
- * @return {Array<Object>}
- */
-const requireFromFolder = function (folder) {
-  const files = fs.readdirSync(folder)
-  return _.map(files, file => {
-    return require(`${folder}/${file}`)
-  })
-}
 
 /**
  * Returns an array of event objects in the correct format so we can loop over it later
@@ -87,29 +87,16 @@ const getEvents = function (events) {
 }
 
 /**
- * Rename all files in a folder to a single filename
- * @param  {String} destination
- * @param  {String} filename
+ * Check value type
  */
-const renameFiles = function (destination, filename) {
-  fs.readdir(destination, (readError, files) => {
-    files.forEach(file => {
-      const extention = file.split('.')[1]
-      fs.rename(`${destination}/${file}`, `${destination}/${filename}.${extention}`, (renameError) => {
-        if (renameError) {
-          console.log(renameError)
-        }
-      })
-    })
-  })
+const checkType = function (type, value, fallback) {
+  return typeof value === type ? value : fallback
 }
-
 
 module.exports = {
   getGitUser,
   confirmPrompt,
-  getEvents,
   renameFiles,
-  checkType,
-  requireFromFolder
+  getEvents,
+  checkType
 }

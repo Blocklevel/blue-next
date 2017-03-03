@@ -2,8 +2,27 @@
 
 A collection of Blue templates
 
+## Installation
+
+```bash
+npm install blue-templates
+```
+
 ## Usage
+These are all functions available, each one retrieves a path to a specific part of the Blue framework
 
-There is no usage! :D
+```js
+const blueTemplates = require('blue-templates')
 
-Blue it's only a versioned folder structure: is not meant to be required as a normal package.
+// Blue
+blueTemplates.getBlue()
+
+// Store module
+blueTemplates.getStoreModule()
+
+// Pre-processors (i.e. postcss)
+blueTemplates.getPreProcessor('postcss')
+
+// Component
+blueTemplates.getComponent()
+```
