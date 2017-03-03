@@ -1,8 +1,8 @@
 {
   "name": "{{ name }}",
   "scripts": {
-    "dev": "bcli start",
-    "build": "bcli build"
+    "dev": "blue-scripts start",
+    "build": "blue-scripts build"
   },
   "dependencies": {
     "vue": "^2.1.10",
@@ -12,6 +12,7 @@
     "vue-router": "^2.2.0"
   },
   "devDependencies": {
+    "blue-scripts": "^0.0.0",
     "vue-loader": "^11.0.0",
     "vue-template-compiler": "^2.1.10"
   }
