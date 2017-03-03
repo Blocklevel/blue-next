@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CompressionPlugin = require("compression-webpack-plugin")
 const webpack = require('webpack')
+const paths = require('../../../commons/paths')
 
 module.exports = [
   new webpack.LoaderOptionsPlugin({
@@ -31,6 +32,18 @@ module.exports = [
     },
     output: {
       comments: false
+    }
+  }),
+
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: function (module, count) {
+      // any required modules inside node_modules are extracted to vendor
+      return (
+        module.resource &&
+        /\.js$/.test(module.resource) &&
+        module.resource.indexOf(paths.appNodeModules) === 0
+      )
     }
   }),
 
