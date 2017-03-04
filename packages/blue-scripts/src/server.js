@@ -22,7 +22,7 @@ module.exports = co.wrap(function * (options) {
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
       compilationSuccessInfo: {
-        messages: [`'${config.app.title}' is running on ${serverUrl}\n`]
+        messages: [`'${config.project.title}' is running on ${serverUrl}\n`]
       }
     })
   )

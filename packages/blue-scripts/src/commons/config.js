@@ -36,21 +36,19 @@ const get = function (nodeEnv = process.env.NODE_ENV) {
   // Merge the env config and the bcli.config.js file
   const webpackConfig = merge.smart({}, envConfig, bcliConfig.webpack)
 
-  delete bcliConfig.webpack
-
   // It's important to separate the two type of informations.
   // Webpack 2 is very strict with properties, only Webpack properties are
   // allowed to be added.
   return {
     // Bcli configurations
-    app: bcliConfig,
+    project: bcliConfig.project,
     // Webpack only configurations
     webpack: webpackConfig
   }
 }
 
 const getPreProcessor = function () {
-  const config = get().app
+  const config = get().project
   const hasValue = !!(config.css && config.css.preProcessor)
 
   return hasValue ? config.css.preProcessor : 'postcss'

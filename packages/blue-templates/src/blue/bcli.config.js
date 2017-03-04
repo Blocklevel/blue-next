@@ -1,4 +1,6 @@
 module.exports = {
-  title: '{{ name }}',
+  project: {
+    title: '{{ name }}'
+  },
   webpack: {}
 }
