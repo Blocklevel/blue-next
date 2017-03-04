@@ -4,7 +4,7 @@
  * @return {String}
  */
 const getComposeFile = function (file) {
-  return JSON.stringify(`src/asset/style/compose/${file}`)
+  return JSON.stringify(`postcss-loader!src/asset/style/compose/${file}`)
 }
 
 module.exports = {
