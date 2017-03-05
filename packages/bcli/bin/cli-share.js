@@ -22,6 +22,6 @@ module.exports = co.wrap(function * (input, flags) {
 
   return runShare(port).catch(err => {
     console.error(chalk.red(err.stack))
-    return
+    process.exit(1)
   })
 })

@@ -1,7 +1,5 @@
 'use strict'
-const webpack = require('webpack')
 const paths = require('../commons/paths')
-const combineLoaders = require('webpack-combine-loaders')
 const path = require('path')
 const utils = require('../commons/utils')
 const rulesFolder = path.resolve(__dirname, './rules/')

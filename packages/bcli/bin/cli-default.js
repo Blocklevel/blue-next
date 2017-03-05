@@ -51,5 +51,6 @@ module.exports = co.wrap(function * () {
     require(`./cli-${answer.task}`)()
   } catch (e) {
     console.log(e)
+    process.exit(1)
   }
 })

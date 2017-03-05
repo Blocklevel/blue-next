@@ -1,8 +1,6 @@
 const paths = require('./paths')
 const merge = require('webpack-merge')
-const fs = require('fs')
 const chalk = require('chalk')
-const _ = require('lodash')
 
 /**
  * Detects the bcli.config.js file

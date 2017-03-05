@@ -27,7 +27,7 @@ const vueHooks = {
     {
       name: 'Oh, yes!',
       value: true
-    },
+    }
   ],
   default: false
 }

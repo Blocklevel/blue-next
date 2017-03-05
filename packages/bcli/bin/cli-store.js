@@ -3,7 +3,6 @@ const chalk = require('chalk')
 const co = require('co')
 const runStore = require('../src/store')
 const inquirer = require('inquirer')
-const commonQuestions = require('../src/commons/questions')
 
 module.exports = co.wrap(function * (input, flags) {
   const answer = yield inquirer.prompt([
@@ -27,7 +26,7 @@ module.exports = co.wrap(function * (input, flags) {
         {
           name: 'Oh, yes!',
           value: true
-        },
+        }
       ],
       default: false
     },
@@ -54,7 +53,7 @@ module.exports = co.wrap(function * (input, flags) {
         {
           name: 'Oh, yes!',
           value: true
-        },
+        }
       ],
       default: false
     }
@@ -64,6 +63,6 @@ module.exports = co.wrap(function * (input, flags) {
 
   return runStore(options).catch(err => {
     console.error(chalk.red(err.stack))
-    return
+    process.exit(1)
   })
 })

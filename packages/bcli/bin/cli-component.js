@@ -25,6 +25,6 @@ module.exports = co.wrap(function * () {
 
   return runComponent(options).catch(err => {
     console.error(chalk.red(err.stack))
-    return
+    process.exit(1)
   })
 })

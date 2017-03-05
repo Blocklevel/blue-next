@@ -1,5 +1,3 @@
-const bcliConfig = require('../../commons/config')
-const preProcessor = bcliConfig.getPreProcessor()
 const paths = require('../../commons/paths')
 const variables = require(`${paths.appStyle}/config/variables.js`)
 

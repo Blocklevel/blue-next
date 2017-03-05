@@ -1,7 +1,6 @@
 const _ = require('lodash')
 const fs = require('fs')
 
-
 /**
  * Require a list of files from a folder
  * @param  {String} folder

@@ -1,6 +1,4 @@
 'use strict'
-const utils = require('./commons/utils')
-const paths = require('./commons/paths')
 const webpack = require('webpack')
 const co = require('co')
 const ora = require('ora')

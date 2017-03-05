@@ -31,6 +31,6 @@ module.exports = co.wrap(function * (input, flags) {
 
   return runDefault(options).catch(err => {
     console.error(chalk.red(err.stack))
-    return
+    process.exit(1)
   })
 })

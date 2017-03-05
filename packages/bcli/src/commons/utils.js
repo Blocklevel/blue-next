@@ -40,10 +40,15 @@ const renameFiles = function (destination, filename) {
   fs.readdir(destination, (readError, files) => {
     files.forEach(file => {
       const extention = file.split('.')[1]
-      fs.rename(`${destination}/${file}`, `${destination}/${filename}.${extention}`, (renameError) => {
-        if (renameError) {
-          console.log(renameError)
+      const origin = `${destination}/${file}`
+      const dest = `${destination}/${filename}.${extention}`
+
+      fs.rename(origin, dest, renameError => {
+        if (!renameError) {
+          return
         }
+
+        console.error(renameError)
       })
     })
   })
@@ -59,7 +64,7 @@ const confirmPrompt = co.wrap(function * () {
 
   if (!confirm.force) {
     console.log(chalk.bold.yellow('\nNo problem!\n'))
-    return
+    process.exit(1)
   }
 })
 
@@ -86,17 +91,9 @@ const getEvents = function (events) {
   })
 }
 
-/**
- * Check value type
- */
-const checkType = function (type, value, fallback) {
-  return typeof value === type ? value : fallback
-}
-
 module.exports = {
   getGitUser,
   confirmPrompt,
   renameFiles,
-  getEvents,
-  checkType
+  getEvents
 }

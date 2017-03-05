@@ -2,7 +2,6 @@
 const co = require('co')
 const detect = require('detect-port')
 const inquirer = require('inquirer')
-const chalk = require('chalk')
 
 module.exports = co.wrap(function * (port) {
   const availablePort = yield detect(port)

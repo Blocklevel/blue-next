@@ -39,5 +39,8 @@ module.exports = co.wrap(function * (options) {
   yield copy(template, dest, { data })
 
   spinner.succeed()
-  console.log(`\n  Vuex store module ${chalk.yellow.bold(name)} created and autoloaded in your application!`)
+  console.log(`
+    Vuex store module ${chalk.yellow.bold(name)} created!
+    The module is autoloaded in your application!
+  `)
 })

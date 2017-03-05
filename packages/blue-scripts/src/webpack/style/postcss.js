@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const paths = require('../../commons/paths')
 const variables = require(`${paths.appStyle}/config/variables.js`)
 
