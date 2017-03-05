@@ -1,19 +1,30 @@
 {
   "name": "eslint-config-blocklevel",
   "version": "0.6.5",
-  "description": "Eslint configuration for Blocklevel projects",
-  "main": "index.js",
+  "description": "Blocklevel eslint configuration",
+  "main": "src/index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Blocklevel/eslint-config-blocklevel"
+    "url": "https://github.com/Blocklevel/blue-next"
   },
+  "bugs": {
+    "url": "https://github.com/Blocklevel/blue-next/issues"
+  },
+  "bin": {
+    "blue-scripts": "./bin/blue.js"
+  },
+  "homepage": "https://github.com/Blocklevel/blue-next#readme",
+  "license": "MIT",
   "keywords": [
     "eslint",
     "blocklevel"
   ],
-  "bugs": {
-    "url": "https://github.com/Blocklevel/eslint-config-blocklevel/issues"
-  },
-  "homepage": "https://github.com/Blocklevel/eslint-config-blocklevel#readme"
+  "dependencies": {
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "eslint-plugin-vue": "^2.0.1"
+  }
 }
