@@ -1,5 +1,5 @@
 const combineLoaders = require('webpack-combine-loaders')
-const bcliConfig = require('../../commons/config')
+const blueConfig = require('../../commons/config')
 
 const vue = {
   test: /\.vue$/,
@@ -18,7 +18,7 @@ const vue = {
 vue.options = Object.assign(
   {},
   vue.options,
-  require(`../style/${bcliConfig.getPreProcessor()}`)
+  require(`../style/${blueConfig.getPreProcessor()}`)
 )
 
 module.exports = vue

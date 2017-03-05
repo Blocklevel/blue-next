@@ -6,6 +6,14 @@ const webpack = require('webpack')
 const paths = require('../../../commons/paths')
 
 module.exports = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      // Essential for Vue to build a smaller bundle
+      // https://vue-loader.vuejs.org/en/workflow/production.html
+      NODE_ENV: '"production"'
+    }
+  }),
+
   new webpack.LoaderOptionsPlugin({
     minimize: true
   }),
@@ -59,5 +67,8 @@ module.exports = [
     filename: '[hash:8]/[name].css',
     ignoreOrder: true,
     allChunks: true
-  })
+  }),
+
+  // optimize module ids by occurrence count
+  new webpack.optimize.OccurrenceOrderPlugin()
 ]

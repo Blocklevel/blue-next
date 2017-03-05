@@ -1,7 +1,7 @@
 module.exports = {
   test: /\.js$/,
   loader: 'babel-loader',
-  exclude: /node_modules/,
+  exclude: /node_modules|build/,
   options: {
     presets: [
       require.resolve('babel-preset-es2015'),

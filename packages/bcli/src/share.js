@@ -18,7 +18,11 @@ module.exports = co.wrap(function (input) {
     }
 
     spinner.succeed()
-    console.log(chalk.bold(`\nSharing a new demo:\n`))
-    console.log(chalk.italic(`    ${url}`))
+
+    console.log(`
+    ${chalk.bold('Sharing a new demo:')}
+
+    ${chalk.italic(url)}
+    `)
   })
 })

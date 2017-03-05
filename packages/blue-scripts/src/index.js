@@ -10,6 +10,11 @@ const getPostCSSConfig = function () {
   }
 }
 
+const getEslintConfig = function () {
+  return require('eslint-config-blocklevel')
+}
+
 module.exports = {
-  getPostCSSConfig
+  getPostCSSConfig,
+  getEslintConfig
 }

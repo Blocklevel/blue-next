@@ -40,7 +40,7 @@ module.exports = co.wrap(function * (options) {
 
   spinner.succeed()
   console.log(`
-    Vuex store module ${chalk.yellow.bold(name)} created!
-    The module is autoloaded in your application!
+  Vuex store module ${chalk.yellow.bold(name)} created!
+  The module is autoloaded in your application!
   `)
 })

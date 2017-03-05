@@ -39,10 +39,10 @@ module.exports = co.wrap(function * (options) {
   utils.renameFiles(dest, name)
 
   spinner.succeed()
-  console.log(`\n  ${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!`)
 
-  console.log(`\n  Copy the import line for your ${options.type}:`)
-  console.log(
-    chalk.italic(`\n     import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue'`)
-  )
+  console.log(`
+  ${_.startCase(options.type)} ${chalk.yellow.bold(name)} created!
+
+    ${chalk.italic(`import ${_.camelCase(name)} from '${options.type}/${name}/${name}.vue`)}'
+  `)
 })

@@ -1,6 +1,8 @@
+const messages = require('./messages')
 const paths = require('./paths')
 const merge = require('webpack-merge')
 const chalk = require('chalk')
+const _ = require('lodash')
 
 /**
  * Detects the bcli.config.js file
@@ -22,24 +24,30 @@ const exists = function () {
  * @return {Object}
  */
 const get = function (nodeEnv = process.env.NODE_ENV) {
+  // blue.config.js is required!
   if (!exists()) {
-    console.log(chalk.red(`\nYou need to be in the root of a Blue project.`))
+    console.log(chalk.red(messages.NO_BLUE_CONFIG_FOUND))
     process.exit(1)
   }
 
-  // Configs
-  const bcliConfig = require(paths.appConfig)
+  const blueConfig = require(paths.appConfig)
   const envConfig = require(`../webpack/env/${nodeEnv}`)
+  const blueConfigWebpack = blueConfig.webpack || {}
 
-  // Merge the env config and the bcli.config.js file
-  const webpackConfig = merge.smart({}, envConfig, bcliConfig.webpack)
+  // assign the environment webpack configuration
+  let webpackConfig = envConfig
+
+  // merge the configuration with the blue.config.js webpack object if is not empty
+  if (!_.isEmpty(blueConfigWebpack)) {
+    webpackConfig = merge.smart({}, envConfig, blueConfigWebpack)
+  }
 
   // It's important to separate the two type of informations.
   // Webpack 2 is very strict with properties, only Webpack properties are
   // allowed to be added.
   return {
     // Bcli configurations
-    project: bcliConfig.project,
+    project: blueConfig.project,
     // Webpack only configurations
     webpack: webpackConfig
   }

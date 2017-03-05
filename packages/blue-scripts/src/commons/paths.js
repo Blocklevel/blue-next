@@ -11,7 +11,7 @@ module.exports = {
   appDirectory: resolveApp('.'),
   ownNodeModules: resolveApp('node_modules/blue-scripts/node_modules'),
   appNodeModules: resolveApp('node_modules'),
-  appConfig: resolveApp('bcli.config.js'),
+  appConfig: resolveApp('blue.config.js'),
   appStyle: resolveApp('./src/asset/style'),
   appRoot: resolveApp('./src/app'),
   appEntry: resolveApp('./src/bootstrap.js'),
