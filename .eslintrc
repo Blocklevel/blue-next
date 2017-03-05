@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "extends": 'standard',
+  "ecmaFeatures": {
+    "experimentalObjectRestSpread": true,
+    "module": true
+  },
+  "settings": {
+   'import/ignore': [
+     'node_modules'
+   ],
+   'import/extensions': ['.js'],
+   'import/resolver': {
+      "node": {
+        "extensions": ['.js', '.json']
+      }
+    }
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    'no-console': 0,
+    'no-unused-vars': 1,
+    'no-debugger': 1,
+    'no-use-before-define': 1,
+    'max-len': [2, { "code": 100, "ignoreUrls": true }]
+  }
+}
