@@ -8,11 +8,23 @@ module.exports = {
     module: true
   },
   settings: {
-    'import/resolver': 'webpack',
+   'import/ignore': [
+     'node_modules'
+   ],
+   'import/resolver': 'webpack',
+   'import/extensions': ['.js'],
+   'import/resolver': {
+      node: {
+        extensions: ['.js', '.json']
+      }
+    }
   },
   plugins: ['vue'],
   env: {
-    browser: true
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true
   },
   rules: {
     'no-console': 1,
