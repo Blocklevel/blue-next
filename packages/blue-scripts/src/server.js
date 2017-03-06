@@ -1,4 +1,5 @@
 'use strict'
+const chalk = require('chalk')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const webpack = require('webpack')
 const paths = require('./commons/paths')
@@ -7,6 +8,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const detectPort = require('./detect-port')
 const co = require('co')
 const blueConfig = require('./commons/config')
+const ip = require('ip')
 
 module.exports = co.wrap(function * (options) {
   const config = blueConfig.get()
@@ -23,7 +25,8 @@ module.exports = co.wrap(function * (options) {
       compilationSuccessInfo: {
         messages: [
           // see https://github.com/Blocklevel/blue-next/issues/25
-          `'${config.project.title}' is running on http://${host.display}:${port}\n`
+          `Project ${chalk.bold.blue(config.project.title)} is running on http://${host.display}:${port}\n`,
+          `Your current ip address ${ip.address()}`
         ]
       }
     })
