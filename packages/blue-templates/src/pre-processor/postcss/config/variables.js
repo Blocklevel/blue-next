@@ -7,6 +7,7 @@ const colors = {
 
 const paths = {
   'page': utils.getComposeFile('layout/page.css'),
+  'grid': utils.getComposeFile('layout/grid.css'),
   'button': utils.getComposeFile('ui/button.css')
 }
 
