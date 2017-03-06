@@ -13,6 +13,7 @@ const exists = function () {
   try {
     return !!require(paths.appConfig)
   } catch (error) {
+    console.log(error)
     return false
   }
 }

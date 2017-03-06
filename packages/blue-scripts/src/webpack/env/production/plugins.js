@@ -1,8 +1,8 @@
 'use strict'
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
 const webpack = require('webpack')
+const CompressionPlugin = require('compression-webpack-plugin')
 const paths = require('../../../commons/paths')
 
 module.exports = [
@@ -43,6 +43,14 @@ module.exports = [
     }
   }),
 
+  new CompressionPlugin({
+    asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: /\.js$|\.html$/,
+    threshold: 10240,
+    minRatio: 0.8
+  }),
+
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     minChunks: function (module, count) {
@@ -53,14 +61,6 @@ module.exports = [
         module.resource.indexOf(paths.appNodeModules) === 0
       )
     }
-  }),
-
-  new CompressionPlugin({
-    asset: '[path].gz[query]',
-    algorithm: 'gzip',
-    test: /\.js$|\.html$/,
-    threshold: 10240,
-    minRatio: 0.8
   }),
 
   new ExtractTextPlugin({

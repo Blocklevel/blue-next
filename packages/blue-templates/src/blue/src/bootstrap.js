@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import Vue from 'vue'
 import VueI18nManager from 'vue-i18n-manager'
 import VueRouter from 'vue-router'
@@ -62,19 +63,5 @@ Vue.initI18nManager()
 /**
  * Creates and mounts the app
  */
-const mount = () => {
-  const app = new App({ store, router })
-  app.$mount('#app')
-}
-
-/**
- * Check if promises are available or not, then mount the application
- */
-if (!window.Promise) {
-  require.ensure([], () => {
-    require('es6-promise')
-    mount()
-  })
-} else {
-  mount()
-}
+const app = new App({ store, router })
+app.$mount('#app')

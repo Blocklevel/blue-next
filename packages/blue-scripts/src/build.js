@@ -16,7 +16,10 @@ module.exports = co.wrap(function * (options) {
   webpack(config.webpack, function (error, stats) {
     if (error) {
       spinner.fail()
-      return
+      console.log('')
+      console.log(chalk.red(error))
+      console.log('')
+      process.exit(1)
     }
 
     spinner.succeed()
