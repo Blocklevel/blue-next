@@ -5,6 +5,7 @@ const chalk = require('chalk')
 const fs = require('fs')
 const questions = require('./questions')
 const _ = require('lodash')
+const detectInstalled = require('detect-installed')
 
 /**
  * Get the credentials of the current git user
@@ -91,9 +92,21 @@ const getEvents = function (events) {
   })
 }
 
+/**
+ * Check whether yarn is available for commands
+ * @returns {Boolean}
+ */
+let _yarnAvailable
+const yarnAvailable = co.wrap(function * () {
+  if (_yarnAvailable != null) return _yarnAvailable
+  _yarnAvailable = yield detectInstalled('yarn')
+  return _yarnAvailable
+})
+
 module.exports = {
   getGitUser,
   confirmPrompt,
   renameFiles,
-  getEvents
+  getEvents,
+  yarnAvailable
 }

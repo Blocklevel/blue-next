@@ -6,6 +6,7 @@ const copy = require('graceful-copy')
 const execa = require('execa')
 const pathExists = require('path-exists')
 const utils = require('./commons/utils')
+const hasYarn = utils.yarnAvailable()
 const co = require('co')
 const ora = require('ora')
 const commonQuestions = require('./commons/questions')
@@ -44,8 +45,7 @@ module.exports = co.wrap(function * (options) {
 
   const data = Object.assign({
     name,
-    author: yield utils.getGitUser(),
-    dependencies: options.dependencies
+    author: yield utils.getGitUser()
   }, options)
 
   yield copy(blue, dest, { data })
@@ -53,16 +53,20 @@ module.exports = co.wrap(function * (options) {
 
   spinner.succeed()
 
-  spinner.text = 'Install dependencies'
+  spinner.text = 'Install dependencies with ' + (hasYarn ? 'yarn' : 'npm')
   spinner.start()
 
   process.chdir(dest)
-  yield execa.shell('npm install')
+  if (hasYarn) {
+    yield execa.shell('yarn')
+  } else {
+    yield execa.shell('npm install')
+  }
 
   spinner.succeed()
 
   console.log(chalk.bold('\n   Website!!!'))
   console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
-  console.log(chalk.italic(`     cd ${folderName} && npm run dev`))
+  console.log(chalk.italic(`     cd ${folderName} && ${(hasYarn ? 'yarn' : 'npm')} run dev`))
 })
