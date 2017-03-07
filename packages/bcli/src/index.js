@@ -6,12 +6,12 @@ const copy = require('graceful-copy')
 const execa = require('execa')
 const pathExists = require('path-exists')
 const utils = require('./commons/utils')
-const hasYarn = utils.yarnAvailable()
 const co = require('co')
 const ora = require('ora')
 const commonQuestions = require('./commons/questions')
 const blueTemplates = require('blue-templates')
 
+const isYarn = utils.isYarn()
 const spinner = ora()
 
 module.exports = co.wrap(function * (options) {
@@ -53,20 +53,17 @@ module.exports = co.wrap(function * (options) {
 
   spinner.succeed()
 
-  spinner.text = 'Install dependencies with ' + (hasYarn ? 'yarn' : 'npm')
+  spinner.text = 'Install dependencies'
   spinner.start()
 
   process.chdir(dest)
-  if (hasYarn) {
-    yield execa.shell('yarn')
-  } else {
-    yield execa.shell('npm install')
-  }
+
+  yield execa.shell(isYarn ? 'yarn' : 'npm install')
 
   spinner.succeed()
 
   console.log(chalk.bold('\n   Website!!!'))
   console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
-  console.log(chalk.italic(`     cd ${folderName} && ${(hasYarn ? 'yarn' : 'npm')} run dev`))
+  console.log(chalk.italic(`     cd ${folderName} && ${isYarn ? 'yarn dev' : 'npm run dev'}`))
 })
