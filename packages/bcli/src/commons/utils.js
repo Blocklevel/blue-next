@@ -6,6 +6,9 @@ const fs = require('fs')
 const questions = require('./questions')
 const _ = require('lodash')
 const detectInstalled = require('detect-installed')
+const fetch = require('node-fetch')
+const semver = require('semver')
+const bcliVersion = require('../../package.json').version
 
 /**
  * Get the credentials of the current git user
@@ -92,6 +95,13 @@ const getEvents = function (events) {
   })
 }
 
+const getBlueScriptsVersion = co.wrap(function * () {
+  const res = yield fetch('https://registry.npmjs.org/blue-scripts').then(res => res.json())
+  const bcliMajor = semver.major(bcliVersion)
+
+  return _.findLast(_.keys(res.versions), (version) => semver.satisfies(version, `${bcliMajor}.x`))
+})
+
 /**
  * Check whether yarn is available for commands
  * @returns {Boolean}
@@ -105,5 +115,6 @@ module.exports = {
   confirmPrompt,
   renameFiles,
   getEvents,
-  isYarn
+  isYarn,
+  getBlueScriptsVersion
 }
