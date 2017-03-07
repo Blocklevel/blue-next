@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Icon
+   ========================================================================== */
+
+/**
+ * This file contains all icons used across pages/components.
+ */
+
+/**
+ * Default icon styles
+ *
+ * Reset icon
+ */
+.icon {
+  composes: reset-bmp from $common;
+}

@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/**
+ * Fonts, sizes and text colors
+ *
+ * This file contains all possible font-families, font-styles, font-sizes,
+ * colors and text-transforms.
+ *
+ * Avoid composing these styles directly. Create a new heading or type in
+ * heading.css or type.css to use instead.
+*/
+
+
+/* Font families
+   ========================================================================== */
+.verdana { font-family: Verdana, sans-serif; }
+
+/* Font sizes
+   ========================================================================== */
+.medium { font-size: 1.8rem; }
+
+/* Transforms
+   ========================================================================== */
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.italic { text-transform: italic; }
+.bold { text-transform: bold; }
+
+/* Colors
+   ========================================================================== */
+.current-color { color: currentColor; }
+.black { color: $black; }
+.white { color: $white; }

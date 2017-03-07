@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Common
+   ========================================================================== */
+
+/**
+ * Common css snippets
+ *
+ * Useful css snippets for easier development. Put all your helpers and resets
+ * here.
+*/
+
+/**
+ * Reset Border Padding Margin
+ *
+ * Resets border, margin and padding
+ */
+.reset-bmp {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/**
+ * Reset list
+ *
+ * List items without the list item styles
+ */
+.reset-list {
+  composes: reset-bmp;
+  list-style: none;
+}
+
+/**
+ * Reset input
+ *
+ * Removes all browser specific input styles
+ */
+.reset-input {
+  display: inline-block;
+  border: 0;
+  padding: 0;
+  background: none;
+  -webkit-appearance: none;
+
+  &:focus { outline: 0; }
+
+  &::-moz-focus-inner,
+  &[type=reset]::-moz-focus-inner,
+  &[type=button]::-moz-focus-inner,
+  &[type=submit]::-moz-focus-inner,
+  &::-moz-focus-inner,
+  &[type=file] > [type=button]::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+/**
+ * Unstyled link
+ *
+ * A link that looks and acts like the text it is contained within
+ */
+.unstyled-link {
+  color: inherit;
+  text-decoration: inherit;
+  cursor: inherit;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}

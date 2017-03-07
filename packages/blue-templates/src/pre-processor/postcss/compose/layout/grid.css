@@ -1,5 +1,41 @@
+/* ==========================================================================
+   Grid
+   ========================================================================== */
+
+/**
+ * CSS Modules flex-box grid.
+ *
+ * Use this grid for layouting your pages. The following example results in:
+ *
+ * 1) A full width, one column grid. (All columns are 1/1).
+ * 2) At breakpoint $m it will have 3 even columns (All columns are 1/3).
+ *
+ * Example HTML:
+ *
+ * <div :class="$style.flexWrapper">
+ *   <div :class="$style.col">1/3</div>
+ *   <div :class="$style.col">1/3</div>
+ *   <div :class="$style.col">1/3</div>
+ * </div>
+ *
+ * Example CSS:
+ *
+ * .flex-wrapper {
+ *   composes: flex-grid from $grid;
+ * }
+ *
+ * .col {
+ *   composes: col-1-1 from $grid;
+ *   composes: col-m-1-3 from $grid;
+ * }
+*/
+
 /**
  * Flex grid
+ *
+ * A wrapper which makes all children listen to flex
+ *
+ * Always wrap your columns inside a flex-grid wrapper.
  */
 .flex-grid {
   display: flex;
@@ -8,12 +44,10 @@
   flex-wrap: wrap;
 }
 
-.vertical {
-  flex-direction: column;
-}
-
 /**
- * Flex cols
+ * Columns
+ *
+ * Define column widths.
  */
 .col-auto { flex: 1 0 auto; max-width: 100%; }
 .col-1-1 { flex: 1 0 100%; max-width: 100%; }
@@ -65,6 +99,8 @@
 
 /**
  * Push
+ *
+ * Push columns to the right based on col width.
  */
 .push-auto { margin-left: auto; }
 .push-1-1 { margin-left: 100%; }
@@ -115,33 +151,56 @@
 .push-11-12 { margin-left: 91.66%; }
 
 /**
- * Alignment items
+ * Align items
+ *
+ * Vertical alignment.
+ *
+ * These styles should only be composed on
+ * the flex-grid wrapper
  */
 .align-top { align-items: flex-start; }
 .align-middle { align-items: center; }
 .align-bottom { align-items: flex-end; }
 
+/* Horizontal alignment */
 .align-left { justify-content: flex-start; }
 .align-center { justify-content: center; }
 .align-right { justify-content: flex-end; }
 
 /**
  * Align self
+ *
+ * Col alignment exceptions
+ *
+ * These styles should only be composed on
+ * the col
  */
 .align-self-top { align-self: flex-start; }
 .align-self-middle { align-self: center; }
 .align-self-bottom { align-self: flex-end; }
 
 /**
- *  Distribution
+ * Distribution
+ *
+ * Fill empty space around or between cols
+ *
+ * These styles should only be composed on
+ * the flex-grid wrapper
  */
 .space-around { justify-content: space-around; }
 .space-between { justify-content: space-between; }
 
+/* ==========================================================================
+   Breakpoints
+   ========================================================================== */
+
 /**
- * Breakpoints
+ * Breakpoint: $xs
+ *
+ * These styles will be ignored on screens < $xs
  */
 @media ($xs) {
+  .col-xs-auto { flex: 1 0 auto; max-width: 100%; }
   .col-xs-1-1 { flex: 1 0 100%; max-width: 100%; }
   .col-xs-1-2 { flex: 1 0 50%; max-width: 50%; }
   .col-xs-1-3 { flex: 1 0 33.33%; max-width: 33.33%; }
@@ -189,6 +248,11 @@
   .col-xs-7-12 { flex: 1 0 58.33%; max-width: 58.33%; }
   .col-xs-11-12 { flex: 1 0 91.66%; max-width: 91.66%; }
 
+  /**
+   * Push
+   *
+   * Push columns to the right based on col width.
+   */
   .push-xs-auto { margin-left: auto; }
   .push-xs-1-1 { margin-left: 100%; }
   .push-xs-1-2 { margin-left: 50%; }
@@ -237,23 +301,54 @@
   .push-xs-7-12 { margin-left: 58.33%; }
   .push-xs-11-12 { margin-left: 91.66%; }
 
+  /**
+   * Align items
+   *
+   * Vertical alignment.
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .align-xs-top { align-items: flex-start; }
   .align-xs-middle { align-items: center; }
   .align-xs-bottom { align-items: flex-end; }
 
+  /* Horizontal alignment */
   .align-xs-left { justify-content: flex-start; }
   .align-xs-center { justify-content: center; }
   .align-xs-right { justify-content: flex-end; }
 
+  /**
+   * Align self
+   *
+   * Col alignment exceptions
+   *
+   * These styles should only be composed on
+   * the col
+   */
   .align-xs-self-top { align-self: flex-start; }
   .align-xs-self-middle { align-self: center; }
   .align-xs-self-bottom { align-self: flex-end; }
 
+  /**
+   * Distribution
+   *
+   * Fill empty space around or between cols
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .space-xs-around { justify-content: space-around; }
   .space-xs-between { justify-content: space-between; }
 }
 
+/**
+ * Breakpoint: $s
+ *
+ * These styles will be ignored on screens < $s
+ */
 @media ($s) {
+  .col-s-auto { flex: 1 0 auto; max-width: 100%; }
   .col-s-1-1 { flex: 1 0 100%; max-width: 100%; }
   .col-s-1-2 { flex: 1 0 50%; max-width: 50%; }
   .col-s-1-3 { flex: 1 0 33.33%; max-width: 33.33%; }
@@ -301,6 +396,11 @@
   .col-s-7-12 { flex: 1 0 58.33%; max-width: 58.33%; }
   .col-s-11-12 { flex: 1 0 91.66%; max-width: 91.66%; }
 
+  /**
+   * Push
+   *
+   * Push columns to the right based on col width.
+   */
   .push-s-auto { margin-left: auto; }
   .push-s-1-1 { margin-left: 100%; }
   .push-s-1-2 { margin-left: 50%; }
@@ -349,6 +449,14 @@
   .push-s-7-12 { margin-left: 58.33%; }
   .push-s-11-12 { margin-left: 91.66%; }
 
+  /**
+   * Align items
+   *
+   * Vertical alignment.
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .align-s-top { align-items: flex-start; }
   .align-s-middle { align-items: center; }
   .align-s-bottom { align-items: flex-end; }
@@ -357,15 +465,37 @@
   .align-s-center { justify-content: center; }
   .align-s-right { justify-content: flex-end; }
 
+  /**
+   * Align self
+   *
+   * Col alignment exceptions
+   *
+   * These styles should only be composed on
+   * the col
+   */
   .align-s-self-top { align-self: flex-start; }
   .align-s-self-middle { align-self: center; }
   .align-s-self-bottom { align-self: flex-end; }
 
+  /**
+   * Distribution
+   *
+   * Fill empty space around or between cols
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .space-s-around { justify-content: space-around; }
   .space-s-between { justify-content: space-between; }
 }
 
+/**
+ * Breakpoint: $m
+ *
+ * These styles will be ignored on screens < $m
+ */
 @media ($m) {
+  .col-m-auto { flex: 1 0 auto; max-width: 100%; }
   .col-m-1-1 { flex: 1 0 100%; max-width: 100%; }
   .col-m-1-2 { flex: 1 0 50%; max-width: 50%; }
   .col-m-1-3 { flex: 1 0 33.33%; max-width: 33.33%; }
@@ -413,6 +543,11 @@
   .col-m-7-12 { flex: 1 0 58.33%; max-width: 58.33%; }
   .col-m-11-12 { flex: 1 0 91.66%; max-width: 91.66%; }
 
+  /**
+   * Push
+   *
+   * Push columns to the right based on col width.
+   */
   .push-m-auto { margin-left: auto; }
   .push-m-1-1 { margin-left: 100%; }
   .push-m-1-2 { margin-left: 50%; }
@@ -461,6 +596,14 @@
   .push-m-7-12 { margin-left: 58.33%; }
   .push-m-11-12 { margin-left: 91.66%; }
 
+  /**
+   * Align items
+   *
+   * Vertical alignment.
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .align-m-top { align-items: flex-start; }
   .align-m-middle { align-items: center; }
   .align-m-bottom { align-items: flex-end; }
@@ -469,15 +612,37 @@
   .align-m-center { justify-content: center; }
   .align-m-right { justify-content: flex-end; }
 
+  /**
+   * Align self
+   *
+   * Col alignment exceptions
+   *
+   * These styles should only be composed on
+   * the col
+   */
   .align-m-self-top { align-self: flex-start; }
   .align-m-self-middle { align-self: center; }
   .align-m-self-bottom { align-self: flex-end; }
 
+  /**
+   * Distribution
+   *
+   * Fill empty space around or between cols
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .space-m-around { justify-content: space-around; }
   .space-m-between { justify-content: space-between; }
 }
 
+/**
+ * Breakpoint: $l
+ *
+ * These styles will be ignored on screens < $l
+ */
 @media ($l) {
+  .col-l-auto { flex: 1 0 auto; max-width: 100%; }
   .col-l-1-1 { flex: 1 0 100%; max-width: 100%; }
   .col-l-1-2 { flex: 1 0 50%; max-width: 50%; }
   .col-l-1-3 { flex: 1 0 33.33%; max-width: 33.33%; }
@@ -525,6 +690,11 @@
   .col-l-7-12 { flex: 1 0 58.33%; max-width: 58.33%; }
   .col-l-11-12 { flex: 1 0 91.66%; max-width: 91.66%; }
 
+  /**
+   * Push
+   *
+   * Push columns to the right based on col width.
+   */
   .push-l-auto { margin-left: auto; }
   .push-l-1-1 { margin-left: 100%; }
   .push-l-1-2 { margin-left: 50%; }
@@ -573,6 +743,14 @@
   .push-l-7-12 { margin-left: 58.33%; }
   .push-l-11-12 { margin-left: 91.66%; }
 
+  /**
+   * Align items
+   *
+   * Vertical alignment.
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .align-l-top { align-items: flex-start; }
   .align-l-middle { align-items: center; }
   .align-l-bottom { align-items: flex-end; }
@@ -581,15 +759,37 @@
   .align-l-center { justify-content: center; }
   .align-l-right { justify-content: flex-end; }
 
+  /**
+   * Align self
+   *
+   * Col alignment exceptions
+   *
+   * These styles should only be composed on
+   * the col
+   */
   .align-l-self-top { align-self: flex-start; }
   .align-l-self-middle { align-self: center; }
   .align-l-self-bottom { align-self: flex-end; }
 
+  /**
+   * Distribution
+   *
+   * Fill empty space around or between cols
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .space-l-around { justify-content: space-around; }
   .space-l-between { justify-content: space-between; }
 }
 
+/**
+ * Breakpoint: $xl
+ *
+ * These styles will be ignored on screens < $xl
+ */
 @media ($xl) {
+  .col-xl-auto { flex: 1 0 auto; max-width: 100%; }
   .col-xl-1-1 { flex: 1 0 100%; max-width: 100%; }
   .col-xl-1-2 { flex: 1 0 50%; max-width: 50%; }
   .col-xl-1-3 { flex: 1 0 33.33%; max-width: 33.33%; }
@@ -637,6 +837,11 @@
   .col-xl-7-12 { flex: 1 0 58.33%; max-width: 58.33%; }
   .col-xl-11-12 { flex: 1 0 91.66%; max-width: 91.66%; }
 
+  /**
+   * Push
+   *
+   * Push columns to the right based on col width.
+   */
   .push-xl-auto { margin-left: auto; }
   .push-xl-1-1 { margin-left: 100%; }
   .push-xl-1-2 { margin-left: 50%; }
@@ -685,6 +890,14 @@
   .push-xl-7-12 { margin-left: 58.33%; }
   .push-xl-11-12 { margin-left: 91.66%; }
 
+  /**
+   * Align items
+   *
+   * Vertical alignment.
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .align-xl-top { align-items: flex-start; }
   .align-xl-middle { align-items: center; }
   .align-xl-bottom { align-items: flex-end; }
@@ -693,10 +906,26 @@
   .align-xl-center { justify-content: center; }
   .align-xl-right { justify-content: flex-end; }
 
+  /**
+   * Align self
+   *
+   * Col alignment exceptions
+   *
+   * These styles should only be composed on
+   * the col
+   */
   .align-xl-self-top { align-self: flex-start; }
   .align-xl-self-middle { align-self: center; }
   .align-xl-self-bottom { align-self: flex-end; }
 
+  /**
+   * Distribution
+   *
+   * Fill empty space around or between cols
+   *
+   * These styles should only be composed on
+   * the flex-grid wrapper
+   */
   .space-xl-around { justify-content: space-around; }
   .space-xl-between { justify-content: space-between; }
 }

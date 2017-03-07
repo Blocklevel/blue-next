@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Heading
+   ========================================================================== */
+
+/**
+ * Titles and subtitles.
+ *
+ * This file contains all titles and subtitles used across pages/components. Combine
+ * composes from typography.css to create headings.
+ */
+
+/**
+ * Default heading styles
+ *
+ * Every heading composes this style. This could be useful for debugging
+ * purposes or general heading styles.
+ */
+.heading {
+
+}
+
+/**
+ * Heading 1
+ *
+ * Short description of this heading
+ *
+ * 1. When to use
+ * 2. Where to use
+ */
+.heading-1 {
+  composes: heading;
+  composes: verdana medium from $typography;
+}
