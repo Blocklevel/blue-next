@@ -68,5 +68,5 @@ module.exports = co.wrap(function * (options) {
   console.log(chalk.bold('\n   Website!!!'))
   console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
-  console.log(chalk.italic(`     cd ${folderName} && npm run dev`))
+  console.log(chalk.italic(`     cd ${folderName} && ${(hasYarn ? 'yarn' : 'npm')} run dev`))
 })
