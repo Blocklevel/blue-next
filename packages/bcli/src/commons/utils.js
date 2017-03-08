@@ -95,11 +95,19 @@ const getEvents = function (events) {
   })
 }
 
+/**
+ * Get latest available blue-script package version
+ * see https://github.com/Blocklevel/blue-next/issues/28
+ * @return {String} version
+ */
 const getBlueScriptsVersion = co.wrap(function * () {
-  const res = yield fetch('https://registry.npmjs.org/blue-scripts').then(res => res.json())
+  const response = yield fetch('https://registry.npmjs.org/blue-scripts')
+  const blueScripts = yield response.json()
   const bcliMajor = semver.major(bcliVersion)
 
-  return _.findLast(_.keys(res.versions), (version) => semver.satisfies(version, `${bcliMajor}.x`))
+  return _.findLast(_.keys(blueScripts.versions), version => {
+    return semver.satisfies(version, `${bcliMajor}.x`)
+  })
 })
 
 /**
