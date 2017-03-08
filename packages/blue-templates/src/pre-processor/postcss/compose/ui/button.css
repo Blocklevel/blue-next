@@ -1,8 +1,25 @@
+/* ==========================================================================
+   Button
+   ========================================================================== */
+
 /**
- * Default button styles. Compose this to create a new button.
+ * This file contains all buttons used across pages/components.
+ */
+
+/**
+ * Default button styles
+ *
+ * Reset button
  */
 .button {
-  outline: none;
-  background-color: transparent;
-  border: none;
+  composes: reset-input from $common;
+}
+
+/**
+ * Primary button
+ *
+ * Main Call to action
+ */
+.primary {
+  composes: button;
 }

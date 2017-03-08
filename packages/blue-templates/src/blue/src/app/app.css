@@ -1,0 +1,28 @@
+:root {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/**
+ * Install font faces
+ */
+/*@each $font in ($(fonts)) {
+  @font-face {
+    font-family: $font;
+    font-path: 'font/$(font)';
+  }
+}*/

@@ -1,4 +1,18 @@
+/* ==========================================================================
+   Page
+   ========================================================================== */
+
 /**
+ * General page styles
+ *
+ * List your general page styles here. Think of reusable wrappers, columns or
+ * snippets used accross multiple pages. If this file gets too big you might
+ * want to consider creating some layout components.
+*/
+
+/**
+ * Fullscreen
+ *
  * Fills the whole viewport. When content is bigger the element
  * automatically increases in size as well.
  */
@@ -8,30 +22,13 @@
 }
 
 /**
- * Fills the whole viewport. When content is bigger the element
- * automatically increases in size as well. Content inside this
- * element will be vertically centered.
+ * Wrapper
+ *
+ * Wraps and centers content based on $site-width. If viewport if smaller
+ * than $site-width the wrapper will be 100%.
  */
-.fullscreen-centered {
-  composes: fullscreen;
-  display: flex;
-  align-items: center;
-}
-
-/**
- * Fills the whole viewport on a fixed position.
- */
-.fullscreen-fixed {
-  position: fixed 0 0 0 0;
-  size: 100%;
-}
-
-/**
- * Centers the element absolutetly in its parent
- */
-.absolute-centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.wrapper {
+  width: 100%;
+  max-width: $site-width;
+  margin: 0 auto;
 }

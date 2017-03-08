@@ -1,14 +1,20 @@
 const utils = require('./utils')
 
 const colors = {
-  'black': '#000000',
-  'red': '#ff0000'
+  'black': '#000',
+  'white': '#fff'
 }
 
 const paths = {
+  'common': utils.getComposeFile('common.css'),
   'page': utils.getComposeFile('layout/page.css'),
   'grid': utils.getComposeFile('layout/grid.css'),
-  'button': utils.getComposeFile('ui/button.css')
+  'button': utils.getComposeFile('ui/button.css'),
+  'list': utils.getComposeFile('ui/list.css'),
+  'icon': utils.getComposeFile('ui/icon.css'),
+  'typography': utils.getComposeFile('type/typography.css'),
+  'heading': utils.getComposeFile('type/heading.css'),
+  'type': utils.getComposeFile('type/type.css')
 }
 
 const sizes = {

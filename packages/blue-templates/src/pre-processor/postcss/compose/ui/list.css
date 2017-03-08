@@ -1,0 +1,16 @@
+/* ==========================================================================
+   List
+   ========================================================================== */
+
+/**
+ * This file contains all lists used across pages/components.
+ */
+
+/**
+ * Default list styles
+ *
+ * Reset list
+ */
+.list {
+  composes: reset-list from $common;
+}
