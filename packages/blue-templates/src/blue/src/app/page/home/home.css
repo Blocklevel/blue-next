@@ -1,4 +1,4 @@
-@import "https://fonts.googleapis.com/css?family=Pacifico";
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 .page {
   width: 100vw;
@@ -6,14 +6,42 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: #203880;
+  background: linear-gradient(40deg, #6428E7 0%, #2882F0 100%);
+}
+
+.links {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+}
+
+.link {
+  font-family: 'PT Sans', sans-serif;
+  color: white;
+  text-decoration: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-right: 24px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .content {
-  composes: absolute-centered from $page;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .title {
   font-family: 'Pacifico', cursive;
   color: white;
+  font-size: 3rem;
+}
+
+.logo {
+  fill: #fff;
+  fill-rule: evenodd;
 }
