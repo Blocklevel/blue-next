@@ -45,7 +45,8 @@ module.exports = co.wrap(function * (options) {
 
   const data = Object.assign({
     name,
-    author: yield utils.getGitUser()
+    author: yield utils.getGitUser(),
+    blueScriptsVersion: yield utils.getBlueScriptsVersion()
   }, options)
 
   yield copy(blue, dest, { data })
