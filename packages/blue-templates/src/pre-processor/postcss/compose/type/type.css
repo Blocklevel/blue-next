@@ -8,26 +8,14 @@
  * This file contains all type styles used across pages/components. Combine
  * composes from typography.css to create type styles.
  */
-
-/**
- * Default type styles
- *
- * Every type composes this style. This could be useful for debugging
- * purposes or general type styles.
- */
-.type {
-
+.type-1 {
+  composes: pt-sans large from $typography;
 }
 
-/**
- * Type 1
- *
- * Short description of this type
- *
- * 1. When to use
- * 2. Where to use
- */
-.type-1 {
-  composes: type;
-  composes: verdana medium from $typography;
+.type-2 {
+  composes: pt-sans medium from $typography;
+}
+
+.type-3 {
+  composes: pt-sans small from $typography;
 }

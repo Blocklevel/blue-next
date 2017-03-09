@@ -1,6 +1,7 @@
 /* ==========================================================================
    Typography
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
 /**
  * Fonts, sizes and text colors
@@ -12,14 +13,47 @@
  * heading.css or type.css to use instead.
 */
 
-
 /* Font families
    ========================================================================== */
-.verdana { font-family: Verdana, sans-serif; }
+.pt-sans { font-family: 'PT Sans', sans-serif; }
 
 /* Font sizes
    ========================================================================== */
-.medium { font-size: 1.8rem; }
+
+/* Heading sizes */
+.h-xsmall { font-size: 1.2rem; }
+.h-small { font-size: 1.4rem; }
+.h-medium { font-size: 1.8rem; }
+.h-large { font-size: 2.4rem; }
+.h-xlarge { font-size: 3rem; }
+.h-xxlarge { font-size: 3.6rem; }
+
+/* Type sizes */
+.small { font-size: 1.2rem; line-height: 1.428em; }
+.medium { font-size: 1.4rem; line-height: 1.428em; }
+.large { font-size: 1.6rem; line-height: 1.428em; }
+
+/**
+ * Small
+ *
+ * Create lighter, secondary text in any heading/type with a
+ * generic <small> tag.
+ */
+.h-xsmall, .h-small, .h-medium, .h-large, .h-xlarge, .h-xxlarge,
+.small, .medium, .large {
+  small {
+    font-size: 0.65em;
+  }
+}
+
+/**
+ * Font size breakpoints
+ *
+ * Handle all device specific font sizes here
+*/
+@media ($m) {
+  /*.h-xxlarge { font-size: 5rem; }*/
+}
 
 /* Transforms
    ========================================================================== */
