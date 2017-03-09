@@ -1,6 +1,17 @@
 module.exports = {
   port: 8080,
   host: '0.0.0.0',
+  compress: true,
+  quiet: true,
+  hot: true,
+  inline: false,
+  clientLogLevel: 'info',
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
+  },
+  historyApiFallback: true,
+  publicPath: '/',
   stats: {
     hash: false,
     version: false,
@@ -18,9 +29,5 @@ module.exports = {
     publicPath: false,
     colors: true,
     module: false
-  },
-  quiet: true,
-  hot: false,
-  historyApiFallback: true,
-  publicPath: '/'
+  }
 }

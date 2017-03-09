@@ -29,20 +29,21 @@ module.exports = co.wrap(function * (options) {
           `Your current ip address ${ip.address()}`
         ]
       }
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   )
 
   // Add webpack-dev-server to the webpack entry point.
   // webpack-dev-server needs to point to the cli node_modules
   // folder or won't be recognized
-  const devServerUrl = `${paths.appNodeModules}/webpack-dev-server/client?${serverUrl}`
-  webpackConfig.entry['devServer'] = devServerUrl
+  webpackConfig.entry.app.unshift(
+    `${paths.appNodeModules}/webpack-dev-server/client?${serverUrl}`,
+    `${paths.appNodeModules}/webpack/hot/dev-server`
+  )
 
   // Start the server!
-  const server = new WebpackDevServer(
-    webpack(webpackConfig),
-    webpackConfig.devServer
-  )
+  const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
 
   server.listen(port, host, function () {
     console.log(`\n   Starting the server...`)

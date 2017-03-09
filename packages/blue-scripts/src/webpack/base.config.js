@@ -14,7 +14,7 @@ process.noDeprecation = true
 module.exports = {
   context: paths.appDirectory,
   entry: {
-    app: paths.appEntry
+    app: [paths.appEntry]
   },
   output: {
     path: `${paths.appBuild}`,
