@@ -7,27 +7,13 @@
  *
  * This file contains all titles and subtitles used across pages/components. Combine
  * composes from typography.css to create headings.
- */
-
-/**
- * Default heading styles
  *
- * Every heading composes this style. This could be useful for debugging
- * purposes or general heading styles.
+ * Try to limit the max amount of headings to 6 (h1-h6). If you need more talk to
+ * the designer to see if some headings can be merged.
  */
-.heading {
-
-}
-
-/**
- * Heading 1
- *
- * Short description of this heading
- *
- * 1. When to use
- * 2. Where to use
- */
-.heading-1 {
-  composes: heading;
-  composes: verdana medium from $typography;
-}
+.heading-1 { composes: pt-sans h-xxlarge from $typography; }
+.heading-2 { composes: pt-sans h-xlarge from $typography; }
+.heading-3 { composes: pt-sans h-large from $typography; }
+.heading-4 { composes: pt-sans h-medium from $typography; }
+.heading-5 { composes: pt-sans h-small from $typography; }
+.heading-6 { composes: pt-sans h-xsmall from $typography; }

@@ -1,0 +1,128 @@
+/* ==========================================================================
+   Visibility
+   ========================================================================== */
+
+/**
+ * This file contains visibility classes. Use these to show/hide content based
+ * on viewport width.
+ *
+ * There are 2 types of visible classes:
+ *
+ * 1) .${size}-iso-${type}
+ * This will only show on the specified (isolated) ${size}
+ *
+ * 2) .${size}-${type}
+ * This will show on the specified ${size} and above
+ */
+
+ /* Block (1)
+    ========================================================================== */
+.xsmall-iso-block {
+  display: block;
+  @media ($s) { display: none; }
+}
+
+.small-iso-block {
+  display: none;
+  @media ($s) { display: block; }
+  @media ($m) { display: none; }
+}
+
+.medium-iso-block {
+  display: none;
+  @media ($m) { display: block; }
+  @media ($l) { display: none; }
+}
+
+.large-iso-block {
+  display: none;
+  @media ($l) { display: block; }
+  @media ($xl) { display: none; }
+}
+
+.xlarge-iso-block {
+  display: none;
+  @media ($xl) { display: block; }
+}
+
+/* Inline block
+   ========================================================================== */
+.xsmall-iso-inline {
+ display: inline-block;
+ @media ($s) { display: none; }
+}
+
+.small-iso-inline {
+ display: none;
+ @media ($s) { display: inline-block; }
+ @media ($m) { display: none; }
+}
+
+.medium-iso-inline {
+ display: none;
+ @media ($m) { display: inline-block; }
+ @media ($l) { display: none; }
+}
+
+.large-iso-inline {
+ display: none;
+ @media ($l) { display: inline-block; }
+ @media ($xl) { display: none; }
+}
+
+.xlarge-iso-inline {
+ display: none;
+ @media ($xl) { display: inline-block; }
+}
+
+/* Block (2)
+   ========================================================================== */
+.xsmall-block {
+  display: block;
+}
+
+.small-block {
+  display: none;
+  @media ($s) { display: block; }
+}
+
+.medium-block {
+  display: none;
+  @media ($m) { display: block; }
+}
+
+.large-block {
+  display: none;
+  @media ($l) { display: block; }
+}
+
+.xlarge-block {
+  display: none;
+  @media ($xl) { display: block; }
+}
+
+/* Inline block (2)
+   ========================================================================== */
+.xsmall-inline {
+  display: inline-block;
+}
+
+.small-inline {
+  display: none;
+  @media ($s) { display: inline-block; }
+}
+
+.medium-inline {
+  display: none;
+  @media ($m) { display: inline-block; }
+}
+
+.large-inline {
+  display: none;
+  @media ($l) { display: inline-block; }
+}
+
+.xlarge-inline {
+  display: none;
+  @media ($xl) { display: inline-block; }
+}

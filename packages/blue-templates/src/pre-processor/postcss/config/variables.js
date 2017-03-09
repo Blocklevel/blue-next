@@ -9,6 +9,7 @@ const paths = {
   'common': utils.getComposeFile('common.css'),
   'page': utils.getComposeFile('layout/page.css'),
   'grid': utils.getComposeFile('layout/grid.css'),
+  'visibility': utils.getComposeFile('layout/visibility.css'),
   'button': utils.getComposeFile('ui/button.css'),
   'list': utils.getComposeFile('ui/list.css'),
   'icon': utils.getComposeFile('ui/icon.css'),

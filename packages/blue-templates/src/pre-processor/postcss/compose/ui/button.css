@@ -18,8 +18,17 @@
 /**
  * Primary button
  *
- * Main Call to action
+ * Default button styles. This button comes with 3 sizes.
+ * Default, small and large. Based on font-size
  */
-.primary {
+.primary-base {
   composes: button;
+  padding: 1em;
+  background: #333;
+  border-radius: 10px;
+  color: #fff;
 }
+
+.primary { composes: primary-base; composes: type2 from $type; }
+.primary-small { composes: primary-base; composes: type3 from $type; }
+.primary-large { composes: primary-base; composes: type1 from $type; }

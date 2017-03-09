@@ -1,21 +1,15 @@
-const mobileFirst = true
+const mediaQueries = {
+  /* Small devices (tablets, 768px and up) */
+  's': 'min-width: 769px',
 
-let mediaQueries = {
-  'xs': 'max-width: 480px',
-  's': 'max-width: 768px',
-  'm': 'max-width: 1024px',
-  'l': 'min-width: 1025px',
-  'xl': 'min-width: 1480px'
-}
+  /* Medium devices (desktops, 992px and up) */
+  'm': 'min-width: 992px',
 
-if (mobileFirst) {
-  mediaQueries = {
-    'xs': 'min-width: 469px',
-    's': 'min-width: 769px',
-    'm': 'min-width: 1025px',
-    'l': 'min-width: 1201px',
-    'xl': 'min-width: 1440px'
-  }
+  /* Large devices (large desktops, 1200px and up) */
+  'l': 'min-width: 1200px',
+
+  /* Extra Large devices (x-large desktops (imac), 1440px and up) */
+  'xl': 'min-width: 1440px'
 }
 
 module.exports = mediaQueries
