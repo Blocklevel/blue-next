@@ -819,9 +819,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blue-templates@^0.13.7:
-  version "0.13.7"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-0.13.7.tgz#e647eab4e8c7b591d724a7b170bde56e3b45adbb"
+blue-templates@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-0.16.1.tgz#19f643f35b201e6b6ba0e1e8c99a1879dbfeb44d"
 
 bluebird@^3.0.5, bluebird@^3.1.1, bluebird@^3.4.7:
   version "3.4.7"
