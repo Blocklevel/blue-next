@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin')
 const paths = require('../../../commons/paths')
+const WebpackManifestPlugin = require('webpack-manifest-plugin')
 
 module.exports = [
   new webpack.DefinePlugin({
@@ -70,5 +71,7 @@ module.exports = [
   }),
 
   // optimize module ids by occurrence count
-  new webpack.optimize.OccurrenceOrderPlugin()
+  new webpack.optimize.OccurrenceOrderPlugin(),
+
+  new WebpackManifestPlugin()
 ]
