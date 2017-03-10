@@ -35,10 +35,11 @@
   transform: translate(-50%, -50%);
 }
 
-.title {
-  font-family: 'Pacifico', cursive;
+.version {
+  font-family: 'PT Sans', sans-serif;
   color: white;
-  font-size: 3rem;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .logo {
