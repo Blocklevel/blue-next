@@ -3,12 +3,7 @@ module.exports = {
   loader: 'babel-loader',
   exclude: /node_modules|build/,
   options: {
-    presets: [
-      require.resolve('babel-preset-es2015'),
-      require.resolve('babel-preset-stage-2')
-    ],
-    plugins: [
-      require.resolve('babel-plugin-transform-regenerator')
-    ]
+    presets: ['es2015', 'stage-2'],
+    plugins: ['transform-regenerator']
   }
 }
