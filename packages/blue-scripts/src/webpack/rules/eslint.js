@@ -8,6 +8,6 @@ module.exports = {
     paths.appSrc
   ],
   options: {
-    configFile: require.resolve('eslint-config-blocklevel')
+    configFile: 'eslint-config-blocklevel'
   }
 }
