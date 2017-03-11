@@ -1,17 +1,7 @@
 <p align="center">
   <img  src="http://i.imgur.com/QmJrU0A.png" width="150" />
-  <br> <br>
-  <a href="https://www.npmjs.com/package/bcli">
-    <img src="https://img.shields.io/npm/v/bcli.svg" alt="npm version">
-  </a>
-  <a href="https://www.npmjs.com/package/bcli">
-    <img src="https://img.shields.io/npm/dt/bcli.svg">
-  </a>
 </p>
 
-# blue-next
-
-Create Blue project with no configuration
 
 ## Installation
 
