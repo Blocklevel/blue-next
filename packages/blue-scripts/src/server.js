@@ -31,7 +31,8 @@ module.exports = co.wrap(function * (options) {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin()
   )
 
   // Add webpack-dev-server to the webpack entry point.
