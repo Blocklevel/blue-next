@@ -663,6 +663,14 @@ babel-plugin-transform-strict-mode@^6.22.0:
     babel-runtime "^6.22.0"
     babel-types "^6.22.0"
 
+babel-polyfill@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
+  dependencies:
+    babel-runtime "^6.22.0"
+    core-js "^2.4.0"
+    regenerator-runtime "^0.10.0"
+
 babel-preset-es2015@^6.18.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.22.0.tgz#af5a98ecb35eb8af764ad8a5a05eb36dc4386835"
@@ -807,9 +815,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blue-templates@^0.18.6:
-  version "0.18.6"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-0.18.6.tgz#c742b747984540735dd7e6764b51fc123bb0bd8f"
+blue-templates@^0.18.8:
+  version "0.18.8"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-0.18.8.tgz#557380b2adaa1c0e7a7450250600f84b1a587142"
 
 bluebird@^2.10.2:
   version "2.11.0"
@@ -1267,7 +1275,7 @@ copy-webpack-plugin@^4.0.1:
     minimatch "^3.0.0"
     node-dir "^0.1.10"
 
-core-js@^2.4.0, core-js@^2.4.1:
+core-js@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
 
