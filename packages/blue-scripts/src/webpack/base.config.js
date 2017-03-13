@@ -3,6 +3,7 @@ const paths = require('../commons/paths')
 const path = require('path')
 const utils = require('../commons/utils')
 const rulesFolder = path.resolve(__dirname, './rules/')
+const webpack = require('webpack')
 
 /**
  * Flag that removes the issue on webpack/utils-loader
@@ -23,7 +24,7 @@ module.exports = {
     filename: `${process.env.VERSION_STRING}/[name].js`
   },
   resolve: {
-    extensions: ['.js', '.vue', '.css', '.scss'],
+    extensions: ['.js', '.vue', '.css'],
     alias: {
       component: `${paths.appRoot}/component`,
       page: `${paths.appRoot}/page`,
@@ -46,5 +47,13 @@ module.exports = {
   module: {
     rules: utils.requireFromFolder(rulesFolder)
   },
-  plugins: []
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        eslint: {
+          formatter: require('eslint-formatter-pretty')
+        }
+      }
+    })
+  ]
 }
