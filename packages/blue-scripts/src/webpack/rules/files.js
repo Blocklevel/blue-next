@@ -3,6 +3,6 @@ module.exports = {
   loader: 'file-loader',
   options: {
     limit: 1,
-    name: 'static/[name].[ext]'
+    name: `${process.env.VERSION_STRING}/asset/[name].[ext]`
   }
 }

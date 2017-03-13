@@ -19,8 +19,8 @@ module.exports = {
   output: {
     path: `${paths.appBuild}`,
     publicPath: '/',
-    chunkFilename: '[hash:8]/chunks/[chunkhash:8].js',
-    filename: '[hash:8]/[name].js'
+    chunkFilename: `${process.env.VERSION_STRING}/chunks/[chunkhash:8].js`,
+    filename: `${process.env.VERSION_STRING}/[name].js`
   },
   resolve: {
     extensions: ['.js', '.vue', '.css', '.scss'],

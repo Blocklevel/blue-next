@@ -5,6 +5,7 @@ const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin')
 const paths = require('../../../commons/paths')
 const WebpackManifestPlugin = require('webpack-manifest-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = [
   new webpack.DefinePlugin({
@@ -65,13 +66,19 @@ module.exports = [
   }),
 
   new ExtractTextPlugin({
-    filename: '[hash:8]/[name].css',
+    filename: `${process.env.VERSION_STRING}/[name].css`,
     ignoreOrder: true,
     allChunks: true
   }),
 
-  // optimize module ids by occurrence count
   new webpack.optimize.OccurrenceOrderPlugin(),
 
-  new WebpackManifestPlugin()
+  new WebpackManifestPlugin(),
+
+  new CopyWebpackPlugin([
+    {
+      from: './static',
+      to: './static'
+    }
+  ])
 ]
