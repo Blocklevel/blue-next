@@ -29,18 +29,13 @@ module.exports = co.wrap(function * (options) {
           `Your current ip address ${ip.address()}`
         ]
       }
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.NamedModulesPlugin()
+    })
   )
 
-  // Add webpack-dev-server to the webpack entry point.
-  // webpack-dev-server needs to point to the cli node_modules
-  // folder or won't be recognized
+  // Add webpack-dev-server and webpack HMR to the webpack entry point.
   webpackConfig.entry.app.unshift(
-    `${paths.appNodeModules}/webpack-dev-server/client?${serverUrl}`,
-    `${paths.appNodeModules}/webpack/hot/dev-server`
+    `webpack-dev-server/client?${serverUrl}`,
+    'webpack/hot/dev-server'
   )
 
   // Start the server!

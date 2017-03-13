@@ -14,5 +14,11 @@ module.exports = [
     filename: 'index.html',
     template: 'index.html',
     inject: true
-  })
+  }),
+
+  new webpack.HotModuleReplacementPlugin(),
+
+  new webpack.NoEmitOnErrorsPlugin(),
+  
+  new webpack.NamedModulesPlugin()
 ]
