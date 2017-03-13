@@ -43,8 +43,33 @@ const requireFromFolder = function (folder) {
   })
 }
 
+/**
+ * HMR name replacer
+ * The class removes the attached loader string and leaves only the actual file path
+ * starting from Blue src folder
+ * see https://github.com/webpack/webpack/issues/4452
+ */
+class HMRModuleName {
+  apply(compiler) {
+    compiler.plugin("compilation", (compilation) => {
+      compilation.plugin("before-module-ids", (modules) => {
+        modules.forEach((module) => {
+          if(module.id === null && module.libIdent) {
+            const name = module.libIdent({
+              context: compiler.options.context
+            })
+
+            module.id = name.replace(/^\.\/.*!(.+.js)/i, '$1')
+          }
+        })
+      })
+    })
+  }
+}
+
 module.exports = {
   requireFromFolder,
   isWindows,
-  getHost
+  getHost,
+  NamedModulesPlugin
 }
