@@ -1,12 +1,10 @@
-const postcss = require('./webpack/style/postcss')
-
 /**
  * Get PostCSS config
  * @return {Object}
  */
 const getPostCSSConfig = function () {
   return {
-    plugins: postcss.postcss
+    plugins: require('./webpack/style/postcss').postcss
   }
 }
 
