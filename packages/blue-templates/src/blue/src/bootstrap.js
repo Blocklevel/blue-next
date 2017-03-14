@@ -39,7 +39,7 @@ sync(store, router)
 /**
  * Internationalization and localization
  */
-const context = require.context('../static/lang', true, /\.json$/)
+const context = require.context('./asset/lang', true, /\.json$/)
 let translations = {}
 
 context.keys().forEach(language => {
