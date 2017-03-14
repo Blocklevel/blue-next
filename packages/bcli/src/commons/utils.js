@@ -104,16 +104,22 @@ const getBlueScriptsVersion = co.wrap(function * () {
   const response = yield fetch('https://registry.npmjs.org/blue-scripts')
   const blueScripts = yield response.json()
   const bcliMajor = semver.major(bcliVersion)
-
   const isPrerelease = semver.prerelease(bcliVersion)
+  const versions = _.keys(blueScripts.versions)
 
-  return _.findLast(_.keys(blueScripts.versions), version => {
+  const version = _.findLast(versions, version => {
     if (isPrerelease) {
       return semver.inc(version, 'prerelease', isPrerelease[0])
     }
 
     return semver.satisfies(version, `${bcliMajor}.x`)
   })
+
+  if (!version) {
+    return _.last(versions)
+  }
+
+  return version
 })
 
 /**
