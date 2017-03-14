@@ -56,15 +56,7 @@ Vue.use(VueI18nManager, {
   router,
   config: {
     persistent: false,
-    translations,
-    languages: [
-      {
-        name: 'English',
-        code: 'en_GB',
-        urlPrefix: 'en',
-        translationKey: 'en'
-      }
-    ]
+    translations
   }
 })
 
