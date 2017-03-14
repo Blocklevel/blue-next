@@ -10,6 +10,7 @@ const co = require('co')
 const ora = require('ora')
 const commonQuestions = require('./commons/questions')
 const blueTemplates = require('blue-templates')
+const fs = require('fs')
 
 const isYarn = utils.isYarn()
 const spinner = ora()
@@ -51,6 +52,14 @@ module.exports = co.wrap(function * (options) {
 
   yield copy(blue, dest, { data })
   yield copy(cssPreprocessor, `${dest}/src/asset/style`, data)
+
+  // see https://github.com/Blocklevel/blue-next/issues/41
+  fs.rename(`${dest}/__.eslintrc.js`, `${dest}/.eslintrc.js`, function (error) {
+    if (error) {
+      spinner.fail()
+      throw error
+    }
+  })
 
   spinner.succeed()
 
