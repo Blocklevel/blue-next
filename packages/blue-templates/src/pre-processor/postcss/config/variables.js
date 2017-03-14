@@ -1,4 +1,5 @@
 const utils = require('./utils')
+const fontList = require('./font')
 
 const colors = {
   'black': '#000',
@@ -22,6 +23,10 @@ const sizes = {
   'site-width': '960px'
 }
 
-const mediaQueries = require('./mediaQueries')
+const fonts = {
+  fonts: fontList
+}
 
-module.exports = Object.assign({}, colors, paths, sizes, mediaQueries)
+const mediaQueries = require('./media-queries')
+
+module.exports = Object.assign({}, colors, paths, sizes, mediaQueries, fonts)

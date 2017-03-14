@@ -20,11 +20,11 @@ html {
 }
 
 /**
- * Install font faces
+ * Uncomment this snippet to install all fonts in the /asset/font folder
  */
 /*@each $font in ($(fonts)) {
   @font-face {
     font-family: $font;
-    font-path: 'font/$(font)';
+    font-path: '../asset/font/$(font)';
   }
 }*/
