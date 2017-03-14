@@ -105,7 +105,13 @@ const getBlueScriptsVersion = co.wrap(function * () {
   const blueScripts = yield response.json()
   const bcliMajor = semver.major(bcliVersion)
 
+  const isPrerelease = semver.prerelease(bcliVersion)
+
   return _.findLast(_.keys(blueScripts.versions), version => {
+    if (isPrerelease) {
+      return semver.inc(version, 'prerelease', isPrerelease[0])
+    }
+
     return semver.satisfies(version, `${bcliMajor}.x`)
   })
 })
