@@ -39,7 +39,7 @@ module.exports = co.wrap(function * (options) {
 
     console.log('')
   }
-  console.log(yield utils.getBlueScriptsVersion())
+
   const blue = blueTemplates.getBlue()
   const cssPreprocessor = blueTemplates.getPreProcessor('postcss')
 
