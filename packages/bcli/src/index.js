@@ -54,11 +54,15 @@ module.exports = co.wrap(function * (options) {
   yield copy(cssPreprocessor, `${dest}/src/asset/style`, data)
 
   // see https://github.com/Blocklevel/blue-next/issues/41
-  fs.rename(`${dest}/__.eslintrc.js`, `${dest}/.eslintrc.js`, function (error) {
-    if (error) {
-      spinner.fail()
-      throw error
-    }
+  // see https://github.com/Blocklevel/blue-next/issues/44
+  const filesToRename = ['__.eslintrc.js', '__.gitignore']
+  filesToRename.forEach(file => {
+    fs.rename(`${dest}/${file}`, `${dest}/${file.replace('__', '')}`, function (error) {
+      if (error) {
+        spinner.fail()
+        throw error
+      }
+    })
   })
 
   spinner.succeed()
