@@ -126,6 +126,7 @@ const isYarn = co.wrap(function * () {
 
 module.exports = {
   getGitUser,
+  renameFiles,
   renameFilesFromDir,
   getEvents,
   isYarn,
