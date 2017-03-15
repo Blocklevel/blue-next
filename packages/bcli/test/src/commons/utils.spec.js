@@ -7,8 +7,6 @@ const mock = require('mock-fs')
 
 chai.use(require('chai-fs'))
 
-const tmp = './tmp'
-
 describe('utils.js', function () {
   describe('getGitUser', function () {
     it('should return a github user with name and email', function () {
