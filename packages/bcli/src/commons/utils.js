@@ -34,25 +34,32 @@ const getGitUser = co.wrap(function * () {
   return { name, email }
 })
 
+const renameFiles = function (dir, files, newName) {
+  if (!newName) {
+    return
+  }
+
+  files.forEach(file => {
+    const extention = file.split('.')[1]
+    const origin = `${dir}/${file}`
+    const dest = `${dir}/${newName}.${extention}`
+
+    fs.rename(origin, dest, renameError => {
+      if (renameError) {
+        throw renameError
+      }
+    })
+  })
+}
+
 /**
  * Rename all files in a folder to a single filename
  * @param  {String} destination
  * @param  {String} filename
  */
 const renameFilesFromDir = function (dir, newName) {
-  fs.readdir(dir, (error, files) => {
-    files.forEach(file => {
-      const extention = file.split('.')[1]
-      const origin = `${dir}/${file}`
-      const dest = `${dir}/${newName}.${extention}`
-
-      fs.rename(origin, dest, renameError => {
-        if (renameError) {
-          throw renameError
-        }
-      })
-    })
-  })
+  const files = fs.readdirSync(dir)
+  renameFiles(dir, files, newName)
 }
 
 /**
