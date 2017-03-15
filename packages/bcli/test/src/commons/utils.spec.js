@@ -21,8 +21,20 @@ describe('utils.js', function () {
   })
 
   describe('renameFilesFromDir', function () {
-    xit('should rename all files in the folder as "foo"', function () {
+    it('should rename all files in the folder as "foo"', function () {
+      mock({
+        './tmp': {
+          'index.css': ''
+        }
+      })
 
+      const before = fs.readdirSync('./tmp')[0]
+      expect(before).to.equal('index.css')
+
+      utils.renameFilesFromDir('./tmp', 'foo')
+
+      const after = fs.readdirSync('./tmp')[0]
+      expect(after).to.equal('foo.css')
     })
   })
 
