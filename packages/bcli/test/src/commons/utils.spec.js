@@ -28,13 +28,11 @@ describe('utils.js', function () {
         }
       })
 
-      const before = fs.readdirSync('./tmp')[0]
-      expect(before).to.equal('index.css')
+      expect('./tmp').to.be.a.directory().with.files(['index.css'])
 
       utils.renameFilesFromDir('./tmp', 'foo')
 
-      const after = fs.readdirSync('./tmp')[0]
-      expect(after).to.equal('foo.css')
+      expect('./tmp').to.be.a.directory().with.files(['foo.css'])
     })
   })
 
@@ -46,10 +44,10 @@ describe('utils.js', function () {
     })
 
     it('should return an item with property `value` as snake-uppercased string', function () {
-      const events = utils.getEvents('get item')
+      const events = utils.getEvents('get item')[0]
 
-      expect(events[0]).to.have.property('value').and.to.be.a('string')
-      expect(events[0].value).to.equal('GET_ITEM')
+      expect(events).to.have.property('value').and.to.be.a('string')
+      expect(events.value).to.equal('GET_ITEM')
     })
   })
 
