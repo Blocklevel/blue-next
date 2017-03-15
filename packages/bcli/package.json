@@ -1,6 +1,6 @@
 {
   "name": "bcli",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.5",
   "description": "Blue Command Line Interface",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
@@ -28,7 +28,7 @@
     "test:watch": "mocha -w"
   },
   "dependencies": {
-    "blue-templates": "^1.0.0-beta.3",
+    "blue-templates": "^1.0.0-beta.5",
     "cac": "^3.0.4",
     "chalk": "^1.1.3",
     "co": "^4.6.0",
