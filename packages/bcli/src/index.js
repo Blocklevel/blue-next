@@ -11,6 +11,7 @@ const ora = require('ora')
 const questions = require('./commons/questions')
 const blueTemplates = require('blue-templates')
 const fs = require('fs')
+const spawn = require('cross-spawn')
 
 const isYarn = utils.isYarn()
 const spinner = ora()
@@ -61,7 +62,12 @@ module.exports = co.wrap(function * (options) {
 
   process.chdir(dest)
 
-  yield execa.shell(isYarn ? 'yarn' : 'npm install')
+  try {
+    yield execa.shell(isYarn ? 'yarn' : 'npm install')
+  } catch (error) {
+    // see https://github.com/Blocklevel/blue-next/issues/46
+    spawn.sync('npm', ['install'], { stdio: 'inherit' })
+  }
 
   spinner.succeed()
 
