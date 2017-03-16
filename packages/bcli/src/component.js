@@ -6,6 +6,7 @@ const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
 const utils = require('./commons/utils')
+const questions = require('./commons/questions')
 const blueTemplates = require('blue-templates')
 
 const spinner = ora()
@@ -21,9 +22,8 @@ module.exports = co.wrap(function * (options) {
 
   if (exists && !options.force) {
     spinner.fail()
-    console.error(chalk.red(`\n Looks like the ${options.type} already exists\n`))
-
-    yield utils.confirmPrompt()
+    console.error(chalk.red(`\n Looks like ${dest} already exists\n`))
+    yield questions.confirmPrompt()
   }
 
   const template = blueTemplates.getComponent()
@@ -36,7 +36,7 @@ module.exports = co.wrap(function * (options) {
   yield copy(template, dest, { data })
 
   // Rename all component files from the template to the component name
-  utils.renameFiles(dest, name)
+  utils.renameFilesFromDir(dest, name)
 
   spinner.succeed()
 

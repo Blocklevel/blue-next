@@ -8,7 +8,7 @@ const pathExists = require('path-exists')
 const utils = require('./commons/utils')
 const co = require('co')
 const ora = require('ora')
-const commonQuestions = require('./commons/questions')
+const questions = require('./commons/questions')
 const blueTemplates = require('blue-templates')
 const fs = require('fs')
 
@@ -27,27 +27,16 @@ module.exports = co.wrap(function * (options) {
 
   if (exists && !options.force) {
     spinner.fail()
-    console.error(chalk.red('\n Looks like the project already exists\n'))
-
-    const confirm = yield inquirer.prompt([
-      commonQuestions.force
-    ])
-
-    if (!confirm.force) {
-      console.log(chalk.bold.yellow('\nNo problem!'))
-      return
-    }
-
-    console.log('')
+    console.error(chalk.red(`\n Looks like the ${dest} already exists\n`))
+    yield questions.confirmPrompt()
   }
 
   const blue = blueTemplates.getBlue()
   const cssPreprocessor = blueTemplates.getPreProcessor('postcss')
-
   const data = Object.assign({
     name,
     author: yield utils.getGitUser(),
-    blueScriptsVersion: yield utils.getBlueScriptsVersion()
+    blueScriptsVersion: yield utils.getSemverFromPackage('blue-scripts')
   }, options)
 
   yield copy(blue, dest, { data })

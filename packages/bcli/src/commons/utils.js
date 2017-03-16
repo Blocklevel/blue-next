@@ -1,4 +1,3 @@
-const inquirer = require('inquirer')
 const co = require('co')
 const execa = require('execa')
 const chalk = require('chalk')
@@ -35,42 +34,33 @@ const getGitUser = co.wrap(function * () {
   return { name, email }
 })
 
-/**
- * Rename all files in a folder to a single filename
- * @param  {String} destination
- * @param  {String} filename
- */
-const renameFiles = function (destination, filename) {
-  fs.readdir(destination, (readError, files) => {
-    files.forEach(file => {
-      const extention = file.split('.')[1]
-      const origin = `${destination}/${file}`
-      const dest = `${destination}/${filename}.${extention}`
+const renameFiles = function (dir, files, newName) {
+  if (!newName) {
+    return
+  }
 
-      fs.rename(origin, dest, renameError => {
-        if (!renameError) {
-          return
-        }
+  files.forEach(file => {
+    const extention = file.split('.')[1]
+    const origin = `${dir}/${file}`
+    const dest = `${dir}/${newName}.${extention}`
 
-        console.error(renameError)
-      })
+    fs.rename(origin, dest, renameError => {
+      if (renameError) {
+        throw renameError
+      }
     })
   })
 }
 
 /**
- * Confirmation prompt for overriding actions
+ * Rename all files in a folder to a single filename
+ * @param  {String} destination
+ * @param  {String} filename
  */
-const confirmPrompt = co.wrap(function * () {
-  const confirm = yield inquirer.prompt([
-    questions.force
-  ])
-
-  if (!confirm.force) {
-    console.log(chalk.bold.yellow('\nNo problem!\n'))
-    process.exit(1)
-  }
-})
+const renameFilesFromDir = function (dir, newName) {
+  const files = fs.readdirSync(dir)
+  renameFiles(dir, files, newName)
+}
 
 /**
  * Returns an array of event objects in the correct format so we can loop over it later
@@ -96,23 +86,15 @@ const getEvents = function (events) {
 }
 
 /**
- * Get latest available blue-script package version
- * see https://github.com/Blocklevel/blue-next/issues/28
- * @return {String} version
+ * Get the most satisfying semver from a list of versions
+ * @param  {Array<String>} versions - list of version number
+ * @param  {String} baseVersion - the major version to compare
+ * @return {String} semver string
  */
-const getBlueScriptsVersion = co.wrap(function * () {
-  const response = yield fetch('https://registry.npmjs.org/blue-scripts')
-  const blueScripts = yield response.json()
-  const bcliMajor = semver.major(bcliVersion)
-  const isPrerelease = semver.prerelease(bcliVersion)
-  const versions = _.keys(blueScripts.versions)
-
+const getSemverFromMajor = function (versions, baseVersion) {
+  const majorVersion = semver.major(baseVersion)
   const version = _.findLast(versions, version => {
-    if (isPrerelease) {
-      return semver.inc(version, 'prerelease', isPrerelease[0])
-    }
-
-    return semver.satisfies(version, `${bcliMajor}.x`)
+    return semver.satisfies(version, `${majorVersion}.x`)
   })
 
   if (!version) {
@@ -120,6 +102,18 @@ const getBlueScriptsVersion = co.wrap(function * () {
   }
 
   return version
+}
+
+/**
+ * Get latest available blue-script package version
+ * see https://github.com/Blocklevel/blue-next/issues/28
+ * @return {String} version
+ */
+const getSemverFromPackage = co.wrap(function * (pkg, baseVersion = bcliVersion) {
+  const response = yield fetch(`https://registry.npmjs.org/${pkg}`)
+  const pkgData = yield response.json()
+
+  return getSemverFromMajor(_.keys(pkgData.versions), baseVersion)
 })
 
 /**
@@ -132,9 +126,10 @@ const isYarn = co.wrap(function * () {
 
 module.exports = {
   getGitUser,
-  confirmPrompt,
   renameFiles,
+  renameFilesFromDir,
   getEvents,
   isYarn,
-  getBlueScriptsVersion
+  getSemverFromMajor,
+  getSemverFromPackage
 }

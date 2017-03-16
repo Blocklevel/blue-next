@@ -1,3 +1,7 @@
+const co = require('co')
+const inquirer = require('inquirer')
+const chalk = require('chalk')
+
 const force = {
   type: 'list',
   name: 'force',
@@ -32,7 +36,20 @@ const vueHooks = {
   default: false
 }
 
+/**
+ * Confirmation prompt for overriding actions
+ */
+const confirmPrompt = co.wrap(function * () {
+  const confirm = yield inquirer.prompt([force])
+
+  if (!confirm.force) {
+    console.log(chalk.bold.yellow('\nNo problem!\n'))
+    process.exit(1)
+  }
+})
+
 module.exports = {
   force,
-  vueHooks
+  vueHooks,
+  confirmPrompt
 }

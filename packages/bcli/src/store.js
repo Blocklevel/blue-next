@@ -6,6 +6,7 @@ const pathExists = require('path-exists')
 const co = require('co')
 const ora = require('ora')
 const utils = require('./commons/utils')
+const questions = require('./commons/questions')
 const blueTemplates = require('blue-templates')
 
 const spinner = ora()
@@ -21,9 +22,8 @@ module.exports = co.wrap(function * (options) {
 
   if (exists && !options.force) {
     spinner.fail()
-    console.error(chalk.red('\n Looks like the module already exists\n'))
-
-    yield utils.confirmPrompt()
+    console.error(chalk.red(`\n Looks like ${dest} already exists\n`))
+    yield questions.confirmPrompt()
   }
 
   const template = blueTemplates.getStoreModule()
@@ -39,6 +39,7 @@ module.exports = co.wrap(function * (options) {
   yield copy(template, dest, { data })
 
   spinner.succeed()
+
   console.log(`
   Vuex store module ${chalk.yellow.bold(name)} created!
   The module is autoloaded in your application!
