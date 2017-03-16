@@ -10,6 +10,7 @@ module.exports = {
     aggregateTimeout: 300,
     poll: 1000
   },
+  overlay: true,
   historyApiFallback: true,
   publicPath: '/',
   stats: {
