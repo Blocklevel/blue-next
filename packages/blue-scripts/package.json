@@ -11,6 +11,9 @@
   "bugs": {
     "url": "https://github.com/Blocklevel/blue-next/issues"
   },
+  "engines": {
+    "node": ">=6.10"
+  },
   "bin": {
     "blue-scripts": "./bin/blue.js"
   },
