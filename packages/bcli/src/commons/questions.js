@@ -4,7 +4,7 @@ const chalk = require('chalk')
 
 const force = {
   type: 'list',
-  name: 'force',
+  name: 'overwrite',
   message: 'Would you like to override it?',
   default: false,
   choices: [

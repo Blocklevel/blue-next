@@ -15,35 +15,24 @@ const spawn = require('cross-spawn')
 
 const spinner = ora()
 
-module.exports = co.wrap(function * (options) {
+module.exports = co.wrap(function * (args) {
   const isYarn = yield utils.isYarn()
 
-  console.log('') // extra space
+  console.log('')
   spinner.text = 'Create a new project'
   spinner.start()
 
-  const name = _.kebabCase(options.projectName)
-  const folderName = _.kebabCase(options.folderName)
-  const dest = `${process.cwd()}/${folderName}`
-  const exists = yield pathExists(dest)
-
-  if (exists && !options.force) {
-    spinner.fail()
-    console.error(chalk.red(`\n Looks like the ${dest} already exists\n`))
-    yield questions.confirmPrompt()
-  }
-
   const blue = blueTemplates.getBlue()
   const cssPreprocessor = blueTemplates.getPreProcessor('postcss')
-  const data = Object.assign({
-    name,
+  const data = {
+    name: args.name,
     author: yield utils.getGitUser(),
     blueScriptsVersion: yield utils.getSemverFromPackage('blue-scripts')
-  }, options)
+  }
 
   try {
-    yield copy(blue, dest, { data })
-    yield copy(cssPreprocessor, `${dest}/src/asset/style`, data)
+    yield copy(blue, args.dest, { data })
+    yield copy(cssPreprocessor, `${args.dest}/src/asset/style`, data)
   } catch (error) {
     spinner.fail()
     throw error
@@ -53,7 +42,7 @@ module.exports = co.wrap(function * (options) {
   // see https://github.com/Blocklevel/blue-next/issues/44
   const filesToRename = ['__.eslintrc.js', '__.gitignore']
   filesToRename.forEach(file => {
-    fs.rename(`${dest}/${file}`, `${dest}/${file.replace('__', '')}`, function (error) {
+    fs.rename(`${args.dest}/${file}`, `${args.dest}/${file.replace('__', '')}`, function (error) {
       if (error) {
         spinner.fail()
         throw error
@@ -66,7 +55,7 @@ module.exports = co.wrap(function * (options) {
   spinner.text = 'Install dependencies'
   spinner.start()
 
-  process.chdir(dest)
+  process.chdir(args.dest)
 
   try {
     yield execa.shell(isYarn ? 'yarn' : 'npm install')
@@ -78,8 +67,7 @@ module.exports = co.wrap(function * (options) {
   spinner.succeed()
 
   console.log(chalk.bold('\n   Website!!!'))
-  console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
+  console.log('\n   New project', chalk.yellow.bold(args.name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
-  console.log(chalk.italic(`     cd ${folderName} && ${isYarn ? 'yarn dev' : 'npm run dev'}`))
-
+  console.log(chalk.italic(`     cd ${args.name} && ${isYarn ? 'yarn dev' : 'npm run dev'}`))
 })
