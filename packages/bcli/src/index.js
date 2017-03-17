@@ -13,10 +13,11 @@ const blueTemplates = require('blue-templates')
 const fs = require('fs')
 const spawn = require('cross-spawn')
 
-const isYarn = utils.isYarn()
 const spinner = ora()
 
 module.exports = co.wrap(function * (options) {
+  const isYarn = yield utils.isYarn()
+
   console.log('') // extra space
   spinner.text = 'Create a new project'
   spinner.start()
@@ -40,8 +41,13 @@ module.exports = co.wrap(function * (options) {
     blueScriptsVersion: yield utils.getSemverFromPackage('blue-scripts')
   }, options)
 
-  yield copy(blue, dest, { data })
-  yield copy(cssPreprocessor, `${dest}/src/asset/style`, data)
+  try {
+    yield copy(blue, dest, { data })
+    yield copy(cssPreprocessor, `${dest}/src/asset/style`, data)
+  } catch (error) {
+    spinner.fail()
+    throw error
+  }
 
   // see https://github.com/Blocklevel/blue-next/issues/41
   // see https://github.com/Blocklevel/blue-next/issues/44
@@ -75,4 +81,5 @@ module.exports = co.wrap(function * (options) {
   console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
   console.log(chalk.italic(`     cd ${folderName} && ${isYarn ? 'yarn dev' : 'npm run dev'}`))
+
 })

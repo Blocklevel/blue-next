@@ -30,7 +30,9 @@ module.exports = co.wrap(function * (input, flags) {
   const options = Object.assign(answer, flags)
 
   return runDefault(options).catch(err => {
+    console.log('')
     console.error(chalk.red(err.stack))
+    console.log('')
     process.exit(1)
   })
 })
