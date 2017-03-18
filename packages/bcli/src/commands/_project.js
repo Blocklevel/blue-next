@@ -1,7 +1,8 @@
-const generateProject = require('../src/project')
+const generateProject = require('../project')
 const _ = require('lodash')
 const pathExists = require('path-exists')
-const questions = require('../src/commons/questions')
+const questions = require('../commons/questions')
+const blueTemplates = require('blue-templates')
 
 module.exports = function (vorpal) {
   const c = vorpal.chalk
@@ -13,8 +14,6 @@ module.exports = function (vorpal) {
     .action(function (args, callback) {
       const dest = `${process.cwd()}/${args.name}`
 
-      args = _.assignIn({ dest }, args)
-
       pathExists(dest)
         .then(exists => {
           if (exists && !args.options.force) {
@@ -23,7 +22,7 @@ module.exports = function (vorpal) {
                 this.log('')
                 this.log(c.yellow('   Ok thanks bye!'))
                 this.log('')
-                callback()
+                process.exit(1)
                 return
               }
 
@@ -33,7 +32,17 @@ module.exports = function (vorpal) {
 
           return args
         })
-        .then(generateProject)
+        .then(() => {
+          const template = blueTemplates.getBlue()
+          const cssTemplate = blueTemplates.getPreProcessor('postcss')
+          const data = _.assignIn({
+            dest,
+            template,
+            cssTemplate
+          }, args)
+
+          return generateProject(data)
+        })
         .catch(error => {
           this.log('')
           throw error

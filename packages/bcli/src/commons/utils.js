@@ -34,9 +34,32 @@ const getGitUser = co.wrap(function * () {
   return { name, email }
 })
 
+/**
+ * Replace name of given files
+ * @param  {String} dir
+ * @param  {Array<String>} files
+ * @param  {Regexp|String} substr
+ * @param  {Regexp|String} newSubstr
+ */
+const replaceFilesName = function (dir, files, substr, newSubstr) {
+  files.forEach(file => {
+    fs.rename(`${dir}/${file}`, `${dir}/${file.replace(substr, newSubstr)}`, error => {
+      if (error) {
+        throw error
+      }
+    })
+  })
+}
+
+/**
+ * Rename files
+ * @param  {String} dir
+ * @param  {Array<String>} files
+ * @param  {String} newName
+ */
 const renameFiles = function (dir, files, newName) {
   if (!newName) {
-    return
+    throw new Error('No name provded')
   }
 
   files.forEach(file => {
@@ -131,5 +154,6 @@ module.exports = {
   getEvents,
   isYarn,
   getSemverFromMajor,
-  getSemverFromPackage
+  getSemverFromPackage,
+  replaceFilesName
 }

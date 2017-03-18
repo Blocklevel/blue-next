@@ -22,9 +22,8 @@
     "blocklevel",
     "cli"
   ],
-  "main": "src/index.js",
   "bin": {
-    "bcli": "./bin/cli.js"
+    "bcli": "./index.js"
   },
   "scripts": {
     "test": "mocha",

@@ -21,7 +21,7 @@ describe('utils.js', function () {
   describe('renameFilesFromDir', function () {
     it('should rename all files in the folder as "foo"', function () {
       mock({
-        './tmp': {
+        'tmp': {
           'index.css': ''
         }
       })
@@ -31,6 +31,23 @@ describe('utils.js', function () {
       utils.renameFilesFromDir('./tmp', 'foo')
 
       expect('./tmp').to.be.a.directory().with.files(['foo.css'])
+    })
+  })
+
+  describe('replaceFilesName', function () {
+    it('should replace files name', function () {
+      mock({
+        'tmp': {
+          '__.gitignore': '',
+          '__.eslintrc': ''
+        }
+      })
+
+      expect('tmp').to.be.a.directory().with.include.files(['__.gitignore', '__.eslintrc'])
+
+      utils.replaceFilesName('tmp', ['__.gitignore', '__.eslintrc'], '__', '')
+
+      expect('tmp').to.be.a.directory().with.include.files(['.gitignore', '.eslintrc'])
     })
   })
 
