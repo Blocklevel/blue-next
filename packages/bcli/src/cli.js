@@ -1,16 +1,10 @@
 const vorpal = require('vorpal')()
 
-// CLI commands
-const project = require('./commands/_project')
-const component = require('./commands/_component')
-const store = require('./commands/_store')
-const share = require('./commands/_share')
-
 // Add all commands
-vorpal.use(project)
-vorpal.use(component)
-vorpal.use(store)
-vorpal.use(share)
+vorpal.use(require('./commands/_project'))
+vorpal.use(require('./commands/_component'))
+vorpal.use(require('./commands/_store'))
+vorpal.use(require('./commands/_share'))
 
 vorpal
   .delimiter('bcli$')
