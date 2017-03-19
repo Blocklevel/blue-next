@@ -17,7 +17,8 @@ describe('scaffold.js', function () {
       name: 'project',
       dest: './tmp',
       template: './blue-template',
-      cssTemplate: './css-template'
+      cssTemplate: './css-template',
+      templateCssFolder: blueTemplates.getStylePath('./tmp')
     }
 
     beforeEach(function (done) {
