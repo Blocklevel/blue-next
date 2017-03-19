@@ -25,10 +25,10 @@ module.exports = function (vorpal) {
       // Check if the folder is not already there, so we can ask for to overwrite or not
       pathExists(dest)
         .then(exists => {
-          return this.prompt(questions.overwrite(exists && !args.force))
+          return this.prompt(questions.overwrite(exists && !args.options.force))
         })
-        .then(response => {
-          if (response.overwrite === false) {
+        .then(overwritePromptResult => {
+          if (overwritePromptResult.overwrite === false) {
             this.log('')
             this.log(chalk.yellow('   Ok thanks bye!'))
             this.log('')
@@ -48,6 +48,13 @@ module.exports = function (vorpal) {
           }, args)
 
           return generateProject(data)
+        })
+
+        // When the project creation is completed, we need to kill the cli
+        // because we need to change directory and start the project.
+        // there's no need to leave the node process active in the bcli$ delimiter
+        .then(() => {
+          vorpal.ui.cancel()
         })
 
         .catch(error => {

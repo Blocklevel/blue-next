@@ -50,38 +50,43 @@ module.exports = function (vorpal) {
       ])
 
       // Check if the folder is not already there, so we can ask for to overwrite or not
-      .then(response => {
-        const { type, name } = response
+      .then(promptResult => {
+        // It's not possible to know whether data is passed via command line options
+        // or via questions. Both results needs to be merged so in any cases
+        // a name and a type will always be available
+        const mergedResult = _.assignIn({}, promptResult, args)
+
+        const { name, type } = mergedResult
         const dest = `${process.cwd()}/src/app/${type}/${name}`
 
-        return pathExists(dest).then(exists => {
-          return this.prompt(questions.overwrite(exists && !args.force))
-        }).then(response => {
-          if (response.overwrite === false) {
-            this.log('')
-            this.log(chalk.yellow('   Ok thanks bye!'))
-            this.log('')
-            process.exit(1)
-          }
+        return pathExists(dest)
+          .then(exists => {
+            return this.prompt(questions.overwrite(exists && !args.options.force))
+          })
+          .then(overwritePromptResult => {
+            if (overwritePromptResult.overwrite === false) {
+              this.log('')
+              this.log(chalk.yellow('   Ok thanks bye!'))
+              this.log('')
+              process.exit(1)
+            }
 
-          return _.assignIn({
-            dest, name, type
-          }, args)
+          return _.assignIn({ dest }, args, mergedResult)
         })
       })
 
       // Collecting all data from all questions
-      .then(response => {
+      .then(result => {
         return _.assignIn({
           template: blueTemplates.getComponent()
-        }, response)
+        }, result)
       })
 
       // Here the component is actually generated!
       .then(generateComponent)
 
       // When the component is generated we need to fire the callback
-      // provided by the action to bring the terminal to the delimiter
+      // provided by the action to bring the terminal back to the delimiter
       .then(callback)
 
       .catch(error => {

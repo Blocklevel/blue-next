@@ -44,6 +44,8 @@ module.exports = co.wrap(function * (args) {
     spawn.sync('npm', ['install'], { stdio: 'inherit' })
   }
 
+  spinner.succeed()
+
   console.log(chalk.bold('\n   Website!!!'))
   console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
