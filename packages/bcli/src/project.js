@@ -30,7 +30,7 @@ module.exports = co.wrap(function * (args) {
   utils.replaceFilesName(args.dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
 
   spinner.succeed()
-
+  
   spinner.text = 'Install dependencies'
   spinner.start()
 
