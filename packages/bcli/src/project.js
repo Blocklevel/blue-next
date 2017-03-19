@@ -13,6 +13,7 @@ const spinner = ora()
 
 module.exports = co.wrap(function * (args) {
   const isYarn = yield utils.isYarn()
+  const { dest, name } = args
 
   console.log('')
   spinner.text = 'Create project'
@@ -27,14 +28,14 @@ module.exports = co.wrap(function * (args) {
 
   // see Blocklevel/blue-next/issues/41
   // see Blocklevel/blue-next/issues/44
-  utils.replaceFilesName(args.dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
+  utils.replaceFilesName(dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
 
   spinner.succeed()
 
   spinner.text = 'Install dependencies'
   spinner.start()
 
-  process.chdir(args.dest)
+  process.chdir(dest)
 
   try {
     yield execa.shell(isYarn ? 'yarn' : 'npm install')
@@ -44,7 +45,7 @@ module.exports = co.wrap(function * (args) {
   }
 
   console.log(chalk.bold('\n   Website!!!'))
-  console.log('\n   New project', chalk.yellow.bold(args.name), 'was created successfully!')
+  console.log('\n   New project', chalk.yellow.bold(name), 'was created successfully!')
   console.log(chalk.bold('\n   To get started:\n'))
-  console.log(chalk.italic(`     cd ${args.name} && ${isYarn ? 'yarn dev' : 'npm run dev'}`))
+  console.log(chalk.italic(`     cd ${name} && ${isYarn ? 'yarn dev' : 'npm run dev'}`))
 })

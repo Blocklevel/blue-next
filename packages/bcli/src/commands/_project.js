@@ -20,20 +20,15 @@ module.exports = function (vorpal) {
     .action(function (args, callback) {
       const dest = `${process.cwd()}/${args.name}`
 
+      // TODO: add question if name is missing. Useless to fallback to the cli usage
+
+      // Check if the folder is not already there, so we can ask for to overwrite or not
       pathExists(dest)
         .then(exists => {
-          return this.prompt({
-            when: function () {
-              return exists && !args.force
-            },
-            type: 'confirm',
-            name: 'overwrite',
-            message: 'The folder already exists: do you want to overwrite it?',
-            default: false
-          })
+          return this.prompt(questions.overwrite(exists && !args.force))
         })
         .then(response => {
-          if (!response.overwrite) {
+          if (response.overwrite === false) {
             this.log('')
             this.log(chalk.yellow('   Ok thanks bye!'))
             this.log('')
@@ -42,6 +37,8 @@ module.exports = function (vorpal) {
 
           return args
         })
+
+        // Collecting all data from all questions
         .then(() => {
           const data = _.assignIn({
             dest,
@@ -52,9 +49,18 @@ module.exports = function (vorpal) {
 
           return generateProject(data)
         })
+
         .catch(error => {
           this.log('')
           throw error
         })
+    })
+
+    // We need to kill all process if during the questions ctrl+c is called
+    // otherwise the application might crashes
+    // see dthree/vorpal/issues/220
+    .cancel(function () {
+      this.log('')
+      process.exit(1)
     })
 }
