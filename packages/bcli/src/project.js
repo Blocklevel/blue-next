@@ -30,9 +30,11 @@ module.exports = co.wrap(function * (args) {
   utils.replaceFilesName(args.dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
 
   spinner.succeed()
-  
+
   spinner.text = 'Install dependencies'
   spinner.start()
+
+  process.chdir(args.dest)
 
   try {
     yield execa.shell(isYarn ? 'yarn' : 'npm install')

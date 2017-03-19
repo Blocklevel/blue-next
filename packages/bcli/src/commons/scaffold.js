@@ -15,7 +15,7 @@ const project = co.wrap(function * (options) {
   }
 
   yield copy(options.template, options.dest, { data })
-  yield copy(options.cssTemplate, `${options.dest}/src/asset/style`, data)
+  yield copy(options.cssTemplate, options.templateCssFolder, data)
 })
 
 module.exports = {

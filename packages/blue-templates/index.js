@@ -8,6 +8,10 @@ const getPreProcessor = function (type) {
   return getPath(`./src/pre-processor/${type}`)
 }
 
+const getStylePath = function (dir) {
+  return `${dir}/src/asset/style`
+}
+
 const getBlue = function () {
   return getPath('./src/blue')
 }
@@ -24,5 +28,6 @@ module.exports = {
   getBlue,
   getPreProcessor,
   getComponent,
-  getStoreModule
+  getStoreModule,
+  getStylePath
 }

@@ -4,8 +4,14 @@ const pathExists = require('path-exists')
 const questions = require('../commons/questions')
 const blueTemplates = require('blue-templates')
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them
+process.on('unhandledRejection', err => {
+  throw err
+})
+
 module.exports = function (vorpal) {
-  const c = vorpal.chalk
+  const chalk = vorpal.chalk
 
   vorpal
     .command('project <name>', 'create a new project with Blue <3')
@@ -16,29 +22,32 @@ module.exports = function (vorpal) {
 
       pathExists(dest)
         .then(exists => {
-          if (exists && !args.options.force) {
-            return this.prompt(questions.force).then(response => {
-              if (!response.overwrite) {
-                this.log('')
-                this.log(c.yellow('   Ok thanks bye!'))
-                this.log('')
-                process.exit(1)
-                return
-              }
-
-              return _.assignIn({}, args, response)
-            })
+          return this.prompt({
+            when: function () {
+              return exists && !args.force
+            },
+            type: 'confirm',
+            name: 'overwrite',
+            message: 'The folder already exists: do you want to overwrite it?',
+            default: false
+          })
+        })
+        .then(response => {
+          if (!response.overwrite) {
+            this.log('')
+            this.log(chalk.yellow('   Ok thanks bye!'))
+            this.log('')
+            process.exit(1)
           }
 
           return args
         })
         .then(() => {
-          const template = blueTemplates.getBlue()
-          const cssTemplate = blueTemplates.getPreProcessor('postcss')
           const data = _.assignIn({
             dest,
-            template,
-            cssTemplate
+            template: blueTemplates.getBlue(),
+            cssTemplate: blueTemplates.getPreProcessor('postcss'),
+            templateCssFolder: blueTemplates.getStylePath(dest)
           }, args)
 
           return generateProject(data)
