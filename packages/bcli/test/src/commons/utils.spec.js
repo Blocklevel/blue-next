@@ -8,6 +8,10 @@ const mock = require('mock-fs')
 chai.use(require('chai-fs'))
 
 describe('utils.js', function () {
+  afterEach(function () {
+    mock.restore()
+  })
+
   describe('getGitUser', function () {
     it('should return a github user with name and email', function () {
       return utils.getGitUser().then(function (response) {
