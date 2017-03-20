@@ -1,6 +1,6 @@
 {
   "name": "bcli",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0-beta.8",
   "description": "Blue Command Line Interface",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
@@ -31,7 +31,7 @@
     "coverage": "istanbul cover _mocha -x *.spec.js"
   },
   "dependencies": {
-    "blue-templates": "^1.0.0-beta.9",
+    "blue-templates": "^1.0.0-beta.8",
     "cac": "^3.0.4",
     "chalk": "^1.1.3",
     "co": "^4.6.0",
