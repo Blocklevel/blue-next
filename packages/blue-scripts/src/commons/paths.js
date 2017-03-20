@@ -17,6 +17,7 @@ module.exports = {
   appEntry: resolveApp('./src/bootstrap.js'),
   appBuild: resolveApp('./build'),
   appSrc: resolveApp('./src'),
+  appStatic: resolveApp('./static'),
   appHTMLIndex: resolveApp('./index.html'),
   blueScripts: resolveApp('node_modules/blue-scripts')
 }
