@@ -1,0 +1,26 @@
+{
+  "name": "babel-preset-blue",
+  "version": "0.0.1",
+  "description": "Babel preset used by Blue",
+  "main": "./index.js",
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blocklevel/blue-next"
+  },
+  "bugs": {
+    "url": "https://github.com/Blocklevel/blue-next/issues"
+  },
+  "homepage": "https://github.com/Blocklevel/blue-next#readme",
+  "license": "MIT",
+  "keywords": [
+    "babel",
+    "preset",
+    "blue"
+  ],
+  "dependencies": {
+    "babel-plugin-transform-regenerator": "^6.22.0",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-stage-2": "^6.22.0"
+  }
+}
