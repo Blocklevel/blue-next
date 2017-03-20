@@ -28,7 +28,7 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha -w",
-    "coverage": "istanbul cover _mocha"
+    "coverage": "istanbul cover _mocha -x *.spec.js"
   },
   "dependencies": {
     "blue-templates": "^1.0.0-beta.5",
