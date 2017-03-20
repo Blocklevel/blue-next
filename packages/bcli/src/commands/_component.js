@@ -10,6 +10,7 @@ module.exports = function (vorpal) {
   vorpal
     .command('component [name] [type]', 'create a component')
     .option('-f, --force', 'Force file overwrite')
+    .option('--hooks', 'Add basic component hooks')
     .alias('c')
     .action(function (args, callback) {
       this.prompt([
@@ -46,6 +47,15 @@ module.exports = function (vorpal) {
             }
           ],
           default: 'component'
+        },
+        {
+          when: function () {
+            return !args.options.hooks
+          },
+          type: 'confirm',
+          name: 'basic',
+          message: 'Would you like some basic Vue hooks?',
+          default: false
         }
       ])
 

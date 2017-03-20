@@ -12,24 +12,6 @@ const overwrite = function (shouldAsk) {
   }
 }
 
-const vueHooks = {
-  type: 'list',
-  name: 'basic',
-  message: 'Would you like some basic Vue hooks?',
-  choices: [
-    {
-      name: 'No, thanks!',
-      value: false
-    },
-    {
-      name: 'Oh, yes!',
-      value: true
-    }
-  ],
-  default: false
-}
-
 module.exports = {
-  overwrite,
-  vueHooks
+  overwrite
 }
