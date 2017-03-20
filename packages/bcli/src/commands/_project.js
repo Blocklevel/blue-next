@@ -14,53 +14,65 @@ module.exports = function (vorpal) {
   const chalk = vorpal.chalk
 
   vorpal
-    .command('project <name>', 'create a new project with Blue <3')
+    .command('project [name]', 'create a new project with Blue <3')
     .option('-f, --force', 'Force file overwrite')
     .alias('p')
     .action(function (args, callback) {
-      const dest = `${process.cwd()}/${args.name}`
-
-      // TODO: add question if name is missing. Useless to fallback to the cli usage
+      this.prompt({
+        when: function () {
+          return !args.name
+        },
+        type: 'input',
+        name: 'name',
+        message: 'What\'s the name of the project?',
+        validate: function (answer) {
+          return answer !== ''
+        }
+      })
 
       // Check if the folder is not already there, so we can ask for to overwrite or not
-      pathExists(dest)
-        .then(exists => {
-          return this.prompt(questions.overwrite(exists && !args.options.force))
-        })
-        .then(overwritePromptResult => {
-          if (overwritePromptResult.overwrite === false) {
-            this.log('')
-            this.log(chalk.yellow('   Ok thanks bye!'))
-            this.log('')
-            process.exit(1)
-          }
+      .then(response => {
+        const mergedResponse = _.assignIn({}, args, response)
+        const dest = `${process.cwd()}/${mergedResponse.name}`
 
-          return args
-        })
+        return pathExists(dest)
+          .then(exists => {
+            return this.prompt(questions.overwrite(exists && !args.options.force))
+          })
+          .then(overwritePromptResult => {
+            if (overwritePromptResult.overwrite === false) {
+              this.log('')
+              this.log(chalk.yellow('   Ok thanks bye!'))
+              this.log('')
+              process.exit(1)
+            }
 
-        // Collecting all data from all questions
-        .then(() => {
-          const data = _.assignIn({
-            dest,
-            template: blueTemplates.getBlue(),
-            cssTemplate: blueTemplates.getPreProcessor('postcss'),
-            templateCssFolder: blueTemplates.getStylePath(dest)
-          }, args)
+            return _.assignIn({ dest }, mergedResponse)
+          })
+      })
 
-          return generateProject(data)
-        })
+      // Collecting all data from all questions
+      .then((response) => {
+        const data = _.assignIn({
+          template: blueTemplates.getBlue(),
+          cssTemplate: blueTemplates.getPreProcessor('postcss'),
+          templateCssFolder: blueTemplates.getStylePath(response.dest)
+        }, response)
 
-        // When the project creation is completed, we need to kill the cli
-        // because we need to change directory and start the project.
-        // there's no need to leave the node process active in the bcli$ delimiter
-        .then(() => {
-          vorpal.ui.cancel()
-        })
+        return generateProject(data)
+      })
 
-        .catch(error => {
-          this.log('')
-          throw error
-        })
+      // When the project creation is completed, we need to kill the cli
+      // because we need to change directory and start the project.
+      // there's no need to leave the node process active in the bcli$ delimiter
+      .then(() => {
+        vorpal.ui.cancel()
+      })
+
+      .catch(error => {
+        this.log('')
+        throw error
+      })
     })
 
     // We need to kill all process if during the questions ctrl+c is called
