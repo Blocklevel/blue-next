@@ -1,6 +1,6 @@
 {
   "name": "blue-scripts",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.10",
   "description": "Configuration and scripts for Blue",
   "main": "src/index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
@@ -27,7 +27,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-2": "^6.18.0",
-    "blue-templates": "^1.0.0-beta.5",
+    "blue-templates": "^1.0.0-beta.10",
     "cac": "^3.0.4",
     "chalk": "^1.1.3",
     "co": "^4.6.0",
