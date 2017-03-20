@@ -49,4 +49,50 @@ describe('scaffold.js', function () {
     })
   })
 
+
+  describe('component', function () {
+    beforeEach(function () {
+      mock({
+        'tmp': {},
+        'component-template': _utils.mockFolder(blueTemplates.getComponent())
+      })
+    })
+
+    afterEach(function () {
+      mock.restore()
+    })
+
+    it('should generate a component', function () {
+      return scaffold.component({
+        name: 'foo',
+        type: 'component',
+        dest: 'tmp',
+        template: 'component-template'
+      }).then((response) => {
+        expect('tmp').to.be.a.directory().and.include.files(['foo.js', 'foo.vue', 'foo.css'])
+      })
+    })
+
+    it('should generate a container component', function () {
+      return scaffold.component({
+        name: 'foo',
+        type: 'container',
+        dest: 'tmp',
+        template: 'component-template'
+      }).then((response) => {
+        expect('tmp').to.be.a.directory().and.include.files(['foo.js', 'foo.vue', 'foo.css'])
+      })
+    })
+
+    it('should generate a page component', function () {
+      return scaffold.component({
+        name: 'foo',
+        type: 'page',
+        dest: 'tmp',
+        template: 'component-template'
+      }).then((response) => {
+        expect('tmp').to.be.a.directory().and.include.files(['foo.js', 'foo.vue', 'foo.css'])
+      })
+    })
+  })
 })

@@ -26,10 +26,6 @@ module.exports = co.wrap(function * (args) {
     throw error
   }
 
-  // see Blocklevel/blue-next/issues/41
-  // see Blocklevel/blue-next/issues/44
-  utils.replaceFilesName(dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
-
   spinner.succeed()
 
   spinner.text = 'Install dependencies'

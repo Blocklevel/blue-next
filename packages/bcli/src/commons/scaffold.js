@@ -16,6 +16,10 @@ const project = co.wrap(function * (inputs) {
 
   yield copy(inputs.template, inputs.dest, { data })
   yield copy(inputs.cssTemplate, inputs.templateCssFolder, data)
+
+  // see Blocklevel/blue-next/issues/41
+  // see Blocklevel/blue-next/issues/44
+  utils.replaceFilesName(inputs.dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
 })
 
 /**
@@ -24,9 +28,11 @@ const project = co.wrap(function * (inputs) {
 const component = co.wrap(function * (inputs) {
   const data = _.assignIn({}, {
     author: yield utils.getGitUser()
-  }, inputs, inputs.options)
+  }, inputs)
 
   yield copy(inputs.template, inputs.dest, { data })
+
+  utils.renameFilesFromDir(inputs.dest, inputs.name)
 })
 
 module.exports = {

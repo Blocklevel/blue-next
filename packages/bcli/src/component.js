@@ -22,8 +22,6 @@ module.exports = co.wrap(function * (args) {
     throw error
   }
 
-  utils.renameFilesFromDir(dest, name)
-
   spinner.succeed()
 
   console.log('')

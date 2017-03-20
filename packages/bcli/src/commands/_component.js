@@ -89,7 +89,7 @@ module.exports = function (vorpal) {
       .then(result => {
         return _.assignIn({
           template: blueTemplates.getComponent()
-        }, result)
+        }, result, result.options)
       })
 
       // Here the component is actually generated!
