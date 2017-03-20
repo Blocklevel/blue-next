@@ -4,8 +4,10 @@ const utils = require('../../../src/commons/utils')
 const fs = require('fs')
 const path = require('path')
 const mock = require('mock-fs')
+const sinon = require('sinon')
 
 chai.use(require('chai-fs'))
+chai.use(require('sinon-chai'))
 
 describe('utils.js', function () {
   afterEach(function () {
@@ -36,6 +38,16 @@ describe('utils.js', function () {
 
       expect('./tmp').to.be.a.directory().with.files(['foo.css'])
     })
+
+    it('should throw an error because the folder doesn\'t exist', function () {
+      const spy = sinon.spy()
+
+      try {
+        utils.renameFilesFromDir('foo', 'bar')
+      } catch (error) {
+        expect(spy).threw
+      }
+    })
   })
 
   describe('replaceFilesName', function () {
@@ -52,6 +64,43 @@ describe('utils.js', function () {
       utils.replaceFilesName('tmp', ['__.gitignore', '__.eslintrc'], '__', '')
 
       expect('tmp').to.be.a.directory().with.include.files(['.gitignore', '.eslintrc'])
+    })
+
+    it('should throw an error because the folder doesn\'t exist', function () {
+      const spy = sinon.spy()
+
+      try {
+        utils.replaceFilesName('foo',['__.gitignore', '__.eslintrc'], '__', '')
+      } catch (error) {
+        expect(spy).threw
+      }
+    })
+  })
+
+  describe('renameFiles', function () {
+    it('should ', function () {
+      mock({
+        'tmp': {
+          'foo.js': '',
+          'bar.css': ''
+        }
+      })
+
+      const spy = sinon.spy()
+
+      utils.renameFiles('tmp', ['foo.js', 'bar.css'], 'hello')
+
+      expect('tmp').to.be.a.directory().with.include.files(['hello.js', 'hello.css'])
+    })
+
+    it('should throw an error because the folder doesn\'t exist', function () {
+      const spy = sinon.spy()
+
+      try {
+        utils.renameFiles('foo', ['foo.js', 'bar.css'], 'foo')
+      }catch (e){
+        expect(spy).threw
+      }
     })
   })
 
