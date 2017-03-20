@@ -13,42 +13,56 @@ const bcliVersion = require('../../package.json').version
  * Get the credentials of the current git user
  * @return {Object}
  */
-const getGitUser = co.wrap(function * () {
-  let name = 'username'
-  let email = 'example@domain.com'
-
+const getGitUser = co.wrap(function * (name = '', email = '') {
   /**
    * It's possible that the current user hasn't set up the git global user info.
    * In that case we'll use placeholders.
    */
   try {
-    name = yield execa.shell('git config user.name')
-    email = yield execa.shell('git config user.email')
+    const configName = yield execa.shell('git config user.name')
+    const configEmail = yield execa.shell('git config user.email')
 
-    name = name.stdout
-    email = email.stdout
-  } catch (error) {
-    console.log(chalk.yellow('\n\nGit global credentials not found.\n'))
-  }
+    name = configName.stdout
+    email = configEmail.stdout
+  } catch (error) {}
 
   return { name, email }
 })
 
-const renameFiles = function (dir, files, newName) {
-  if (!newName) {
-    return
-  }
+/**
+ * Replace name of given files
+ * @param  {String} dir
+ * @param  {Array<String>} files
+ * @param  {Regexp|String} substr
+ * @param  {Regexp|String} newSubstr
+ */
+const replaceFilesName = function (dir, files, substr, newSubstr) {
+  files.forEach(file => {
+    fs.rename(`${dir}/${file}`, `${dir}/${file.replace(substr, newSubstr)}`, error => {
+      if (error) {
+        throw new Error('something wrong happend renaming files')
+      }
+    })
+  })
+}
 
+/**
+ * Rename files
+ * @param  {String} dir
+ * @param  {Array<String>} files
+ * @param  {String} newName
+ */
+const renameFiles = function (dir, files, newName) {
   files.forEach(file => {
     const extention = file.split('.')[1]
     const origin = `${dir}/${file}`
     const dest = `${dir}/${newName}.${extention}`
 
-    fs.rename(origin, dest, renameError => {
-      if (renameError) {
-        throw renameError
-      }
-    })
+    try {
+      fs.renameSync(origin, dest)
+    } catch (error) {
+      throw new Error(`an error occured trying to rename files in ${dir} folder`)
+    }
   })
 }
 
@@ -58,8 +72,12 @@ const renameFiles = function (dir, files, newName) {
  * @param  {String} filename
  */
 const renameFilesFromDir = function (dir, newName) {
-  const files = fs.readdirSync(dir)
-  renameFiles(dir, files, newName)
+  try {
+    const files = fs.readdirSync(dir)
+    renameFiles(dir, files, newName)
+  } catch (error) {
+    throw new Error(`the folder ${dir} doesn\'t exist`)
+  }
 }
 
 /**
@@ -131,5 +149,6 @@ module.exports = {
   getEvents,
   isYarn,
   getSemverFromMajor,
-  getSemverFromPackage
+  getSemverFromPackage,
+  replaceFilesName
 }

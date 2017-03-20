@@ -4,10 +4,16 @@ const utils = require('../../../src/commons/utils')
 const fs = require('fs')
 const path = require('path')
 const mock = require('mock-fs')
+const sinon = require('sinon')
 
 chai.use(require('chai-fs'))
+chai.use(require('sinon-chai'))
 
 describe('utils.js', function () {
+  afterEach(function () {
+    mock.restore()
+  })
+
   describe('getGitUser', function () {
     it('should return a github user with name and email', function () {
       return utils.getGitUser().then(function (response) {
@@ -21,7 +27,7 @@ describe('utils.js', function () {
   describe('renameFilesFromDir', function () {
     it('should rename all files in the folder as "foo"', function () {
       mock({
-        './tmp': {
+        'tmp': {
           'index.css': ''
         }
       })
@@ -31,6 +37,70 @@ describe('utils.js', function () {
       utils.renameFilesFromDir('./tmp', 'foo')
 
       expect('./tmp').to.be.a.directory().with.files(['foo.css'])
+    })
+
+    it('should throw an error because the folder doesn\'t exist', function () {
+      const spy = sinon.spy()
+
+      try {
+        utils.renameFilesFromDir('foo', 'bar')
+      } catch (error) {
+        expect(spy).threw
+      }
+    })
+  })
+
+  describe('replaceFilesName', function () {
+    it('should replace files name', function () {
+      mock({
+        'tmp': {
+          '__.gitignore': '',
+          '__.eslintrc': ''
+        }
+      })
+
+      expect('tmp').to.be.a.directory().with.include.files(['__.gitignore', '__.eslintrc'])
+
+      utils.replaceFilesName('tmp', ['__.gitignore', '__.eslintrc'], '__', '')
+
+      expect('tmp').to.be.a.directory().with.include.files(['.gitignore', '.eslintrc'])
+    })
+
+    it('should throw an error because the folder doesn\'t exist', function () {
+      const spy = sinon.spy()
+
+      try {
+        utils.replaceFilesName('foo',['__.gitignore', '__.eslintrc'], '__', '')
+      } catch (error) {
+        expect(spy).threw
+      }
+    })
+  })
+
+  describe('renameFiles', function () {
+    it('should ', function () {
+      mock({
+        'tmp': {
+          'foo.js': '',
+          'bar.css': ''
+        }
+      })
+
+      const spy = sinon.spy()
+
+      utils.renameFiles('tmp', ['foo.js', 'bar.css'], 'hello')
+
+      expect('tmp').to.be.a.directory().with.include.files(['hello.js', 'hello.css'])
+    })
+
+    it('should throw an error because the folder doesn\'t exist', function () {
+      const spy = sinon.spy()
+
+      try {
+        utils.renameFiles('foo', ['foo.js', 'bar.css'], 'foo')
+      }catch (e){
+        expect(spy).threw
+      }
     })
   })
 

@@ -9,9 +9,6 @@ import actions from './actions'
  * @type {Object}
  */
 export default {
-  {{#if hasNamespace}}
-  namespaced: true,
-  {{/if}}
   state,
   mutations,
   getters,
