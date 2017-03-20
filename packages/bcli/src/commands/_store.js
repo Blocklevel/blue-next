@@ -5,6 +5,7 @@ const questions = require('../commons/questions')
 const blueTemplates = require('blue-templates')
 
 module.exports = function (vorpal) {
+  const chalk = vorpal.chalk
 
   vorpal
     .command('store [name]', 'create a vuex store module')
@@ -55,7 +56,13 @@ module.exports = function (vorpal) {
 
         return pathExists(dest)
           .then(exists => {
-            return this.prompt(questions.overwrite(exists && !args.options.force))
+            const overwriteQuestion = _.assignIn({
+              when: function () {
+                return exists && !args.options.force
+              }
+            }, questions.overwrite)
+
+            return this.prompt(overwriteQuestion)
           })
           .then(overwritePromptResult => {
             if (overwritePromptResult.overwrite === false) {

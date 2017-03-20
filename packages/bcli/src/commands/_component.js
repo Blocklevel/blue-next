@@ -71,7 +71,13 @@ module.exports = function (vorpal) {
 
         return pathExists(dest)
           .then(exists => {
-            return this.prompt(questions.overwrite(exists && !args.options.force))
+            const overwriteQuestion = _.assignIn({
+              when: function () {
+                return exists && !args.options.force
+              }
+            }, questions.overwrite)
+
+            return this.prompt(overwriteQuestion)
           })
           .then(overwritePromptResult => {
             if (overwritePromptResult.overwrite === false) {
