@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "test": "lerna run --scope bcli test"
+    "test": "lerna run --scope bcli test",
+    "coverage": "lerna run --scope bcli coverage"
   },
   "devDependencies": {
     "lerna": "2.0.0-beta.38"
