@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-
+const semver = require('semver')
 const chalk = require('chalk')
 
-var currentNodeVersion = process.versions.node
-if (currentNodeVersion.split('.')[0] < 6.10) {
+const currentNodeVersion = process.versions.node
+
+if (!semver.satisfies(currentNodeVersion, '>=6.10.x')) {
   console.error(
     chalk.red(
       'You are running Node ' +
