@@ -12,6 +12,10 @@ const getStylePath = function (dir) {
   return `${dir}/src/asset/style`
 }
 
+const getStoreModulePath = function (dir) {
+  return `${dir}/src/app/store/modules`
+}
+
 const getBlue = function () {
   return getPath('./src/blue')
 }
@@ -29,5 +33,6 @@ module.exports = {
   getPreProcessor,
   getComponent,
   getStoreModule,
-  getStylePath
+  getStylePath,
+  getStoreModulePath
 }

@@ -35,7 +35,21 @@ const component = co.wrap(function * (inputs) {
   utils.renameFilesFromDir(inputs.dest, inputs.name)
 })
 
+/**
+ * Scaffolds a Vuex store module
+ */
+const storeModule = co.wrap(function * (inputs) {
+  const data = _.assignIn({}, inputs, {
+    author: yield utils.getGitUser(),
+    noEvents: !inputs.addEvents,
+    events: utils.getEvents(inputs.events)
+  })
+
+  yield copy(inputs.template, inputs.dest, { data })
+})
+
 module.exports = {
   project,
-  component
+  component,
+  storeModule
 }

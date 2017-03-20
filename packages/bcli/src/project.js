@@ -11,16 +11,16 @@ const scaffold = require('./commons/scaffold')
 
 const spinner = ora()
 
-module.exports = co.wrap(function * (args) {
+module.exports = co.wrap(function * (inputs) {
   const isYarn = yield utils.isYarn()
-  const { dest, name } = args
+  const { dest, name } = inputs
 
   console.log('')
   spinner.text = 'Create project'
   spinner.start()
 
   try {
-    yield scaffold.project(args)
+    yield scaffold.project(inputs)
   } catch (error) {
     spinner.fail()
     throw error

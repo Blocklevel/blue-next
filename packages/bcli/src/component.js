@@ -8,15 +8,15 @@ const scaffold = require('./commons/scaffold')
 
 const spinner = ora()
 
-module.exports = co.wrap(function * (args) {
-  const { name, type, dest } = args
+module.exports = co.wrap(function * (inputs) {
+  const { name, type, dest } = inputs
 
   console.log('')
   spinner.text = `Create a new ${type}`
   spinner.start()
 
   try {
-    yield scaffold.component(args)
+    yield scaffold.component(inputs)
   } catch (error) {
     spinner.fail()
     throw error
