@@ -95,4 +95,33 @@ describe('scaffold.js', function () {
       })
     })
   })
+
+  describe('storeModule', function () {
+    beforeEach(function () {
+      mock({
+        'tmp': {},
+        'store-template': _utils.mockFolder(blueTemplates.getStoreModule())
+      })
+    })
+
+    afterEach(function () {
+      mock.restore()
+    })
+
+    it('should create a store module', function () {
+      return scaffold.storeModule({
+        name: 'foo',
+        dest: 'tmp',
+        template: 'store-template'
+      }).then((response) => {
+        expect('tmp').to.be.a.directory().and.include.files([
+          'actions.js',
+          'mutations.js',
+          'events.js',
+          'index.js',
+          'state.js'
+        ])
+      })
+    })
+  })
 })
