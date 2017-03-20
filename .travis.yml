@@ -11,5 +11,4 @@ before_script:
   - npm prune
 script:
   - lerna bootstrap
-  - npm run test
   - npm run coverage
