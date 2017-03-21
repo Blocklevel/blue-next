@@ -3,7 +3,7 @@ module.exports = {
   loader: 'babel-loader',
   exclude: /node_modules|build/,
   options: {
-    presets: [require.resolve('babel-preset-blue')],
+    presets: ['blue'],
     babelrc: false,
     cacheDirectory: true
   }
