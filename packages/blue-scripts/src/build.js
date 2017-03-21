@@ -11,7 +11,6 @@ const paths = require('./commons/paths')
 module.exports = co.wrap(function * (options) {
   const config = blueConfig.get()
 
-  console.log('') // extra space
   spinner.text = `Building ${chalk.bold.yellow(config.project.title)} project`
   spinner.start()
 
@@ -21,8 +20,6 @@ module.exports = co.wrap(function * (options) {
     new FaviconsWebpackPlugin({
       logo: `${paths.appStatic}/image/favicon.png`,
       prefix: `static/favicon/`,
-      emitStats: true,
-      statsFilename: 'iconstats.json',
       persistentCache: false,
       inject: true,
       background: '#fff',
@@ -33,11 +30,11 @@ module.exports = co.wrap(function * (options) {
         appleStartup: false,
         coast: false,
         favicons: true,
-        firefox: true,
-        opengraph: true,
-        twitter: true,
-        yandex: true,
-        windows: true
+        firefox: false,
+        opengraph: false,
+        twitter: false,
+        yandex: false,
+        windows: false
       }
     })
   )
@@ -56,7 +53,7 @@ module.exports = co.wrap(function * (options) {
 
     process.stdout.write(stats.toString({
       colors: true,
-      modules: true,
+      modules: false,
       children: false,
       chunks: false,
       chunkModules: false
