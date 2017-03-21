@@ -6,6 +6,9 @@ const vue = {
   loader: 'vue-loader',
   options: {
     loaders: {
+      // all javascript that passes via vue-loader needs to pass also
+      // via eslint and babel: babel-loader itself can't reach
+      // these files
       js: combineLoaders([
         require('./babel'),
         require('./eslint')
