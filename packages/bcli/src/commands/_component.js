@@ -87,8 +87,8 @@ module.exports = function (vorpal) {
               process.exit(1)
             }
 
-          return _.assignIn({ dest }, args, mergedResult)
-        })
+            return _.assignIn({ dest }, args, mergedResult)
+          })
       })
 
       // Collecting all data from all questions

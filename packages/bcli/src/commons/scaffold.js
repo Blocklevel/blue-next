@@ -1,5 +1,4 @@
 const utils = require('./utils')
-const fs = require('fs')
 const copy = require('graceful-copy')
 const co = require('co')
 const _ = require('lodash')

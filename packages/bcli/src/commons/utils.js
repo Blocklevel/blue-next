@@ -1,8 +1,6 @@
 const co = require('co')
 const execa = require('execa')
-const chalk = require('chalk')
 const fs = require('fs')
-const questions = require('./questions')
 const _ = require('lodash')
 const detectInstalled = require('detect-installed')
 const fetch = require('node-fetch')
@@ -76,7 +74,7 @@ const renameFilesFromDir = function (dir, newName) {
     const files = fs.readdirSync(dir)
     renameFiles(dir, files, newName)
   } catch (error) {
-    throw new Error(`the folder ${dir} doesn\'t exist`)
+    throw new Error(`the folder ${dir} doesn't exist`)
   }
 }
 

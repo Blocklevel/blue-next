@@ -1,4 +1,4 @@
-const package = require('../../package.json')
+const pkg = require('../../package.json')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -7,6 +7,6 @@ module.exports = function (vorpal) {
     .command('version', 'check current version')
     .alias('-v')
     .action(function (args, callback) {
-      this.log(`you are running version ${chalk.bold(package.version)}`)
+      this.log(`you are running version ${chalk.bold(pkg.version)}`)
     })
 }

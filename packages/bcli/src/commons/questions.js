@@ -1,5 +1,3 @@
-const inquirer = require('inquirer')
-
 const overwrite = {
   type: 'confirm',
   name: 'overwrite',
