@@ -78,19 +78,19 @@ describe('utils.js', function () {
   })
 
   describe('renameFiles', function () {
-    it('should ', function () {
+    it('should renames all listed files as "foo"', function () {
       mock({
         'tmp': {
-          'foo.js': '',
+          'foobar.js': '',
           'bar.css': ''
         }
       })
 
       const spy = sinon.spy()
 
-      utils.renameFiles('tmp', ['foo.js', 'bar.css'], 'hello')
+      utils.renameFiles('tmp', ['foobar.js', 'bar.css'], 'foo')
 
-      expect('tmp').to.be.a.directory().with.include.files(['hello.js', 'hello.css'])
+      expect('tmp').to.be.a.directory().with.include.files(['foo.js', 'foo.css'])
     })
 
     it('should throw an error because the folder doesn\'t exist', function () {
