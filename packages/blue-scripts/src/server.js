@@ -42,6 +42,6 @@ module.exports = co.wrap(function * (options) {
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
 
   server.listen(port, host.value, function () {
-    console.log(`   Starting the server...`)
+    console.log(`\n   Starting the server...`)
   })
 })
