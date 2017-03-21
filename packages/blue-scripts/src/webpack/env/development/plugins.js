@@ -19,6 +19,14 @@ module.exports = [
   new webpack.HotModuleReplacementPlugin(),
 
   new webpack.NoEmitOnErrorsPlugin(),
-  
-  new webpack.NamedModulesPlugin()
+
+  new webpack.NamedModulesPlugin(),
+
+  new webpack.LoaderOptionsPlugin({
+    options: {
+      eslint: {
+        formatter: require('eslint-formatter-pretty')
+      }
+    }
+  })
 ]

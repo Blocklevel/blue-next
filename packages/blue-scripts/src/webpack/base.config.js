@@ -47,13 +47,5 @@ module.exports = {
   module: {
     rules: utils.requireFromFolder(rulesFolder)
   },
-  plugins: [
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        eslint: {
-          formatter: require('eslint-formatter-pretty')
-        }
-      }
-    })
-  ]
+  plugins: []
 }
