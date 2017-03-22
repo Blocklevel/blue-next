@@ -3,6 +3,7 @@ const _ = require('lodash')
 const pathExists = require('path-exists')
 const questions = require('../commons/questions')
 const blueTemplates = require('blue-templates')
+const utils = require('../commons/utils')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -27,7 +28,7 @@ module.exports = function (vorpal) {
         },
         {
           when: function () {
-            return ['component', 'page', 'container'].indexOf(args.type) === -1
+            return typeof args.type !== 'undefined' && !utils.isComponentType(args.type)
           },
           type: 'list',
           name: 'type',
@@ -64,7 +65,13 @@ module.exports = function (vorpal) {
         // It's not possible to know whether data is passed via command line options
         // or via questions. Both results needs to be merged so in any cases
         // a name and a type will always be available
-        const mergedResult = _.assignIn({}, promptResult, args)
+        let mergedResult = _.assignIn({}, promptResult, args)
+
+        // It's not possible to pass a default value if a question is skipped,
+        // so in case the type of component is undefuned: type is 'component'
+        if (!mergedResult.type) {
+          mergedResult.type = 'component'
+        }
 
         const { name, type } = mergedResult
         const dest = `${process.cwd()}/src/app/${type}/${name}`

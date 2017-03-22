@@ -5,6 +5,7 @@ const chalk = require('chalk')
 const currentNodeVersion = process.versions.node
 
 if (!semver.satisfies(currentNodeVersion, '>=6.10.x')) {
+  /* eslint-disable */
   console.error(
     chalk.red(
       'You are running Node ' +
@@ -15,6 +16,7 @@ if (!semver.satisfies(currentNodeVersion, '>=6.10.x')) {
     )
   )
   process.exit(1)
+  /* eslint-enable */
 }
 
 require('./src/cli')

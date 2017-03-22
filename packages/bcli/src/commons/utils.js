@@ -133,6 +133,15 @@ const getSemverFromPackage = co.wrap(function * (pkg, baseVersion = bcliVersion)
 })
 
 /**
+ * Returns true if the type of component is supported
+ * @param  {String} type
+ * @return {Boolean}
+ */
+const isComponentType = function (type) {
+  return ['component', 'page', 'container'].indexOf(type) !== -1
+}
+
+/**
  * Check whether yarn is available for commands
  * @returns {Boolean}
  */
@@ -148,5 +157,6 @@ module.exports = {
   isYarn,
   getSemverFromMajor,
   getSemverFromPackage,
-  replaceFilesName
+  replaceFilesName,
+  isComponentType
 }
