@@ -23,7 +23,7 @@ bcli project my-project
 #### Create a new component
 
 ```bash
-bcli component hello-world component
+bcli component hello-world
 ```
 
 #### Create a new container component
