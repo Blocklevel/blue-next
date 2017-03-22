@@ -1,17 +1,15 @@
+/* global  afterEach describe it beforeEach */
+
 const chai = require('chai')
 const expect = chai.expect
 const scaffold = require('../../../src/commons/scaffold')
 const blueTemplates = require('blue-templates')
-const fs = require('fs')
-const path = require('path')
 const mock = require('mock-fs')
-const _ = require('lodash')
 const _utils = require('../../utils')
 
 chai.use(require('chai-fs'))
 
 describe('scaffold.js', function () {
-
   describe('project', function () {
     const options = {
       name: 'project',
@@ -48,7 +46,6 @@ describe('scaffold.js', function () {
       expect('tmp/src/asset/style').to.be.a.directory().and.include.files(['postcss.config.js'])
     })
   })
-
 
   describe('component', function () {
     beforeEach(function () {

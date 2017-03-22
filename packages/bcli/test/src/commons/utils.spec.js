@@ -1,8 +1,8 @@
+/* global  afterEach describe it */
+
 const chai = require('chai')
 const expect = chai.expect
 const utils = require('../../../src/commons/utils')
-const fs = require('fs')
-const path = require('path')
 const mock = require('mock-fs')
 const sinon = require('sinon')
 
@@ -70,7 +70,7 @@ describe('utils.js', function () {
       const spy = sinon.spy()
 
       try {
-        utils.replaceFilesName('foo',['__.gitignore', '__.eslintrc'], '__', '')
+        utils.replaceFilesName('foo', ['__.gitignore', '__.eslintrc'], '__', '')
       } catch (error) {
         expect(spy).threw
       }
@@ -86,8 +86,6 @@ describe('utils.js', function () {
         }
       })
 
-      const spy = sinon.spy()
-
       utils.renameFiles('tmp', ['foobar.js', 'bar.css'], 'foo')
 
       expect('tmp').to.be.a.directory().with.include.files(['foo.js', 'foo.css'])
@@ -98,7 +96,7 @@ describe('utils.js', function () {
 
       try {
         utils.renameFiles('foo', ['foo.js', 'bar.css'], 'foo')
-      }catch (e){
+      } catch (e) {
         expect(spy).threw
       }
     })
