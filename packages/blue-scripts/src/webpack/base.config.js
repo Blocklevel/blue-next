@@ -18,7 +18,7 @@ module.exports = {
     app: [paths.appEntry]
   },
   output: {
-    path: `${paths.appBuild}`,
+    path: paths.appBuild,
     publicPath: '/',
     chunkFilename: `${paths.appBuildHash}/chunks/[chunkhash:8].js`,
     filename: `${paths.appBuildHash}/[name].js`
