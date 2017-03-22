@@ -17,19 +17,25 @@ npm install -g bcli
 Create a new project just running 
 
 ```bash 
-bcli project
+bcli project my-project
 ```
 
 #### Create a new component
 
 ```bash
-bcli component
+bcli component hello-world component
 ```
 
-#### Create a new page
+#### Create a new container component
 
 ```bash
-bcli page
+bcli component hello-world container
+```
+
+#### Create a new page component
+
+```bash
+bcli component hello-world page
 ```
 
 #### Create a new vuex store module
