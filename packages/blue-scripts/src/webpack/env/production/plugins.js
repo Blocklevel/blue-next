@@ -66,7 +66,7 @@ module.exports = [
   }),
 
   new ExtractTextPlugin({
-    filename: `${process.env.VERSION_STRING}/[name].css`,
+    filename: `${paths.appBuildHash}/[name].css`,
     ignoreOrder: true,
     allChunks: true
   }),

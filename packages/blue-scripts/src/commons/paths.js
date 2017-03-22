@@ -16,6 +16,7 @@ module.exports = {
   appRoot: resolveApp('./src/app'),
   appEntry: resolveApp('./src/bootstrap.js'),
   appBuild: resolveApp('./build'),
+  appBuildHash: process.env.VERSION_STRING || '[hash:6]',
   appSrc: resolveApp('./src'),
   appStatic: resolveApp('./static'),
   appHTMLIndex: resolveApp('./index.html'),
