@@ -43,6 +43,8 @@
     "file-loader": "^0.10.0",
     "friendly-errors-webpack-plugin": "^1.1.2",
     "html-webpack-plugin": "^2.26.0",
+    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-webpack-plugin": "^1.4.4",
     "ip": "^1.1.5",
     "lodash": "^4.17.4",
     "normalize.css": "^5.0.0",
