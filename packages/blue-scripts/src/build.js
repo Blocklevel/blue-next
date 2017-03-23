@@ -6,6 +6,9 @@ const chalk = require('chalk')
 const spinner = ora()
 const blueConfig = require('./commons/config')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const ImageminPlugin = require('imagemin-webpack-plugin').default
+const imageminMozjpeg = require('imagemin-mozjpeg')
+
 const paths = require('./commons/paths')
 
 module.exports = co.wrap(function * (options) {
@@ -37,6 +40,21 @@ module.exports = co.wrap(function * (options) {
         windows: false
       }
     })
+  )
+
+  config.webpack.plugins.push(
+    new ImageminPlugin({
+      disable: false, // Disable the plugin here
+      plugins: [
+        imageminMozjpeg({
+          quality: 65,
+          progressive: true
+        })
+      ],
+      pngquant: {
+        quality: '95-100'
+      }
+    })
   )
 
   webpack(config.webpack, function (error, stats) {
