@@ -41,7 +41,7 @@ module.exports = {
 
     'no-unused-vars': 1,
     'no-use-before-define': 1,
-    'max-len': [2, { 'code': 100, 'ignoreUrls': true }],
+    'max-len': [2, { 'code': 130, 'ignoreUrls': true }],
     'vue/jsx-uses-vars': 2
   }
 }

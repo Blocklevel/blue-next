@@ -1,28 +1,14 @@
-require('any-observable/register/rxjs-all')
-
 const scaffold = require('../commons/scaffold')
-const Observable = require('any-observable')
-const streamToObservable = require('stream-to-observable')
-const split = require('split')
 const fs = require('fs')
-const execa = require('execa')
 const del = require('del')
 const Listr = require('listr')
+const utils = require('../commons/utils')
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them
 process.on('unhandledRejection', err => {
   throw err
 })
-
-const exec = (cmd, args) => {
-  const cp = execa(cmd, args)
-
-  return Observable.merge(
-    streamToObservable(cp.stdout.pipe(split()), {await: cp}),
-    streamToObservable(cp.stderr.pipe(split()), {await: cp})
-  ).filter(Boolean)
-}
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -58,7 +44,7 @@ module.exports = function (vorpal) {
           title: 'Install Blue templates',
           task: () => {
             process.chdir(dir)
-            return exec('npm', ['install', 'blue-templates'])
+            return utils.exec('npm', ['install', 'blue-templates'])
           }
         },
         {
@@ -77,7 +63,7 @@ module.exports = function (vorpal) {
         },
         {
           title: 'Install project dependencies',
-          task: () => exec('npm', ['install'])
+          task: () => utils.exec('npm', ['install'])
         }
       ])
 

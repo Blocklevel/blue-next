@@ -1,3 +1,5 @@
+require('any-observable/register/rxjs-all')
+
 const co = require('co')
 const execa = require('execa')
 const fs = require('fs')
@@ -6,7 +8,18 @@ const detectInstalled = require('detect-installed')
 const fetch = require('node-fetch')
 const semver = require('semver')
 const bcliVersion = require('../../package.json').version
+const Observable = require('any-observable')
+const streamToObservable = require('stream-to-observable')
+const split = require('split')
 
+const exec = function (cmd, args) {
+  const cp = execa(cmd, args)
+
+  return Observable.merge(
+    streamToObservable(cp.stdout.pipe(split()), {await: cp}),
+    streamToObservable(cp.stderr.pipe(split()), {await: cp})
+  ).filter(Boolean)
+}
 /**
  * Get the credentials of the current git user
  * @return {Object}
@@ -158,5 +171,6 @@ module.exports = {
   getSemverFromMajor,
   getSemverFromPackage,
   replaceFilesName,
-  isComponentType
+  isComponentType,
+  exec
 }

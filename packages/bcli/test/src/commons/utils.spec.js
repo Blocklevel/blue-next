@@ -142,4 +142,12 @@ describe('utils.js', function () {
       expect(version).to.equal('0.0.8')
     })
   })
+
+  describe('isComponentType', function () {
+    it('should return true if component, container or page is passed as parameter', function () {
+      expect(utils.isComponentType('component')).to.be.true
+      expect(utils.isComponentType('container')).to.be.true
+      expect(utils.isComponentType('page')).to.be.true
+    })
+  })
 })

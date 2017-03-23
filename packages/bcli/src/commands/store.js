@@ -1,8 +1,7 @@
-const generateStoreModule = require('../store')
 const _ = require('lodash')
-const pathExists = require('path-exists')
+const fs = require('fs')
 const questions = require('../commons/questions')
-const blueTemplates = require('blue-templates')
+const scaffold = require('../commons/scaffold')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -12,6 +11,8 @@ module.exports = function (vorpal) {
     .option('-f, --force', 'Force file overwrite')
     .alias('s')
     .action(function (args, callback) {
+      const blueTemplates = require(`${process.cwd()}/node_modules/blue-templates`)
+
       this.prompt([
         {
           when: function () {
@@ -53,27 +54,23 @@ module.exports = function (vorpal) {
         // a name and a type will always be available
         const mergedResult = _.assignIn({}, promptResult, args)
         const dest = `${blueTemplates.getStoreModulePath(process.cwd())}/${mergedResult.name}`
+        const exists = fs.existsSync(dest)
+        const overwriteQuestion = _.assignIn({
+          when: function () {
+            return exists && !args.options.force
+          }
+        }, questions.overwrite)
 
-        return pathExists(dest)
-          .then(exists => {
-            const overwriteQuestion = _.assignIn({
-              when: function () {
-                return exists && !args.options.force
-              }
-            }, questions.overwrite)
+        return this.prompt(overwriteQuestion).then(answer => {
+          if (answer.overwrite === false) {
+            this.log('')
+            this.log('   Ok thanks bye!')
+            this.log('')
+            process.exit(1)
+          }
 
-            return this.prompt(overwriteQuestion)
-          })
-          .then(overwritePromptResult => {
-            if (overwritePromptResult.overwrite === false) {
-              this.log('')
-              this.log(chalk.yellow('   Ok thanks bye!'))
-              this.log('')
-              process.exit(1)
-            }
-
-            return _.assignIn({ dest }, args, mergedResult)
-          })
+          return _.assignIn({ dest }, args, mergedResult)
+        })
       })
 
       // Collecting all data from all questions
@@ -84,11 +81,19 @@ module.exports = function (vorpal) {
       })
 
       // Here the store module is actually generated!
-      .then(generateStoreModule)
+      .then(scaffold.storeModule)
 
-      // When the component is generated we need to fire the callback
-      // provided by the action to bring the terminal back to the delimiter
-      .then(callback)
+      // Done!
+      .then(() => {
+        this.log('')
+        this.log(`   Vuex store module ${chalk.yellow.bold(args.name)} created!`)
+        this.log('   The module is autoloaded in your application!')
+        this.log('')
+
+        // When the component is generated we need to fire the callback
+        // provided by the action to bring the terminal back to the delimiter
+        callback()
+      })
 
       .catch(error => {
         this.log('')
