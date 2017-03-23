@@ -1,8 +1,13 @@
-const generateProject = require('../project')
-const _ = require('lodash')
-const pathExists = require('path-exists')
-const questions = require('../commons/questions')
-const blueTemplates = require('blue-templates')
+require('any-observable/register/rxjs-all')
+
+const scaffold = require('../commons/scaffold')
+const Observable = require('any-observable')
+const streamToObservable = require('stream-to-observable')
+const split = require('split')
+const fs = require('fs')
+const execa = require('execa')
+const del = require('del')
+const Listr = require('listr')
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them
@@ -10,82 +15,97 @@ process.on('unhandledRejection', err => {
   throw err
 })
 
+const exec = (cmd, args) => {
+  const cp = execa(cmd, args)
+
+  return Observable.merge(
+    streamToObservable(cp.stdout.pipe(split()), {await: cp}),
+    streamToObservable(cp.stderr.pipe(split()), {await: cp})
+  ).filter(Boolean)
+}
+
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
+  const cwd = process.cwd()
 
   vorpal
-    .command('project [name]', 'create a new project with Blue <3')
+    .command('project <name>', 'create a new project with Blue <3')
     .option('-f, --force', 'Force file overwrite')
+    .option('--verbose')
     .alias('p')
     .action(function (args, callback) {
-      this.prompt({
-        when: function () {
-          return !args.name
+      const dir = `${cwd}/${args.name}`
+      const dirExists = fs.existsSync(dir)
+
+      if (dirExists && !args.options.force) {
+        this.log(chalk.red(`Folder ${dir} already exists. Pass --force flag to overwrite it.`))
+        process.exit(1)
+      }
+
+      this.log('')
+
+      const tasks = new Listr([
+        {
+          title: 'Delete existing project folder',
+          enabled: () => dirExists,
+          task: () => del(dir)
         },
-        type: 'input',
-        name: 'name',
-        message: 'What\'s the name of the project?',
-        validate: function (answer) {
-          return answer !== ''
+        {
+          title: 'Create project folder',
+          task: () => fs.mkdirSync(dir)
+        },
+        {
+          title: 'Install Blue templates',
+          task: () => {
+            process.chdir(dir)
+            return exec('npm', ['install', 'blue-templates'])
+          }
+        },
+        {
+          title: 'Scaffold the project',
+          task: () => {
+            const blueTemplates = require(`${dir}/node_modules/blue-templates`)
+
+            return scaffold.project({
+              name: args.name,
+              dest: dir,
+              template: blueTemplates.getBlue(),
+              cssTemplate: blueTemplates.getPreProcessor('postcss'),
+              templateCssFolder: blueTemplates.getStylePath(dir)
+            })
+          }
+        },
+        {
+          title: 'Install project dependencies',
+          task: () => exec('npm', ['install'])
         }
-      })
+      ])
 
-      // Check if the folder is not already there, so we can ask for to overwrite or not
-      .then(response => {
-        const mergedResponse = _.assignIn({}, args, response)
-        const dest = `${process.cwd()}/${mergedResponse.name}`
+      tasks.run()
+        .then(result => {
+          this.log('')
+          this.log(chalk.bold('\n   Website!!!'))
+          this.log('\n   New project', chalk.yellow.bold(args.name), 'was created successfully!')
+          this.log(chalk.bold('\n   To get started:\n'))
+          this.log(chalk.italic(`     cd ${args.name} && npm run dev`))
+          this.log('')
+        })
+        .catch(error => {
+          this.log('')
+          this.log(chalk.red(error.message))
 
-        return pathExists(dest)
-          .then(exists => {
-            const overwriteQuestion = _.assignIn({
-              when: function () {
-                return exists && !args.options.force
-              }
-            }, questions.overwrite)
-
-            return this.prompt(overwriteQuestion)
-          })
-          .then(overwritePromptResult => {
-            if (overwritePromptResult.overwrite === false) {
-              this.log('')
-              this.log(chalk.yellow('   Ok thanks bye!'))
-              this.log('')
-              process.exit(1)
-            }
-
-            return _.assignIn({ dest }, mergedResponse)
-          })
-      })
-
-      // Collecting all data from all questions
-      .then((response) => {
-        const data = _.assignIn({
-          template: blueTemplates.getBlue(),
-          cssTemplate: blueTemplates.getPreProcessor('postcss'),
-          templateCssFolder: blueTemplates.getStylePath(response.dest)
-        }, response)
-
-        return generateProject(data)
-      })
-
-      // When the project creation is completed, we need to kill the cli
-      // because we need to change directory and start the project.
-      // there's no need to leave the node process active in the bcli$ delimiter
-      .then(() => {
-        vorpal.ui.cancel()
-      })
-
-      .catch(error => {
-        this.log('')
-        throw error
-      })
+          // go verbose!
+          if (args.options.verbose) {
+            this.log('')
+            this.log(error)
+          }
+        })
     })
 
     // We need to kill all process if during the questions ctrl+c is called
     // otherwise the application might crashes
     // see dthree/vorpal/issues/220
     .cancel(function () {
-      this.log('')
       process.exit(1)
     })
 }
