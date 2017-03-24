@@ -1,5 +1,7 @@
+// required by any-observable package to run shortcuts
 require('any-observable/register/rxjs-all')
 
+const log = require('./log')
 const co = require('co')
 const execa = require('execa')
 const fs = require('fs')
@@ -11,6 +13,21 @@ const bcliVersion = require('../../package.json').version
 const Observable = require('any-observable')
 const streamToObservable = require('stream-to-observable')
 const split = require('split')
+
+/**
+ * Detects if the blue.config.js file exists, so we know we are in the root of a project
+ * @return {Boolean}
+ */
+const canCommandRun = function () {
+  const exists = fs.existsSync('./blue.config.js')
+
+  if (!exists) {
+    log.error('No Blue config file found. You need to run the command in the root of your project')
+    process.exit(1)
+  }
+
+  return true
+}
 
 const exec = function (cmd, args) {
   const cp = execa(cmd, args)
@@ -51,7 +68,7 @@ const replaceFilesName = function (dir, files, substr, newSubstr) {
   files.forEach(file => {
     fs.rename(`${dir}/${file}`, `${dir}/${file.replace(substr, newSubstr)}`, error => {
       if (error) {
-        throw new Error('something wrong happend renaming files')
+        log.error('something wrong happend renaming files')
       }
     })
   })
@@ -72,7 +89,7 @@ const renameFiles = function (dir, files, newName) {
     try {
       fs.renameSync(origin, dest)
     } catch (error) {
-      throw new Error(`an error occured trying to rename files in ${dir} folder`)
+      log.error(`an error occured trying to rename files in ${dir} folder`)
     }
   })
 }
@@ -87,7 +104,7 @@ const renameFilesFromDir = function (dir, newName) {
     const files = fs.readdirSync(dir)
     renameFiles(dir, files, newName)
   } catch (error) {
-    throw new Error(`the folder ${dir} doesn't exist`)
+    log.error(`the folder ${dir} doesn't exist`)
   }
 }
 
@@ -172,5 +189,6 @@ module.exports = {
   getSemverFromPackage,
   replaceFilesName,
   isComponentType,
-  exec
+  exec,
+  canCommandRun
 }

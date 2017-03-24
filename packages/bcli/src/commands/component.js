@@ -13,6 +13,9 @@ module.exports = function (vorpal) {
     .option('--hooks', 'Add basic component hooks')
     .alias('c')
     .action(function (args, callback) {
+      // the command needs to run in the root of the project
+      utils.canCommandRun()
+
       this.prompt([
         {
           when: function () {
