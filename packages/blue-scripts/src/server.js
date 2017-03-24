@@ -13,7 +13,7 @@ const ip = require('ip')
 module.exports = co.wrap(function * (options) {
   const config = blueConfig.get()
   const webpackConfig = config.webpack
-  const port = yield detectPort(webpackConfig.devServer.port)
+  const port = yield detectPort
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`
 
