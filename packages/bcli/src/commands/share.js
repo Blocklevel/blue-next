@@ -10,6 +10,7 @@ module.exports = function (vorpal) {
     .command('share <port>', 'share your localhost with a secure tunnel')
     .action(function (args, callback) {
       const hasPackage = detectInstalled.sync('ngrok')
+
       const tasks = new Listr([
         {
           title: 'Installing ngrok package',
@@ -26,7 +27,13 @@ module.exports = function (vorpal) {
               process.exit()
             }
 
-            this.log(`   ${chalk.italic(url)}`)
+            // Pure visual stuff.
+            // I like a space after the task is completed
+            if (!hasPackage) {
+              this.log('')
+            }
+
+            this.log(`   Sharing at ${chalk.italic(url)}`)
             this.log('')
           })
         })
