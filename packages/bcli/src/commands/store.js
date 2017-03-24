@@ -2,6 +2,8 @@ const _ = require('lodash')
 const fs = require('fs')
 const questions = require('../commons/questions')
 const scaffold = require('../commons/scaffold')
+const utils = require('../commons/utils')
+const log = require('../commons/log')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -11,6 +13,9 @@ module.exports = function (vorpal) {
     .option('-f, --force', 'Force file overwrite')
     .alias('s')
     .action(function (args, callback) {
+      // the command needs to run in the root of the project
+      utils.canCommandRun()
+
       const blueTemplates = require(`${process.cwd()}/node_modules/blue-templates`)
 
       this.prompt([
@@ -97,7 +102,7 @@ module.exports = function (vorpal) {
 
       .catch(error => {
         this.log('')
-        throw error
+        log.error(error, true)
       })
     })
 

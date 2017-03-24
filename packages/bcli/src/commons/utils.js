@@ -23,7 +23,6 @@ const canCommandRun = function () {
 
   if (!exists) {
     log.error('No Blue config file found. You need to run the command in the root of your project')
-    process.exit(1)
   }
 
   return true

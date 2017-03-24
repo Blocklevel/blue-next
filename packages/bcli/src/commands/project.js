@@ -3,6 +3,7 @@ const fs = require('fs')
 const del = require('del')
 const Listr = require('listr')
 const utils = require('../commons/utils')
+const log = require('../commons/log')
 
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them
@@ -24,8 +25,7 @@ module.exports = function (vorpal) {
       const dirExists = fs.existsSync(dir)
 
       if (dirExists && !args.options.force) {
-        this.log(chalk.red(`Folder ${dir} already exists. Pass --force flag to overwrite it.`))
-        process.exit(1)
+        log.error(`Folder ${dir} already exists. Pass --force flag to overwrite it.`)
       }
 
       this.log('')
@@ -78,12 +78,12 @@ module.exports = function (vorpal) {
         })
         .catch(error => {
           this.log('')
-          this.log(chalk.red(error.message))
+          log.error(error.message)
 
           // go verbose!
           if (args.options.verbose) {
             this.log('')
-            this.log(error)
+            log.error(error, true)
           }
         })
     })

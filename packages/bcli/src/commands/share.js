@@ -2,6 +2,7 @@ const detectInstalled = require('detect-installed')
 const Listr = require('listr')
 const utils = require('../commons/utils')
 const globalModules = require('global-modules')
+const log = require('../commons/log')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -23,8 +24,7 @@ module.exports = function (vorpal) {
         .then(() => {
           require(`${globalModules}/ngrok`).connect('8080', (error, url) => {
             if (error) {
-              this.log(error)
-              process.exit()
+              log.error(error.message)
             }
 
             // Pure visual stuff.

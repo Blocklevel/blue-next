@@ -3,6 +3,7 @@ const questions = require('../commons/questions')
 const utils = require('../commons/utils')
 const scaffold = require('../commons/scaffold')
 const fs = require('fs')
+const log = require('../commons/log')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -125,7 +126,7 @@ module.exports = function (vorpal) {
 
       .catch(error => {
         this.log('')
-        throw error
+        log.error(error, true)
       })
     })
 
