@@ -48,7 +48,7 @@ module.exports = function (vorpal) {
           }
         },
         {
-          title: 'Scaffold the project',
+          title: 'Scaffold project',
           task: () => {
             const blueTemplates = require(`${dir}/node_modules/blue-templates`)
 
@@ -62,7 +62,7 @@ module.exports = function (vorpal) {
           }
         },
         {
-          title: 'Install project dependencies',
+          title: 'Install dependencies',
           task: () => utils.exec('npm', ['install'])
         }
       ])
