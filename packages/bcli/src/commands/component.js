@@ -1,9 +1,9 @@
-const generateComponent = require('../component')
 const _ = require('lodash')
-const pathExists = require('path-exists')
 const questions = require('../commons/questions')
-const blueTemplates = require('blue-templates')
 const utils = require('../commons/utils')
+const scaffold = require('../commons/scaffold')
+const fs = require('fs')
+const log = require('../commons/log')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -14,6 +14,9 @@ module.exports = function (vorpal) {
     .option('--hooks', 'Add basic component hooks')
     .alias('c')
     .action(function (args, callback) {
+      // the command needs to run in the root of the project
+      utils.canCommandRun()
+
       this.prompt([
         {
           when: function () {
@@ -75,46 +78,55 @@ module.exports = function (vorpal) {
 
         const { name, type } = mergedResult
         const dest = `${process.cwd()}/src/app/${type}/${name}`
+        const exists = fs.existsSync(dest)
+        const overwriteQuestion = _.assignIn({
+          when: function () {
+            return exists && !args.options.force
+          }
+        }, questions.overwrite)
 
-        return pathExists(dest)
-          .then(exists => {
-            const overwriteQuestion = _.assignIn({
-              when: function () {
-                return exists && !args.options.force
-              }
-            }, questions.overwrite)
+        return this.prompt(overwriteQuestion).then(answer => {
+          if (answer.overwrite === false) {
+            this.log('')
+            this.log('   Ok thanks bye!')
+            this.log('')
+            process.exit(1)
+          }
 
-            return this.prompt(overwriteQuestion)
-          })
-          .then(overwritePromptResult => {
-            if (overwritePromptResult.overwrite === false) {
-              this.log('')
-              this.log(chalk.yellow('   Ok thanks bye!'))
-              this.log('')
-              process.exit(1)
-            }
-
-            return _.assignIn({ dest }, args, mergedResult)
-          })
+          return _.assignIn({ dest }, args, mergedResult)
+        })
       })
 
       // Collecting all data from all questions
       .then(result => {
+        const blueTemplates = require(`${process.cwd()}/node_modules/blue-templates`)
+
         return _.assignIn({
           template: blueTemplates.getComponent()
         }, result, result.options)
       })
 
       // Here the component is actually generated!
-      .then(generateComponent)
+      .then(result => scaffold.component(result).then(() => result))
 
-      // When the component is generated we need to fire the callback
-      // provided by the action to bring the terminal back to the delimiter
-      .then(callback)
+      // Done!
+      .then(result => {
+        const { type, name } = result
+
+        this.log('')
+        this.log(`   ${_.startCase(type)}`, chalk.yellow.bold(name), 'was created successfully!')
+        this.log('')
+        this.log(chalk.italic(`    import ${_.camelCase(name)} from '${type}/${name}/${name}.vue'`))
+        this.log('')
+
+        // When the component is generated we need to fire the callback
+        // provided by the action to bring the terminal back to the delimiter
+        callback()
+      })
 
       .catch(error => {
         this.log('')
-        throw error
+        log.error(error, true)
       })
     })
 

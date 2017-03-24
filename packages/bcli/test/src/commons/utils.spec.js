@@ -1,5 +1,7 @@
 /* global  afterEach describe it */
 
+process.env.NODE_ENV = 'test'
+
 const chai = require('chai')
 const expect = chai.expect
 const utils = require('../../../src/commons/utils')
@@ -140,6 +142,14 @@ describe('utils.js', function () {
 
       expect(version).to.be.a('string')
       expect(version).to.equal('0.0.8')
+    })
+  })
+
+  describe('isComponentType', function () {
+    it('should return true if component, container or page is passed as parameter', function () {
+      expect(utils.isComponentType('component')).to.be.true
+      expect(utils.isComponentType('container')).to.be.true
+      expect(utils.isComponentType('page')).to.be.true
     })
   })
 })

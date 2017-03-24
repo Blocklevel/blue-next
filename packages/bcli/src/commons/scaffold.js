@@ -13,8 +13,8 @@ const project = co.wrap(function * (inputs) {
     blueScriptsVersion: yield utils.getSemverFromPackage('blue-scripts')
   }
 
-  yield copy(inputs.template, inputs.dest, { data })
-  yield copy(inputs.cssTemplate, inputs.templateCssFolder, data)
+  yield copy(inputs.template, inputs.dest, { data, clean: false })
+  yield copy(inputs.cssTemplate, inputs.templateCssFolder, { data, clean: false })
 
   // see Blocklevel/blue-next/issues/41
   // see Blocklevel/blue-next/issues/44
