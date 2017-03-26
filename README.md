@@ -2,7 +2,9 @@
   <img  src="http://i.imgur.com/QmJrU0A.png" width="150" />
   <br />
   <br />
-  <img src="https://travis-ci.org/Blocklevel/blue-next.svg?branch=master" />
+  <a href="https://travis-ci.org/Blocklevel/blue-next">
+    <img src="https://travis-ci.org/Blocklevel/blue-next.svg?branch=master" />
+  </a>
 </p>
 
 
