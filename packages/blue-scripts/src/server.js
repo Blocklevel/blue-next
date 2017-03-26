@@ -22,6 +22,7 @@ module.exports = co.wrap(function * (options) {
   const port = yield detectPort
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`
+
   const messages = [
     // see https://github.com/Blocklevel/blue-next/issues/25
     `Project ${chalk.bold.blue(config.project.title)} is running on http://${host.display}:${port}\n`,
