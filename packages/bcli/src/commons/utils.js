@@ -28,6 +28,12 @@ const canCommandRun = function () {
   return true
 }
 
+/**
+ * Streaming stdout with `execa`
+ * @param  {String} cmd
+ * @param  {Array<String>} args
+ * @return {Observable}
+ */
 const exec = function (cmd, args) {
   const cp = execa(cmd, args)
 

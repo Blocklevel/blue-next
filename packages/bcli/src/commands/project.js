@@ -5,12 +5,6 @@ const Listr = require('listr')
 const utils = require('../commons/utils')
 const log = require('../commons/log')
 
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them
-process.on('unhandledRejection', err => {
-  throw err
-})
-
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
   const cwd = process.cwd()

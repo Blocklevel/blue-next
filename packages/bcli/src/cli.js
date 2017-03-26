@@ -1,5 +1,11 @@
 const vorpal = require('vorpal')()
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them
+process.on('unhandledRejection', err => {
+  throw err
+})
+
 // Add all commands
 vorpal.use(require('./commands/project'))
 vorpal.use(require('./commands/component'))
