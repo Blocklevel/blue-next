@@ -5,64 +5,42 @@ const ora = require('ora')
 const chalk = require('chalk')
 const spinner = ora()
 const blueConfig = require('./commons/config')
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const ImageminPlugin = require('imagemin-webpack-plugin').default
-const imageminMozjpeg = require('imagemin-mozjpeg')
-
+const Progress = require('webpack/lib/ProgressPlugin')
 const paths = require('./commons/paths')
+const _ = require('lodash')
+
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them
+process.on('unhandledRejection', err => {
+  throw err
+})
 
 module.exports = co.wrap(function * (options) {
   const config = blueConfig.get()
 
-  spinner.text = `Building ${chalk.bold.yellow(config.project.title)} project`
+  console.log('')
+  console.log(`Build ${chalk.bold.yellow(config.project.title)} project`)
+  console.log('')
+
   spinner.start()
 
-  // FaviconsWebpackPlugin needs to be added at the end so we can overwrite
-  // options with blue.config.js file
-  config.webpack.plugins.push(
-    new FaviconsWebpackPlugin({
-      logo: `${paths.appStatic}/image/favicon.png`,
-      prefix: `static/favicon/`,
-      persistentCache: false,
-      inject: true,
-      background: '#fff',
-      title: config.project.title,
-      icons: {
-        android: true,
-        appleIcon: true,
-        appleStartup: false,
-        coast: false,
-        favicons: true,
-        firefox: false,
-        opengraph: false,
-        twitter: false,
-        yandex: false,
-        windows: false
-      }
-    })
-  )
+  if (config.isConfigurationModified) {
+    spinner.text = 'Apply webpack proxy changes'
+    spinner.succeed()
+  }
 
-  config.webpack.plugins.push(
-    new ImageminPlugin({
-      disable: false, // Disable the plugin here
-      plugins: [
-        imageminMozjpeg({
-          quality: 65,
-          progressive: true
-        })
-      ],
-      pngquant: {
-        quality: '95-100'
-      }
-    })
-  )
+  spinner.text = 'Compile project'
+  spinner.start()
 
-  webpack(config.webpack, function (error, stats) {
+  const compile = webpack(config.webpack)
+
+  if (config.webpackVerboseOutput) {
+    compile.apply(new Progress())
+  }
+
+  compile.run(function (error, stats) {
     if (error) {
-      spinner.fail()
-      console.log('')
       console.log(chalk.red(error))
-      console.log('')
       process.exit(1)
     }
 
@@ -71,6 +49,9 @@ module.exports = co.wrap(function * (options) {
 
     process.stdout.write(stats.toString({
       colors: true,
+      hash: false,
+      version: false,
+      timings: false,
       modules: false,
       children: false,
       chunks: false,

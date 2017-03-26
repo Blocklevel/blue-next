@@ -2147,9 +2147,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-blocklevel@^1.0.0-beta.13:
-  version "1.0.0-beta.13"
-  resolved "https://registry.yarnpkg.com/eslint-config-blocklevel/-/eslint-config-blocklevel-1.0.0-beta.13.tgz#25b219cc71a219a94a48f2302a83af5964bd4644"
+eslint-config-blocklevel@^1.0.0-beta.16:
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/eslint-config-blocklevel/-/eslint-config-blocklevel-1.0.0-beta.16.tgz#6e487b284cd19953d91451d97bae5738b3ef3199"
   dependencies:
     eslint-config-standard "^6.2.1"
     eslint-plugin-import "^2.2.0"

@@ -10,25 +10,34 @@ const co = require('co')
 const blueConfig = require('./commons/config')
 const ip = require('ip')
 
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them
+process.on('unhandledRejection', err => {
+  throw err
+})
+
 module.exports = co.wrap(function * (options) {
   const config = blueConfig.get()
   const webpackConfig = config.webpack
   const port = yield detectPort
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`
+  const messages = [
+    // see https://github.com/Blocklevel/blue-next/issues/25
+    `Project ${chalk.bold.blue(config.project.title)} is running on http://${host.display}:${port}\n`,
+    `Your current ip address ${ip.address()}\n`
+  ]
+
+  if (config.isConfigurationModified) {
+    messages.push('Webpack configuration is modified via proxies')
+  }
 
   // Add the FriendlyErrorsWebpackPlugin after everything is sorted.
   // We need this to be able to change server port in runtime and
   // display the current project and where it's served.
   webpackConfig.plugins.push(
     new FriendlyErrorsWebpackPlugin({
-      compilationSuccessInfo: {
-        messages: [
-          // see https://github.com/Blocklevel/blue-next/issues/25
-          `Project ${chalk.bold.blue(config.project.title)} is running on http://${host.display}:${port}\n`,
-          `Your current ip address ${ip.address()}`
-        ]
-      }
+      compilationSuccessInfo: { messages }
     })
   )
 

@@ -7,6 +7,10 @@ const resolveApp = function (relativePath) {
   return path.resolve(appDirectory, relativePath)
 }
 
+const resolvePkg = function (relativePath) {
+  return path.resolve(__dirname, '../', relativePath)
+}
+
 module.exports = {
   appDirectory: resolveApp('.'),
   ownNodeModules: resolveApp('node_modules/blue-scripts/node_modules'),
@@ -20,5 +24,6 @@ module.exports = {
   appSrc: resolveApp('./src'),
   appStatic: resolveApp('./static'),
   appHTMLIndex: resolveApp('./index.html'),
+  webpackRules: resolvePkg('./webpack/rules'),
   blueScripts: resolveApp('node_modules/blue-scripts')
 }

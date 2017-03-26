@@ -2,7 +2,6 @@
 const paths = require('../commons/paths')
 const path = require('path')
 const utils = require('../commons/utils')
-const rulesFolder = path.resolve(__dirname, './rules/')
 const webpack = require('webpack')
 
 /**
@@ -45,7 +44,7 @@ module.exports = {
     ]
   },
   module: {
-    rules: utils.requireFromFolder(rulesFolder)
+    rules: utils.requireFromFolder(paths.webpackRules)
   },
   plugins: []
 }

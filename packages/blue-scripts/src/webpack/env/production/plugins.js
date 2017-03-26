@@ -6,6 +6,9 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const paths = require('../../../commons/paths')
 const WebpackManifestPlugin = require('webpack-manifest-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const ImageminPlugin = require('imagemin-webpack-plugin').default
+const imageminMozjpeg = require('imagemin-mozjpeg')
 
 module.exports = [
   new webpack.DefinePlugin({
@@ -80,5 +83,38 @@ module.exports = [
       from: './static',
       to: './static'
     }
-  ])
+  ]),
+
+  new FaviconsWebpackPlugin({
+    logo: `${paths.appStatic}/image/favicon.png`,
+    prefix: `static/favicon/`,
+    persistentCache: false,
+    inject: true,
+    background: '#fff',
+    icons: {
+      android: true,
+      appleIcon: true,
+      appleStartup: false,
+      coast: false,
+      favicons: true,
+      firefox: false,
+      opengraph: false,
+      twitter: false,
+      yandex: false,
+      windows: false
+    }
+  }),
+
+  new ImageminPlugin({
+    disable: false,
+    plugins: [
+      imageminMozjpeg({
+        quality: 65,
+        progressive: true
+      })
+    ],
+    pngquant: {
+      quality: '95-100'
+    }
+  })
 ]
