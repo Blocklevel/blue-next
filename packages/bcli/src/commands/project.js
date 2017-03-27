@@ -4,6 +4,7 @@ const del = require('del')
 const Listr = require('listr')
 const utils = require('../commons/utils')
 const log = require('../commons/log')
+const tmp = require('tmp')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -17,6 +18,7 @@ module.exports = function (vorpal) {
     .action(function (args, callback) {
       const dir = `${cwd}/${args.name}`
       const dirExists = fs.existsSync(dir)
+      const tmpFolder = tmp.dirSync({ unsafeCleanup: true })
 
       if (dirExists && !args.options.force) {
         log.error(`Folder ${dir} already exists. Pass --force flag to overwrite it.`)
@@ -37,14 +39,14 @@ module.exports = function (vorpal) {
         {
           title: 'Install Blue templates',
           task: () => {
-            process.chdir(dir)
+            process.chdir(tmpFolder.name)
             return utils.exec('npm', ['install', 'blue-templates'])
           }
         },
         {
           title: 'Scaffold project',
           task: () => {
-            const blueTemplates = require(`${dir}/node_modules/blue-templates`)
+            const blueTemplates = require(`${tmpFolder.name}/node_modules/blue-templates`)
 
             return scaffold.project({
               name: args.name,
@@ -57,7 +59,10 @@ module.exports = function (vorpal) {
         },
         {
           title: 'Install dependencies',
-          task: () => utils.exec('npm', ['install'])
+          task: () => {
+            process.chdir(dir)
+            return utils.exec('npm', ['install'])
+          }
         }
       ])
 
@@ -69,6 +74,7 @@ module.exports = function (vorpal) {
           this.log(chalk.bold('\n   To get started:\n'))
           this.log(chalk.italic(`     cd ${args.name} && npm run dev`))
           this.log('')
+          tmpFolder.removeCallback()
         })
         .catch(error => {
           this.log('')
