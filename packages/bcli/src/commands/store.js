@@ -86,12 +86,17 @@ module.exports = function (vorpal) {
       })
 
       // Here the store module is actually generated!
-      .then(scaffold.storeModule)
+      .then(result => {
+        return scaffold.storeModule(result).then(() => {
+          // pass data to the final step
+          return result
+        })
+      })
 
       // Done!
-      .then(() => {
+      .then((result) => {
         this.log('')
-        this.log(`   Vuex store module ${chalk.yellow.bold(args.name)} created!`)
+        this.log(`   Vuex store module ${chalk.yellow.bold(result.name)} created!`)
         this.log('   The module is autoloaded in your application!')
         this.log('')
 
