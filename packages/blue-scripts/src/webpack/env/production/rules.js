@@ -1,27 +1,14 @@
+const vue = require('../../rules/vue')
+const babel = require('../../rules/babel')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const vue = {
-  test: /\.vue$/,
-  loader: 'vue-loader',
-  options: {
-    cssModules: {
-      localIdentName: '[hash:8]'
-    },
-    loaders: {
-      css: ExtractTextPlugin.extract({
-        use: 'css-loader',
-        fallback: 'vue-style-loader'
-      })
-    }
-  }
-}
+vue.options.cssModules.localIdentName = '[hash:8]'
 
-const babel = {
-  test: /\.js$/,
-  loader: 'babel-loader',
-  options: {
-    plugins: [require.resolve('babel-plugin-transform-flow-strip-types')]
-  }
-}
+vue.options.loaders.css = ExtractTextPlugin.extract({
+  use: 'css-loader',
+  fallback: 'vue-style-loader'
+})
+
+babel.options.plugins = [require.resolve('babel-plugin-transform-flow-strip-types')]
 
 module.exports = [vue, babel]

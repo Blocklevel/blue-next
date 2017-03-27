@@ -1,9 +1,5 @@
-const babel = {
-  test: /\.js$/,
-  loader: 'babel-loader',
-  options: {
-    plugins: [require.resolve('babel-plugin-transform-flow-comments')]
-  }
-}
+const babel = require('../../rules/babel')
+
+babel.options.plugins = [require.resolve('babel-plugin-transform-flow-strip-types')]
 
 module.exports = [babel]

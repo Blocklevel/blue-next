@@ -8,7 +8,7 @@ const serverOptions = require('./server')
 module.exports = merge.smart({}, config, {
   devtool: 'eval-source-map',
   devServer: serverOptions,
-  plugins,
+  plugins: config.plugins.concat(plugins),
   module: {
     rules
   }
