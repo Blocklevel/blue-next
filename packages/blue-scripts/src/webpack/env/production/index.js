@@ -6,7 +6,7 @@ const rules = require('./rules')
 
 module.exports = merge.smart({}, config, {
   devtool: false,
-  plugins: config.plugins.concat(plugins),
+  plugins,
   module: {
     rules
   }

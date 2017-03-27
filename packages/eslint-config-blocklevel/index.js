@@ -25,7 +25,7 @@ module.exports = {
     'import/resolver': 'webpack',
     'import/extensions': ['.js']
   },
-  plugins: ['vue'],
+  plugins: ['vue', 'flowtype'],
   env: {
     browser: true,
     commonjs: true,

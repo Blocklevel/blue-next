@@ -1,0 +1,12 @@
+[version]
+>=0.23.0
+[options]
+munge_underscores=false
+[libs]
+./lib
+[ignore]
+# Ignore all dependency tests
+<PROJECT_ROOT>/node_modules/[^/]*/test/.*
+# Ignore problematic dependencies
+<PROJECT_ROOT>/node_modules/vue-router/src/.*
+<PROJECT_ROOT>/node_modules/vue/src/.*

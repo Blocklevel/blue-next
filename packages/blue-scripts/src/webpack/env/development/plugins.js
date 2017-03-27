@@ -1,6 +1,7 @@
 'use strict'
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin')
 
 module.exports = [
   new webpack.DefinePlugin({
@@ -28,5 +29,9 @@ module.exports = [
         formatter: require('eslint-formatter-pretty')
       }
     }
+  }),
+
+  new FlowBabelWebpackPlugin({
+    warn: true
   })
 ]
