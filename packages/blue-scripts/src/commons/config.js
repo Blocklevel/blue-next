@@ -85,8 +85,7 @@ function applyBlueProxyModifiers (config, webpack, nodeEnv = process.env.NODE_EN
  * @return {Object}
  */
 const get = function (nodeEnv = process.env.NODE_ENV) {
-  const projectConfig = _.assignIn({}, {
-    // create a mock of modifiers for the specific environment
+  const projectConfig = _.merge({
     [nodeEnv]: modifiers
   }, getBlueConfig())
 
