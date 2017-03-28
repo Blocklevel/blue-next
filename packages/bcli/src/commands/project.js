@@ -4,7 +4,7 @@ const del = require('del')
 const Listr = require('listr')
 const utils = require('../commons/utils')
 const log = require('../commons/log')
-const tmp = require('tmp')
+const blueTemplates = require('blue-templates')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -13,15 +13,22 @@ module.exports = function (vorpal) {
   vorpal
     .command('project <name>', 'create a new project with Blue <3')
     .option('-f, --force', 'Force file overwrite')
+    .option('--sass', 'Use Sass pre-processor')
     .option('--verbose')
     .alias('p')
     .action(function (args, callback) {
-      const dir = `${cwd}/${args.name}`
-      const dirExists = fs.existsSync(dir)
-      const tmpFolder = tmp.dirSync({ unsafeCleanup: true })
+      const dest = `${cwd}/${args.name}`
+      const dirExists = fs.existsSync(dest)
+      const projectData = {
+        dest,
+        name: args.name,
+        template: blueTemplates.getBlue(),
+        cssTemplate: blueTemplates.getPreProcessor(args.options.sass ? 'sass' : 'postcss'),
+        templateCssFolder: blueTemplates.getStylePath(dest)
+      }
 
       if (dirExists && !args.options.force) {
-        log.error(`Folder ${dir} already exists. Pass --force flag to overwrite it.`)
+        log.error(`Folder ${dest} already exists. Pass --force flag to overwrite it.`)
       }
 
       this.log('')
@@ -30,37 +37,20 @@ module.exports = function (vorpal) {
         {
           title: 'Delete existing project folder',
           enabled: () => dirExists,
-          task: () => del(dir)
+          task: () => del(dest)
         },
         {
           title: 'Create project folder',
-          task: () => fs.mkdirSync(dir)
-        },
-        {
-          title: 'Install Blue templates',
-          task: () => {
-            process.chdir(tmpFolder.name)
-            return utils.exec('npm', ['install', 'blue-templates'])
-          }
+          task: () => fs.mkdirSync(dest)
         },
         {
           title: 'Scaffold project',
-          task: () => {
-            const blueTemplates = require(`${tmpFolder.name}/node_modules/blue-templates`)
-
-            return scaffold.project({
-              name: args.name,
-              dest: dir,
-              template: blueTemplates.getBlue(),
-              cssTemplate: blueTemplates.getPreProcessor('postcss'),
-              templateCssFolder: blueTemplates.getStylePath(dir)
-            })
-          }
+          task: () => scaffold.project(projectData)
         },
         {
           title: 'Install dependencies',
           task: () => {
-            process.chdir(dir)
+            process.chdir(dest)
             return utils.exec('npm', ['install'])
           }
         }
@@ -74,7 +64,6 @@ module.exports = function (vorpal) {
           this.log(chalk.bold('\n   To get started:\n'))
           this.log(chalk.italic(`     cd ${args.name} && npm run dev`))
           this.log('')
-          tmpFolder.removeCallback()
         })
         .catch(error => {
           this.log('')
