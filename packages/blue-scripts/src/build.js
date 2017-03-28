@@ -19,7 +19,7 @@ module.exports = co.wrap(function * (options) {
   const config = blueConfig.get()
 
   console.log('')
-  console.log(`Build ${chalk.bold.yellow(config.project.title)} project`)
+  console.log(`Build ${chalk.bold.yellow(config.projectName)} project`)
   console.log('')
 
   spinner.start()

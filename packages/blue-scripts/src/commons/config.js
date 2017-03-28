@@ -7,11 +7,16 @@ const fs = require('fs')
 
 let isConfigurationModified = false
 
-const modifiers = {
-  proxy: {
-    rules: null,
-    plugins: null
-  }
+const modifier = {
+  webpackConfig: null,
+  rules: null,
+  plugins: null
+}
+
+const blueConfigDefaults = {
+  name: 'my-project',
+  production: { modifier },
+  development: { modifier }
 }
 
 /**
@@ -29,20 +34,20 @@ const getBlueConfig = function () {
 }
 
 /**
- * Applies the modifiers for each proxy
- * @param  {Function} proxy
+ * Returns the modified property in the webpack configuration
+ * @param  {Function} modifier - function from the configuration file
  * @param  {Array} data
- * @param  {Function} modifier
+ * @param  {Function} arrayToMap - custom function that returns a map of the array
  * @return {Array}
  */
-function webpackConfigModifierHandler (proxy, data, modifier) {
+function webpackConfigModifierHandler (modifier, data, arrayToMap) {
   // notify that configuration is changed
   isConfigurationModified = true
 
   const toArray = _.values
-  const dataFromProxy = proxy({ map: modifier(), array: data }, toArray)
+  const changes = modifier({ map: arrayToMap(), array: data }, toArray)
 
-  return dataFromProxy.length ? dataFromProxy : toArray(dataFromProxy)
+  return changes.constructor === Array ? changes : toArray(changes)
 }
 
 /**
@@ -52,18 +57,24 @@ function webpackConfigModifierHandler (proxy, data, modifier) {
  * @param  {String} [nodeEnv=process.env.NODE_ENV]
  * @return {Object}
  */
-function applyBlueProxyModifiers (config, webpack, nodeEnv = process.env.NODE_ENV) {
-  const pluginProxy = config[nodeEnv].proxy.plugins
-  const rulesProxy = config[nodeEnv].proxy.rules
+function applyModifiers (config, webpack, nodeEnv = process.env.NODE_ENV) {
+  const envConfig = config[nodeEnv]
+  const pluginModifier = envConfig.modifier.plugins
+  const rulesModifier = envConfig.modifier.rules
+  const webpackConfigModifier = envConfig.modifier.webpackConfig
 
-  if (pluginProxy) {
-    webpack.plugins = webpackConfigModifierHandler(pluginProxy, webpack.plugins, function () {
+  if (webpackConfigModifier) {
+    webpack = webpackConfigModifier(webpack)
+  }
+
+  if (pluginModifier) {
+    webpack.plugins = webpackConfigModifierHandler(pluginModifier, webpack.plugins, function () {
       return _.keyBy(webpack.plugins, plugin => plugin.constructor.name)
     })
   }
 
-  if (rulesProxy) {
-    webpack.module.rules = webpackConfigModifierHandler(rulesProxy, webpack.module.rules, function () {
+  if (rulesModifier) {
+    webpack.module.rules = webpackConfigModifierHandler(rulesModifier, webpack.module.rules, function () {
       const rulesMap = {}
 
       fs.readdirSync(paths.webpackRules).forEach(file => {
@@ -85,21 +96,11 @@ function applyBlueProxyModifiers (config, webpack, nodeEnv = process.env.NODE_EN
  * @return {Object}
  */
 const get = function (nodeEnv = process.env.NODE_ENV) {
-  const projectConfig = _.merge({
-    [nodeEnv]: modifiers
-  }, getBlueConfig())
+  const projectConfig = _.merge({}, blueConfigDefaults, getBlueConfig())
+  const webpackConfig = require(`../webpack/env/${nodeEnv}`)
 
-  const envConfig = require(`../webpack/env/${nodeEnv}`)
-  const projectConfigWebpack = projectConfig.webpack || {}
-
-  let webpackConfig = envConfig
-
-  if (!_.isEmpty(projectConfigWebpack)) {
-    webpackConfig = merge.smart({}, envConfig, projectConfigWebpack)
-  }
-
-  // some magic here!
-  applyBlueProxyModifiers(projectConfig, webpackConfig)
+  // apply magic stuff
+  applyModifiers(projectConfig, webpackConfig)
 
   return {
     // Webpack only configurations
@@ -107,7 +108,7 @@ const get = function (nodeEnv = process.env.NODE_ENV) {
     // comparison. No other parameters are allowed
     webpack: webpackConfig,
 
-    project: projectConfig.project,
+    projectName: projectConfig.name,
     isConfigurationModified,
     versbose: projectConfig.webpackVerboseOutput
   }
@@ -115,10 +116,14 @@ const get = function (nodeEnv = process.env.NODE_ENV) {
 
 const getPreProcessor = function () {
   const config = getBlueConfig()
-  const project = config.project
-  const hasValue = !!(project.css && project.css.preProcessor)
+  const allowed = ['postcss', 'scss']
 
-  return hasValue ? project.css.preProcessor : 'postcss'
+  if (config.preProcessor && allowed.indexOf(config.preProcessor) === -1) {
+    console.log(chalk.red(`${config.preProcessor} is not a valid pre-processor. Try 'postcss' or 'scss'`))
+    process.exit(1)
+  }
+
+  return config.preProcessor || 'postcss'
 }
 
 module.exports = {

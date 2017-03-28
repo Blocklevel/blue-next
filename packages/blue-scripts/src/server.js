@@ -25,12 +25,12 @@ module.exports = co.wrap(function * (options) {
 
   const messages = [
     // see https://github.com/Blocklevel/blue-next/issues/25
-    `Project ${chalk.bold.blue(config.project.title)} is running on http://${host.display}:${port}\n`,
+    `Project ${chalk.bold.blue(config.projectName)} is running on http://${host.display}:${port}\n`,
     `Your current ip address ${ip.address()}\n`
   ]
 
   if (config.isConfigurationModified) {
-    messages.push('Webpack configuration is modified via proxies')
+    messages.push('blue.config.js modifiers applied')
   }
 
   // Add the FriendlyErrorsWebpackPlugin after everything is sorted.
