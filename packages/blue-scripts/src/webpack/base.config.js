@@ -25,6 +25,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.css'],
     alias: {
+      mixin: `${paths.appRoot}/mixin`,
+      proxy: `${paths.appRoot}/proxy`,
+      container: `${paths.appRoot}/container`,
       component: `${paths.appRoot}/component`,
       page: `${paths.appRoot}/page`,
       store: `${paths.appRoot}/store/modules`,
