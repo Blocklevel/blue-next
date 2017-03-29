@@ -7,6 +7,9 @@
   </a>
 </p>
 
+## Documentation
+Click [here](https://blocklevel.gitbooks.io/blue-next/content/) 
+
 
 ## Installation
 
@@ -14,42 +17,6 @@
 npm install -g bcli
 ```
 
-## Usage
-
-Create a new project just running 
-
-```bash 
-bcli project my-project
-```
-
-#### Create a new component
-
-```bash
-bcli component hello-world
-```
-
-#### Create a new container component
-
-```bash
-bcli component hello-world container
-```
-
-#### Create a new page component
-
-```bash
-bcli component hello-world page
-```
-
-#### Create a new vuex store module
-
-```bash
-bcli store
-```
-
-#### Share your localhost with a secure tunnel
-
-```bash
-bcli share
 ```
 ## Packages state
 <p>
