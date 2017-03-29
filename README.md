@@ -16,7 +16,6 @@ coming soon
 npm install -g bcli
 ```
 
-```
 ## Packages state
 <p>
   <a href="https://www.npmjs.com/package/bcli">
