@@ -5,6 +5,7 @@ const Listr = require('listr')
 const utils = require('../commons/utils')
 const log = require('../commons/log')
 const blueTemplates = require('blue-templates')
+const execa = require('execa')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -14,6 +15,7 @@ module.exports = function (vorpal) {
     .command('project <name>', 'create a new project with Blue <3')
     .option('-f, --force', 'Force file overwrite')
     .option('--sass', 'Use Sass pre-processor')
+    .option('--nocommit', 'Avoid git first commit')
     .option('--verbose')
     .alias('p')
     .action(function (args, callback) {
@@ -53,6 +55,11 @@ module.exports = function (vorpal) {
             process.chdir(dest)
             return utils.exec('npm', ['install'])
           }
+        },
+        {
+          title: 'Initialize git',
+          enabled: () => !args.options.nocommit,
+          task: () => execa.shell('git init && git add . && git commit -m \'initial commit\'')
         }
       ])
 
