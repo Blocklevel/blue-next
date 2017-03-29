@@ -7,16 +7,8 @@ const fs = require('fs')
 
 let isConfigurationModified = false
 
-const modifier = {
-  webpackConfig: null,
-  rules: null,
-  plugins: null
-}
-
 const blueConfigDefaults = {
-  name: 'my-project',
-  production: { modifier },
-  development: { modifier }
+  name: 'my-project'
 }
 
 /**
@@ -31,6 +23,23 @@ const getBlueConfig = function () {
     console.log(chalk.red(messages.NO_BLUE_CONFIG_FOUND))
     process.exit(1)
   }
+}
+
+/**
+ * Returns available node environment string
+ * If the value is not handled by Blue, the application will
+ * fallback to 'production'
+ * @return {String}
+ */
+function getNodeEnv () {
+  const env = process.env.NODE_ENV
+  const allowed = ['development', 'production']
+
+  if (allowed.indexOf(env) === -1) {
+    return 'production'
+  }
+
+  return env
 }
 
 /**
@@ -57,12 +66,13 @@ function webpackConfigModifierHandler (modifier, data, arrayToMap) {
  * @param  {String} [nodeEnv=process.env.NODE_ENV]
  * @return {Object}
  */
-function applyModifiers (config, webpack, nodeEnv = process.env.NODE_ENV) {
-  const envConfig = config[nodeEnv]
-  const pluginModifier = envConfig.modifier.plugins
-  const rulesModifier = envConfig.modifier.rules
-  const webpackConfigModifier = envConfig.modifier.webpackConfig
+function applyModifiers (config, webpack, nodeEnv = getNodeEnv()) {
+  const envConfig = config[nodeEnv] || {}
+  const pluginModifier = envConfig.modifier && envConfig.modifier.plugins
+  const rulesModifier = envConfig.modifier && envConfig.modifier.rules
+  const webpackConfigModifier = envConfig.webpackConfig
 
+  // directly change webpack configuration object
   if (webpackConfigModifier) {
     webpack = webpackConfigModifier(webpack)
   }
@@ -95,7 +105,7 @@ function applyModifiers (config, webpack, nodeEnv = process.env.NODE_ENV) {
  * @param  {String} [nodeEnv=process.env.NODE_ENV]
  * @return {Object}
  */
-const get = function (nodeEnv = process.env.NODE_ENV) {
+const get = function (nodeEnv = getNodeEnv()) {
   const projectConfig = _.merge({}, blueConfigDefaults, getBlueConfig())
   const webpackConfig = require(`../webpack/env/${nodeEnv}`)
 
@@ -128,5 +138,6 @@ const getPreProcessor = function () {
 
 module.exports = {
   get,
-  getPreProcessor
+  getPreProcessor,
+  getNodeEnv
 }
