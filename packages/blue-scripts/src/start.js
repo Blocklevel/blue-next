@@ -2,24 +2,23 @@
 const chalk = require('chalk')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const webpack = require('webpack')
-const paths = require('./commons/paths')
 const utils = require('./commons/utils')
 const WebpackDevServer = require('webpack-dev-server')
 const detectPort = require('./detect-port')
-const co = require('co')
 const blueConfig = require('./commons/config')
 const ip = require('ip')
 
+// Set the current node environment
+process.env.NODE_ENV = 'development'
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them
 process.on('unhandledRejection', err => {
   throw err
 })
 
-module.exports = co.wrap(function * (options) {
+detectPort().then(port => {
   const config = blueConfig.get()
   const webpackConfig = config.webpack
-  const port = yield detectPort
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`
 

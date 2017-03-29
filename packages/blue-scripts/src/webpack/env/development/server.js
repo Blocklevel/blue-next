@@ -7,6 +7,7 @@ module.exports = {
   inline: false,
   clientLogLevel: 'info',
   watchOptions: {
+    ignored: /node_modules/,
     aggregateTimeout: 300,
     poll: 1000
   },
