@@ -8,8 +8,7 @@
 </p>
 
 ## Documentation
-Click [here](https://blocklevel.gitbooks.io/blue-next/content/) 
-
+coming soon
 
 ## Installation
 
