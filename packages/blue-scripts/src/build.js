@@ -1,11 +1,4 @@
 'use strict'
-const webpack = require('webpack')
-const ora = require('ora')
-const chalk = require('chalk')
-const spinner = ora()
-const blueConfig = require('./commons/config')
-const Progress = require('webpack/lib/ProgressPlugin')
-const paths = require('./commons/paths')
 
 // Set the current node environment
 process.env.NODE_ENV = 'production'
@@ -16,6 +9,14 @@ process.env.VERSION_STRING = new Date().getTime().toString()
 process.on('unhandledRejection', err => {
   throw err
 })
+
+const webpack = require('webpack')
+const ora = require('ora')
+const chalk = require('chalk')
+const spinner = ora()
+const blueConfig = require('./commons/config')
+const Progress = require('webpack/lib/ProgressPlugin')
+const paths = require('./commons/paths')
 
 // Get the blue configuration object
 const config = blueConfig.get()

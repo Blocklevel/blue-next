@@ -6,7 +6,6 @@ const co = require('co')
 const execa = require('execa')
 const fs = require('fs')
 const _ = require('lodash')
-const detectInstalled = require('detect-installed')
 const fetch = require('node-fetch')
 const semver = require('semver')
 const bcliVersion = require('../../package.json').version
@@ -176,20 +175,11 @@ const isComponentType = function (type) {
   return ['component', 'page', 'container'].indexOf(type) !== -1
 }
 
-/**
- * Check whether yarn is available for commands
- * @returns {Boolean}
- */
-const isYarn = co.wrap(function * () {
-  return yield detectInstalled('yarn')
-})
-
 module.exports = {
   getGitUser,
   renameFiles,
   renameFilesFromDir,
   getEvents,
-  isYarn,
   getSemverFromMajor,
   getSemverFromPackage,
   replaceFilesName,

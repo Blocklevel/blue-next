@@ -6,6 +6,7 @@ const utils = require('../commons/utils')
 const log = require('../commons/log')
 const blueTemplates = require('blue-templates')
 const execa = require('execa')
+const detectInstalled = require('detect-installed')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -21,6 +22,7 @@ module.exports = function (vorpal) {
     .action(function (args, callback) {
       const dest = `${cwd}/${args.name}`
       const dirExists = fs.existsSync(dest)
+      const hasYarn = detectInstalled.sync('yarn')
       const projectData = {
         dest,
         name: args.name,
@@ -50,10 +52,19 @@ module.exports = function (vorpal) {
           task: () => scaffold.project(projectData)
         },
         {
-          title: 'Install dependencies',
+          title: 'Install dependencies', // with npm
+          enabled: () => !hasYarn,
           task: () => {
             process.chdir(dest)
             return utils.exec('npm', ['install'])
+          }
+        },
+        {
+          title: 'Install dependencies', // with yarn
+          enabled: () => hasYarn,
+          task: () => {
+            process.chdir(dest)
+            return utils.exec('yarn')
           }
         },
         {
@@ -65,9 +76,7 @@ module.exports = function (vorpal) {
 
       tasks.run()
         .then(result => {
-          this.log('')
-          this.log(chalk.bold('\n   Website!!!'))
-          this.log('\n   New project', chalk.yellow.bold(args.name), 'was created successfully!')
+          this.log('\n   New project', chalk.yellow.bold(args.name), 'created successfully!')
           this.log(chalk.bold('\n   To get started:\n'))
           this.log(chalk.italic(`     cd ${args.name} && npm run dev`))
           this.log('')

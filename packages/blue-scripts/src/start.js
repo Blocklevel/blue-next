@@ -1,4 +1,14 @@
 'use strict'
+
+// Set the current node environment
+process.env.NODE_ENV = 'development'
+
+// Makes the script crash on unhandled rejections instead of silently
+// ignoring them
+process.on('unhandledRejection', err => {
+  throw err
+})
+
 const chalk = require('chalk')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const webpack = require('webpack')
@@ -7,14 +17,6 @@ const WebpackDevServer = require('webpack-dev-server')
 const detectPort = require('./detect-port')
 const blueConfig = require('./commons/config')
 const ip = require('ip')
-
-// Set the current node environment
-process.env.NODE_ENV = 'development'
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them
-process.on('unhandledRejection', err => {
-  throw err
-})
 
 detectPort().then(port => {
   const config = blueConfig.get()
@@ -47,10 +49,11 @@ detectPort().then(port => {
     'webpack/hot/dev-server'
   )
 
-  // Start the server!
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
 
+  // Start the server!
   server.listen(port, host.value, function () {
-    console.log(`\n   Starting the server...`)
+    console.log('')
+    console.log('Starting the server...')
   })
 })
