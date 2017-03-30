@@ -22,6 +22,7 @@ module.exports = {
   appBuild: resolveApp('./build'),
   appBuildHash: process.env.VERSION_STRING || '[hash:6]',
   appSrc: resolveApp('./src'),
+  appPackageJSON: resolveApp('./package.json'),
   appStatic: resolveApp('./static'),
   appHTMLIndex: resolveApp('./index.html'),
   webpackRules: resolvePkg('./webpack/rules'),

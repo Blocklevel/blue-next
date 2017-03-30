@@ -5,6 +5,7 @@ const script = process.argv[2]
 switch (script) {
   case 'build':
   case 'start':
+  case 'eject':
     require(`../src/${script}`)
     break
   default:
