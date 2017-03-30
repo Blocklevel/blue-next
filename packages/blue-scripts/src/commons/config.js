@@ -50,9 +50,6 @@ function getNodeEnv () {
  * @return {Array}
  */
 function webpackConfigModifierHandler (modifier, data, arrayToMap) {
-  // notify that configuration is changed
-  isConfigurationModified = true
-
   const toArray = _.values
   const changes = modifier({ map: arrayToMap(), array: data }, toArray)
 
@@ -66,37 +63,47 @@ function webpackConfigModifierHandler (modifier, data, arrayToMap) {
  * @param  {String} [nodeEnv=process.env.NODE_ENV]
  * @return {Object}
  */
-function applyModifiers (config, webpack, nodeEnv = getNodeEnv()) {
+function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEnv()) {
   const envConfig = config[nodeEnv] || {}
-  const pluginModifier = envConfig.modifier && envConfig.modifier.plugins
-  const rulesModifier = envConfig.modifier && envConfig.modifier.rules
-  const webpackConfigModifier = envConfig.webpackConfig
+  // TODO better implementation of these checks
+  const pluginHelper = envConfig.webpackHelper && envConfig.webpackHelper.plugins
+  const rulesHelper = envConfig.webpackHelper && envConfig.webpackHelper.rules
+  const webpackModifier = envConfig.webpack
 
-  // directly change webpack configuration object
-  if (webpackConfigModifier) {
-    webpack = webpackConfigModifier(webpack)
+  if (webpackModifier) {
+    // notify that configuration is changed
+    isConfigurationModified = true
+    // directly change webpack configuration object
+    webpackConfig = webpackModifier(webpackConfig)
   }
 
-  if (pluginModifier) {
-    webpack.plugins = webpackConfigModifierHandler(pluginModifier, webpack.plugins, function () {
-      return _.keyBy(webpack.plugins, plugin => plugin.constructor.name)
+  if (pluginHelper) {
+    // notify that configuration is changed
+    isConfigurationModified = true
+
+    webpackConfig.plugins = webpackConfigModifierHandler(pluginHelper, webpackConfig.plugins, function () {
+      return _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
     })
   }
 
-  if (rulesModifier) {
-    webpack.module.rules = webpackConfigModifierHandler(rulesModifier, webpack.module.rules, function () {
-      const rulesMap = {}
+  if (rulesHelper) {
+    // notify that configuration is changed
+    isConfigurationModified = true
 
-      fs.readdirSync(paths.webpackRules).forEach(file => {
-        const key = file.replace('.js', '')
-        rulesMap[key] = require(`${paths.webpackRules}/${file}`)
+    webpackConfig.module.rules = webpackConfigModifierHandler(rulesHelper, webpackConfig.module.rules, function () {
+      const rulesMap = {}
+      const files = fs.readdirSync(paths.webpackRules)
+
+      files.forEach(file => {
+        const filename = file.replace('.js', '')
+        rulesMap[filename] = require(`${paths.webpackRules}/${file}`)
       })
 
       return rulesMap
     })
   }
 
-  return webpack
+  return webpackConfig
 }
 
 /**
@@ -106,11 +113,10 @@ function applyModifiers (config, webpack, nodeEnv = getNodeEnv()) {
  * @return {Object}
  */
 const get = function (nodeEnv = getNodeEnv()) {
-  const projectConfig = _.merge({}, blueConfigDefaults, getBlueConfig())
+  const blueConfig = _.merge({}, blueConfigDefaults, getBlueConfig())
   const webpackConfig = require(`../webpack/env/${nodeEnv}`)
 
-  // apply magic stuff
-  applyModifiers(projectConfig, webpackConfig)
+  applyWebpackConfigModifiers(blueConfig, webpackConfig)
 
   return {
     // Webpack only configurations
@@ -118,9 +124,9 @@ const get = function (nodeEnv = getNodeEnv()) {
     // comparison. No other parameters are allowed
     webpack: webpackConfig,
 
-    projectName: projectConfig.name,
-    isConfigurationModified,
-    versbose: projectConfig.webpackVerboseOutput
+    projectName: blueConfig.name,
+    versbose: blueConfig.webpackVerboseOutput,
+    isConfigurationModified
   }
 }
 
