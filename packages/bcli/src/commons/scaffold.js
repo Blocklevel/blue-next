@@ -18,7 +18,7 @@ const project = co.wrap(function * (inputs) {
 
   // see Blocklevel/blue-next/issues/41
   // see Blocklevel/blue-next/issues/44
-  utils.replaceFilesName(inputs.dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
+  utils.replaceFilesName(inputs.dest, [`#.eslintrc.js#`, `#.gitignore#`])
 })
 
 /**

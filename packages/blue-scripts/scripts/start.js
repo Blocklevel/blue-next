@@ -12,14 +12,16 @@ process.on('unhandledRejection', err => {
 const chalk = require('chalk')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const webpack = require('webpack')
-const utils = require('./commons/utils')
 const WebpackDevServer = require('webpack-dev-server')
-const detectPort = require('./detect-port')
-const blueConfig = require('./commons/config')
+const portfinder = require('portfinder')
 const ip = require('ip')
 
-detectPort().then(port => {
-  const config = blueConfig.get()
+const utils = require('../commons/utils')
+const config = require('../commons/config').get()
+
+portfinder.basePort = 8080
+
+portfinder.getPortPromise().then(port => {
   const webpackConfig = config.webpack
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`

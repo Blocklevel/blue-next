@@ -3,6 +3,7 @@
 // Set the current node environment
 process.env.NODE_ENV = 'production'
 // Creates am hash string that can be used across the application
+// see Blocklevel/blue-next/issues/38
 process.env.VERSION_STRING = new Date().getTime().toString()
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them
@@ -13,13 +14,11 @@ process.on('unhandledRejection', err => {
 const webpack = require('webpack')
 const ora = require('ora')
 const chalk = require('chalk')
-const spinner = ora()
-const blueConfig = require('./commons/config')
 const Progress = require('webpack/lib/ProgressPlugin')
-const paths = require('./commons/paths')
 
-// Get the blue configuration object
-const config = blueConfig.get()
+const paths = require('../commons/paths')
+const config = require('../commons/config').get()
+const spinner = ora()
 
 console.log('')
 console.log(`Build ${chalk.bold.yellow(config.projectName)} project`)

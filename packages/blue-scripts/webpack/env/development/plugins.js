@@ -1,6 +1,7 @@
 'use strict'
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const CaseSensitiveWebpackPaths = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = [
   new webpack.DefinePlugin({
@@ -21,6 +22,8 @@ module.exports = [
   new webpack.NoEmitOnErrorsPlugin(),
 
   new webpack.NamedModulesPlugin(),
+
+  new CaseSensitiveWebpackPaths({ debug: false }),
 
   new webpack.LoaderOptionsPlugin({
     options: {

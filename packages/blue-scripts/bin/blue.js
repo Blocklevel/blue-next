@@ -6,7 +6,7 @@ switch (script) {
   case 'build':
   case 'start':
   case 'eject':
-    require(`../src/${script}`)
+    require(`../scripts/${script}`)
     break
   default:
     console.log('')

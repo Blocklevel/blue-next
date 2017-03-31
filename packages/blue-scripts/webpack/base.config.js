@@ -1,8 +1,6 @@
 'use strict'
 const paths = require('../commons/paths')
-const path = require('path')
 const utils = require('../commons/utils')
-const webpack = require('webpack')
 
 /**
  * Flag that removes the issue on webpack/utils-loader
@@ -33,21 +31,20 @@ module.exports = {
       store: `${paths.appRoot}/store/modules`,
       asset: `${paths.appSrc}/asset`
     },
-    modules: [
-      paths.appNodeModules,
-      paths.appDirectory,
-      paths.ownNodeModules
-    ]
+    modules: ['node_modules', paths.appNodeModules]
   },
+  // @remove-on-eject-begin
   resolveLoader: {
     modules: [
       paths.appNodeModules,
-      paths.appDirectory,
       paths.ownNodeModules
     ]
   },
+  // @remove-on-eject-end
   module: {
     rules: utils.requireFromFolder(paths.webpackRules)
   },
-  plugins: []
+  plugins: [
+    // leave it empty if no plugins are added
+  ]
 }
