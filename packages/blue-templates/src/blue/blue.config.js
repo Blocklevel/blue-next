@@ -1,3 +1,3 @@
 module.exports = {
-  title: '{{ name }}'
+  name: '{{ name }}'
 }
