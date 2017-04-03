@@ -119,14 +119,6 @@ describe('utils.js', function () {
     })
   })
 
-  describe('isYarn', function () {
-    it('should return a boolean', function () {
-      return utils.isYarn().then((response) => {
-        expect(response).to.be.a('boolean')
-      })
-    })
-  })
-
   describe('getSemverFromMajor', function () {
     it('should return a semver string that matches the major version', function () {
       const versions = ['0.0.1', '0.0.2', '1.0.0-beta.2', '1.0.0', '2.0.3']
