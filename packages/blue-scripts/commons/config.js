@@ -1,6 +1,5 @@
-const messages = require('./messages')
 const paths = require('./paths')
-const merge = require('webpack-merge')
+const webpackMerge = require('webpack-merge')
 const chalk = require('chalk')
 const _ = require('lodash')
 const fs = require('fs')
@@ -12,17 +11,11 @@ const blueConfigDefaults = {
 }
 
 /**
- * Detects the bcli.config.js file
- * It returns the file content if detected, otherwise returns false
- * @return {Object|Boolean}
+ * Returns bcli.config.js content
+ * @return {Object}
  */
 const getBlueConfig = function () {
-  try {
-    return require(paths.appConfig)
-  } catch (error) {
-    console.log(chalk.red(messages.NO_BLUE_CONFIG_FOUND))
-    process.exit(1)
-  }
+  return fs.existsSync(paths.appConfig) ? require(paths.appConfig) : {}
 }
 
 /**
@@ -74,33 +67,41 @@ function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEn
     // notify that configuration is changed
     isConfigurationModified = true
     // directly change webpack configuration object
-    webpackConfig = webpackModifier(webpackConfig)
+    webpackConfig = webpackMerge.smart(webpackModifier(webpackConfig), webpackConfig)
   }
 
   if (pluginHelper) {
     // notify that configuration is changed
     isConfigurationModified = true
 
-    webpackConfig.plugins = webpackConfigModifierHandler(pluginHelper, webpackConfig.plugins, function () {
-      return _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
-    })
+    webpackConfig.plugins = webpackConfigModifierHandler(
+      pluginHelper,
+      webpackConfig.plugins,
+      // generates a constructor name based map
+      () => _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
+    )
   }
 
   if (rulesHelper) {
     // notify that configuration is changed
     isConfigurationModified = true
 
-    webpackConfig.module.rules = webpackConfigModifierHandler(rulesHelper, webpackConfig.module.rules, function () {
-      const rulesMap = {}
-      const files = fs.readdirSync(paths.webpackRules)
+    webpackConfig.module.rules = webpackConfigModifierHandler(
+      rulesHelper,
+      webpackConfig.module.rules,
+      function () {
+        // TODO find a better way to map it
+        const rulesMap = {}
+        const files = fs.readdirSync(paths.webpackRules)
 
-      files.forEach(file => {
-        const filename = file.replace('.js', '')
-        rulesMap[filename] = require(`${paths.webpackRules}/${file}`)
-      })
+        files.forEach(file => {
+          const filename = file.replace('.js', '')
+          rulesMap[filename] = require(`${paths.webpackRules}/${file}`)
+        })
 
-      return rulesMap
-    })
+        return rulesMap
+      }
+    )
   }
 
   return webpackConfig
@@ -123,9 +124,12 @@ const get = function (nodeEnv = getNodeEnv()) {
     // This object will be directly merged with webpack and it's a very strict
     // comparison. No other parameters are allowed
     webpack: webpackConfig,
-
+    // share the name of the project
     projectName: blueConfig.name,
+    // verbose output during compilation
     versbose: blueConfig.webpackVerboseOutput,
+    // nofity if webpack configuration has been changed
+    // in the blue.config.js file
     isConfigurationModified
   }
 }
