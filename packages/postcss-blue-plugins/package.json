@@ -1,0 +1,31 @@
+{
+  "name": "postcss-blue-plugins",
+  "version": "0.0.1",
+  "description": "PostCSS plugins used by Blue",
+  "main": "./index.js",
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blocklevel/blue-next"
+  },
+  "bugs": {
+    "url": "https://github.com/Blocklevel/blue-next/issues"
+  },
+  "homepage": "https://github.com/Blocklevel/blue-next#readme",
+  "license": "MIT",
+  "keywords": [
+    "postcss",
+    "plugins",
+    "blue"
+  ],
+  "dependencies": {
+    "postcss-advanced-variables": "^1.2.2",
+    "postcss-cssnext": "^2.10.0",
+    "postcss-custom-media": "^5.0.1",
+    "postcss-import": "^9.1.0",
+    "postcss-mixins": "^5.4.1",
+    "postcss-nested": "^1.0.0",
+    "postcss-short": "^3.0.3",
+    "rucksack-css": "^0.9.1"
+  }
+}
