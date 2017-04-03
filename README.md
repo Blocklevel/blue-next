@@ -27,8 +27,8 @@ npm install -g bcli
   <a href="https://www.npmjs.com/package/blue-templates">
     <img src="https://img.shields.io/npm/v/blue-templates.svg?label=blue-templates" alt="npm version">
   </a><br>
-  <a href="https://www.npmjs.com/package/eslint-config-blocklevel">
-    <img src="https://img.shields.io/npm/v/eslint-config-blocklevel.svg?label=eslint-config-blocklevel" alt="npm version">
+  <a href="https://www.npmjs.com/package/eslint-config-blue">
+    <img src="https://img.shields.io/npm/v/eslint-config-blue.svg?label=eslint-config-blue" alt="npm version">
   </a><br>
 </p>
 
