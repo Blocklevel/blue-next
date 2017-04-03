@@ -6,8 +6,5 @@ module.exports = {
   loader: 'eslint-loader',
   include: [
     paths.appSrc
-  ],
-  options: {
-    configFile: 'eslint-config-blocklevel'
-  }
+  ]
 }
