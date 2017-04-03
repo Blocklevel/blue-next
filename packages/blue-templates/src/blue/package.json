@@ -2,7 +2,8 @@
   "name": "{{ name }}",
   "scripts": {
     "dev": "blue-scripts start",
-    "build": "blue-scripts build"
+    "build": "blue-scripts build",
+    "eject": "blue-scripts eject"
   },
   "dependencies": {
     "vue": "^2.1.10",

@@ -46,7 +46,6 @@
     "normalize.css": "^5.0.0",
     "ora": "^1.1.0",
     "portfinder": "^1.0.13",
-    "postcss-advanced-variables": "^1.2.2",
     "postcss-blue-plugins": "^1.0.0-beta.21",
     "postcss-loader": "^1.2.2",
     "style-loader": "^0.13.1",

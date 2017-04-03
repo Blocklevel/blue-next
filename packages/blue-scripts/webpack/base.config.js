@@ -33,16 +33,17 @@ module.exports = {
     },
     modules: [
       paths.appNodeModules,
-      paths.appDirectory,
-      paths.ownNodeModules
+      paths.appDirectory
     ]
   },
+  // @remove-on-eject-begin
   resolveLoader: {
     modules: [
       paths.appNodeModules,
       paths.ownNodeModules
     ]
   },
+  // @remove-on-eject-end
   module: {
     rules: utils.requireFromFolder(paths.webpackRules)
   },

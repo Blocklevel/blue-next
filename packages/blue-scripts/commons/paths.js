@@ -8,8 +8,26 @@ const resolveApp = function (relativePath) {
 }
 
 // see Blocklevel/blue-next/issues/38
-const appBuildHash = process.env.VERSION_STRING || '[hash:6]'
+const appBuildHash = process.env.VERSION_STRING || 'dist'
 
+// we are in the ./config folder in the root of the project
+module.exports = {
+  appDirectory: resolveApp('.'),
+  appNodeModules: resolveApp('node_modules'),
+  appConfig: resolveApp('blue.config.js'),
+  appStyle: resolveApp('./src/asset/style'),
+  appRoot: resolveApp('./src/app'),
+  appEntry: resolveApp('./src/bootstrap.js'),
+  appBuild: resolveApp('./build'),
+  appSrc: resolveApp('./src'),
+  appPackageJSON: resolveApp('./package.json'),
+  appStatic: resolveApp('./static'),
+  appHTMLIndex: resolveApp('./index.html'),
+  webpackRules: resolveApp('./config/webpack/rules'),
+  appBuildHash: appBuildHash
+}
+
+// @remove-on-eject-begin
 const resolveOwn = function (relativePath) {
   return path.resolve(__dirname, '..', relativePath)
 }
@@ -33,3 +51,4 @@ module.exports = {
   ownNodeModules: resolveOwn('node_modules'),
   appBuildHash: appBuildHash
 }
+// @remove-on-eject-end
