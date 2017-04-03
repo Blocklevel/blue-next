@@ -1,1 +1,1 @@
-module.exports = require('eslint-config-blocklevel')
+module.exports = require('eslint-config-blue')

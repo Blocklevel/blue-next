@@ -94,8 +94,8 @@ array-uniq@^1.0.1:
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
 
 array.prototype.find@^2.0.1:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/array.prototype.find/-/array.prototype.find-2.0.3.tgz#08c3ec33e32ec4bab362a2958e686ae92f59271d"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/array.prototype.find/-/array.prototype.find-2.0.4.tgz#556a5c5362c08648323ddaeb9de9d14bc1864c90"
   dependencies:
     define-properties "^1.1.2"
     es-abstract "^1.7.0"
@@ -245,9 +245,9 @@ bit-mask@0.0.2-alpha:
   dependencies:
     prime "0.0.5-alpha"
 
-blue-templates@^1.0.0-beta.10:
-  version "1.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.0.0-beta.10.tgz#b0d185411fb630138a5a5cfb159ce75bb6805cd6"
+blue-templates@^1.0.0-beta.21:
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.0.0-beta.21.tgz#44e033306221f7818f4c4cdaf527cee24fc51b59"
 
 bluebird@^3.1.1:
   version "3.4.7"
@@ -667,9 +667,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-blocklevel@^1.0.0-beta.16:
-  version "1.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/eslint-config-blocklevel/-/eslint-config-blocklevel-1.0.0-beta.16.tgz#6e487b284cd19953d91451d97bae5738b3ef3199"
+eslint-config-blue@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-0.0.1.tgz#828bcd38b86da93a90eb0037e1359df7acc4b2f2"
   dependencies:
     eslint-config-standard "^6.2.1"
     eslint-plugin-import "^2.2.0"
