@@ -32,8 +32,6 @@ portfinder.getPortPromise().then(port => {
     `Your current ip address ${ip.address()}\n`
   ]
 
-  console.log(config)
-
   if (config.isConfigurationModified) {
     messages.push('blue.config.js modifiers applied')
   }
