@@ -65,10 +65,10 @@ const getGitUser = co.wrap(function * (name = '', email = '') {
  * Replace name of given files
  * @param  {String} dir
  * @param  {Array<String>} files
- * @param  {Regexp|String} substr
- * @param  {Regexp|String} newSubstr
+ * @param  {Regexp|String} [substr=/[!@#$%^&*]/g]
+ * @param  {String} [newSubstr='']
  */
-const replaceFilesName = function (dir, files, substr, newSubstr) {
+const replaceFilesName = function (dir, files, substr = /[!@#$%^&*]/g, newSubstr = '') {
   files.forEach(file => {
     fs.rename(`${dir}/${file}`, `${dir}/${file.replace(substr, newSubstr)}`, error => {
       if (error) {

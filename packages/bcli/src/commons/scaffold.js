@@ -16,9 +16,12 @@ const project = co.wrap(function * (inputs) {
   yield copy(inputs.template, inputs.dest, { data, clean: false })
   yield copy(inputs.cssTemplate, inputs.templateCssFolder, { data, clean: false })
 
-  // see Blocklevel/blue-next/issues/41
-  // see Blocklevel/blue-next/issues/44
-  utils.replaceFilesName(inputs.dest, [`__.eslintrc.js`, `__.gitignore`], '__', '')
+  utils.replaceFilesName(inputs.dest, [
+    // see Blocklevel/blue-next/issues/41
+    `#.eslintrc.js#`,
+    // see Blocklevel/blue-next/issues/44
+    `#.gitignore#`
+  ])
 })
 
 /**
