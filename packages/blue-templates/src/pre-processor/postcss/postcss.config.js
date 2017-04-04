@@ -1,4 +1,5 @@
-const path = require('path')
-const variables = path.resolve(__dirname, './config/variables.js')
+const variables = require('./config/variables.js')
 
-module.exports = require('postcss-blue-plugins')(variables)
+module.exports = {
+  plugins: require('postcss-blue-plugins')(variables)
+}
