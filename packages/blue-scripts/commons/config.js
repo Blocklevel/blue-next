@@ -7,7 +7,11 @@ const fs = require('fs')
 let isConfigurationModified = false
 
 const blueConfigDefaults = {
-  name: 'my-project'
+  name: 'my-project',
+  isomorphic: {
+    enabled: false,
+    path: `${paths.appDirectory}/server/index`
+  }
 }
 
 /**
@@ -126,6 +130,8 @@ const get = function (nodeEnv = getNodeEnv()) {
     webpack: webpackConfig,
     // share the name of the project
     projectName: blueConfig.name,
+    // enable SSR
+    isomorphic: blueConfig.isomorphic,
     // verbose output during compilation
     versbose: blueConfig.webpackVerboseOutput,
     // nofity if webpack configuration has been changed

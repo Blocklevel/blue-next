@@ -43,6 +43,7 @@
     "imagemin-webpack-plugin": "^1.4.4",
     "ip": "^1.1.5",
     "lodash": "^4.17.4",
+    "memory-fs": "^0.4.1",
     "normalize.css": "^5.0.0",
     "ora": "^1.1.0",
     "portfinder": "^1.0.13",
@@ -50,10 +51,13 @@
     "postcss-loader": "^1.2.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
+    "vue-ssr-webpack-plugin": "^2.1.0",
     "vue-style-loader": "^2.0.0",
     "webpack": "^2.2.1",
     "webpack-combine-loaders": "^2.0.3",
+    "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.2.0",
+    "webpack-hot-middleware": "^2.18.0",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-merge": "^3.0.0"
   }

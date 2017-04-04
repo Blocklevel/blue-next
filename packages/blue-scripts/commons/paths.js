@@ -8,7 +8,7 @@ const resolveApp = function (relativePath) {
 }
 
 // see Blocklevel/blue-next/issues/38
-const appBuildHash = process.env.VERSION_STRING || 'dist'
+const appBuildHash = process.env.VERSION_STRING || ''
 
 // we are in the ./config folder in the root of the project
 module.exports = {
