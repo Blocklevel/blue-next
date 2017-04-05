@@ -58,36 +58,29 @@ function webpackConfigModifierHandler (modifier, data, arrayToMap) {
  */
 function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEnv()) {
   const envConfig = config[nodeEnv] || {}
-  // TODO better implementation of these checks
-  const pluginHelper = envConfig.webpackHelper && envConfig.webpackHelper.plugins
-  const rulesHelper = envConfig.webpackHelper && envConfig.webpackHelper.rules
-  const webpackModifier = envConfig.webpack
+  const envPluginsHelper = _.get(envConfig, 'webpackHelper.plugins')
+  const envRulesHelper = _.get(envConfig, 'webpackHelper.rules')
+  const rulesHelper = _.get(config, 'webpackHelper.rules')
+  const pluginsHelper = _.get(config, 'webpackHelper.plugins')
+  const envWenpackModifier = envConfig.webpack
+  const webpackModifier = config.webpack
 
-  if (webpackModifier) {
-    // notify that configuration is changed
-    isConfigurationModified = true
-    // directly change webpack configuration object
-    webpackConfig = webpackMerge.smart(webpackModifier(webpackConfig), webpackConfig)
-  }
-
-  if (pluginHelper) {
-    // notify that configuration is changed
+  _.compact([pluginsHelper, envPluginsHelper]).forEach(helper => {
     isConfigurationModified = true
 
     webpackConfig.plugins = webpackConfigModifierHandler(
-      pluginHelper,
+      helper,
       webpackConfig.plugins,
       // generates a constructor name based map
       () => _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
     )
-  }
+  })
 
-  if (rulesHelper) {
-    // notify that configuration is changed
+  _.compact([rulesHelper, envRulesHelper]).forEach(helper => {
     isConfigurationModified = true
 
     webpackConfig.module.rules = webpackConfigModifierHandler(
-      rulesHelper,
+      helper,
       webpackConfig.module.rules,
       function () {
         // TODO find a better way to map it
@@ -102,7 +95,14 @@ function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEn
         return rulesMap
       }
     )
-  }
+  })
+
+  _.compact([webpackModifier, envWenpackModifier]).forEach(helper => {
+    // notify that configuration is changed
+    isConfigurationModified = true
+    // directly change webpack configuration object
+    webpackConfig = webpackMerge.smart(helper(webpackConfig), webpackConfig)
+  })
 
   return webpackConfig
 }
