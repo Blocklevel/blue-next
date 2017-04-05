@@ -50,22 +50,33 @@ function webpackConfigModifierHandler (modifier, data, arrayToMap) {
 }
 
 /**
+ * Returns all helpers from the configuration object
+ * @param  {Object} config
+ * @param  {String} type
+ * @param  {String} [nodeEnv=getNodeEnv()]
+ * @return {Object}                      
+ */
+function getHelpers (config, type, nodeEnv = getNodeEnv()) {
+  const envConfig = config[nodeEnv] || {}
+  // get helpers for each environment
+  const helpers = [config, envConfig].map(currConfig => _.get(currConfig, type))
+  // remove undefined values
+  return _.compact(helpers)
+}
+
+/**
  * Modifies the webpack configuration
  * @param  {Object} config
  * @param  {Object} webpack
- * @param  {String} [nodeEnv=process.env.NODE_ENV]
  * @return {Object}
  */
-function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEnv()) {
-  const envConfig = config[nodeEnv] || {}
-  const envPluginsHelper = _.get(envConfig, 'webpackHelper.plugins')
-  const envRulesHelper = _.get(envConfig, 'webpackHelper.rules')
-  const rulesHelper = _.get(config, 'webpackHelper.rules')
-  const pluginsHelper = _.get(config, 'webpackHelper.plugins')
-  const envWenpackModifier = envConfig.webpack
-  const webpackModifier = config.webpack
+function applyWebpackConfigModifiers (config, webpackConfig) {
+  const webpackHelpers = getHelpers(config, 'webpack')
+  const plugins = getHelpers(config, 'webpackHelper.plugins')
+  const rules = getHelpers(config, 'webpackHelper.rules')
 
-  _.compact([pluginsHelper, envPluginsHelper]).forEach(helper => {
+  plugins.forEach(helper => {
+    // notify that configuration is changed
     isConfigurationModified = true
 
     webpackConfig.plugins = webpackConfigModifierHandler(
@@ -76,14 +87,14 @@ function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEn
     )
   })
 
-  _.compact([rulesHelper, envRulesHelper]).forEach(helper => {
+  rules.forEach(helper => {
+    // notify that configuration is changed
     isConfigurationModified = true
 
     webpackConfig.module.rules = webpackConfigModifierHandler(
       helper,
       webpackConfig.module.rules,
       function () {
-        // TODO find a better way to map it
         const rulesMap = {}
         const files = fs.readdirSync(paths.webpackRules)
 
@@ -97,7 +108,7 @@ function applyWebpackConfigModifiers (config, webpackConfig, nodeEnv = getNodeEn
     )
   })
 
-  _.compact([webpackModifier, envWenpackModifier]).forEach(helper => {
+  webpackHelpers.forEach(helper => {
     // notify that configuration is changed
     isConfigurationModified = true
     // directly change webpack configuration object
