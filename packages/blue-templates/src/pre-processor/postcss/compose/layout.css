@@ -1,25 +1,14 @@
 /* ==========================================================================
-   Page
+   Layout
    ========================================================================== */
 
 /**
- * General page styles
+ * General layout styles
  *
- * List your general page styles here. Think of reusable wrappers, columns or
+ * List your general layout styles here. Think of reusable wrappers, columns or
  * snippets used accross multiple pages. If this file gets too big you might
  * want to consider creating some layout components.
 */
-
-/**
- * Fullscreen
- *
- * Fills the whole viewport. When content is bigger the element
- * automatically increases in size as well.
- */
-.fullscreen {
-  width: 100%;
-  min-height: 100vh;
-}
 
 /**
  * Wrapper
