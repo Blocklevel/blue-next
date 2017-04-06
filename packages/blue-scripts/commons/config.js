@@ -88,9 +88,9 @@ function applyWebpackConfigModifiers (config, webpackConfig) {
   rules.forEach(helper => {
     // generates a file name based map
     webpackConfig.module.rules = webpackConfigModifierHandler(helper, webpackConfig.module.rules, function () {
-      return fs.readdirSync(paths.webpackRules).reduce((prop, filename) => {
+      return fs.readdirSync(paths.webpackRules).reduce((map, filename) => {
         const name = filename.replace('.js', '')
-        return _.assignIn(prop, {
+        return _.assignIn(map, {
           [name]: require(`${paths.webpackRules}/${filename}`)
         })
       }, {})
