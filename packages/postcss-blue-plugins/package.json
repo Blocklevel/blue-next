@@ -26,7 +26,7 @@
     "postcss-mixins": "^5.4.1",
     "postcss-nested": "^1.0.0",
     "postcss-short": "^3.0.3",
-    "postgrid": "^0.0.2",
+    "postgrid": "^0.0.4",
     "rucksack-css": "^0.9.1"
   }
 }

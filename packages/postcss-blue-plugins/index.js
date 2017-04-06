@@ -2,7 +2,17 @@ const defaultBrowsers = ['last 3 versions', 'iOS >= 8']
 
 module.exports = function (variables = {}, browsers = defaultBrowsers) {
   return [
+    /**
+     * Share global variable across the application
+     * https://github.com/jonathantneal/postcss-advanced-variables
+     */
     require('postcss-advanced-variables')({ variables }),
+
+    /**
+     * Flexbox grid system
+     * https://github.com/Blocklevel/postgrid
+     */
+    require('postgrid'),
 
     /**
      * Plugin to inline @import rules content
