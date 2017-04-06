@@ -8,9 +8,6 @@
  *
  * This file contains all possible font-families, font-styles, font-sizes,
  * colors and text-transforms.
- *
- * Avoid composing these styles directly. Create a new heading or type in
- * heading.css or type.css to use instead.
 */
 
 /* Font families
@@ -34,7 +31,7 @@
 .large { font-size: 1.6rem; line-height: 1.428em; }
 
 /**
- * Small
+ * <small> sizes
  *
  * Create lighter, secondary text in any heading/type with a
  * generic <small> tag.
@@ -44,15 +41,6 @@
   small {
     font-size: 0.65em;
   }
-}
-
-/**
- * Font size breakpoints
- *
- * Handle all device specific font sizes here
-*/
-@media ($m) {
-  /*.h-xxlarge { font-size: 5rem; }*/
 }
 
 /* Transforms
@@ -67,3 +55,9 @@
 .current-color { color: currentColor; }
 .black { color: $black; }
 .white { color: $white; }
+
+/* Breakpoints
+   ========================================================================== */
+@media ($m) {
+  /*.h-xxlarge { font-size: 5rem; }*/
+}

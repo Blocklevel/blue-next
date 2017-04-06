@@ -1,16 +1,17 @@
 /* ==========================================================================
-   List
+   Form
    ========================================================================== */
 
 /**
- * This file contains all lists used across pages/components.
- */
+ * Inputs, textarea, radio buttons etc.
+*/
+.input {
+  outline: none;
+}
 
 /**
- * Default list styles
- *
- * Reset list
+ * Input
  */
-.list {
-  composes: reset-list from $common;
+.input {
+  composes: input;
 }
