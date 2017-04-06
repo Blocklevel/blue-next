@@ -28,7 +28,7 @@ spinner.start()
 
 // Notify any changes made via blue.config.js file
 if (config.isConfigurationModified) {
-  spinner.text = 'Apply blue configuration changes'
+  spinner.text = 'Apply blue.config.js changes'
   spinner.succeed()
 }
 

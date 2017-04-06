@@ -54,7 +54,7 @@ function webpackConfigModifierHandler (modifier, data, arrayToMap) {
  * @param  {Object} config
  * @param  {String} type
  * @param  {String} [nodeEnv=getNodeEnv()]
- * @return {Object}                      
+ * @return {Object}
  */
 function getHelpers (config, type, nodeEnv = getNodeEnv()) {
   const envConfig = config[nodeEnv] || {}
@@ -75,47 +75,32 @@ function applyWebpackConfigModifiers (config, webpackConfig) {
   const plugins = getHelpers(config, 'webpackHelper.plugins')
   const rules = getHelpers(config, 'webpackHelper.rules')
 
-  plugins.forEach(helper => {
-    // notify that configuration is changed
-    isConfigurationModified = true
+  // notify if webpack changed via blue.config.js
+  isConfigurationModified = [].concat(plugins, rules, webpackHelpers).length > 0
 
-    webpackConfig.plugins = webpackConfigModifierHandler(
-      helper,
-      webpackConfig.plugins,
-      // generates a constructor name based map
-      () => _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
-    )
+  plugins.forEach(helper => {
+    // generates a constructor name based map
+    webpackConfig.plugins = webpackConfigModifierHandler(helper, webpackConfig.plugins, function () {
+      return  _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
+    })
   })
 
   rules.forEach(helper => {
-    // notify that configuration is changed
-    isConfigurationModified = true
-
-    webpackConfig.module.rules = webpackConfigModifierHandler(
-      helper,
-      webpackConfig.module.rules,
-      function () {
-        const rulesMap = {}
-        const files = fs.readdirSync(paths.webpackRules)
-
-        files.forEach(file => {
-          const filename = file.replace('.js', '')
-          rulesMap[filename] = require(`${paths.webpackRules}/${file}`)
+    // generates a file name based map
+    webpackConfig.module.rules = webpackConfigModifierHandler(helper, webpackConfig.module.rules, function () {
+      return fs.readdirSync(paths.webpackRules).reduce((prop, filename) => {
+        const name = filename.replace('.js', '')
+        return _.assignIn(prop, {
+          [name]: require(`${paths.webpackRules}/${filename}`)
         })
-
-        return rulesMap
-      }
-    )
+      }, {})
+    })
   })
 
   webpackHelpers.forEach(helper => {
-    // notify that configuration is changed
-    isConfigurationModified = true
     // directly change webpack configuration object
-    webpackConfig = webpackMerge.smart(helper(webpackConfig), webpackConfig)
+    webpackMerge.smart(helper(webpackConfig), webpackConfig)
   })
-
-  return webpackConfig
 }
 
 /**

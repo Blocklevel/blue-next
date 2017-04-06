@@ -33,7 +33,7 @@ portfinder.getPortPromise().then(port => {
   ]
 
   if (config.isConfigurationModified) {
-    messages.push('blue.config.js modifiers applied')
+    messages.push('blue.config.js changes applied')
   }
 
   // Add the FriendlyErrorsWebpackPlugin after everything is sorted.
