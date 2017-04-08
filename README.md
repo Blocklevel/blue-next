@@ -1,10 +1,14 @@
-<p align="center">
+<p align="center" style="font-size: 12px">
   <img  src="http://i.imgur.com/QmJrU0A.png" width="150" />
   <br />
   <br />
   <a href="https://travis-ci.org/Blocklevel/blue-next">
     <img src="https://travis-ci.org/Blocklevel/blue-next.svg?branch=master" />
   </a>
+  <br />
+   <img src="https://img.shields.io/npm/dm/bcli.svg?label=bcli" />
+   
+   <img src="https://img.shields.io/npm/dm/blue-scripts.svg?label=blue-scripts" />
 </p>
 
 ## Documentation
