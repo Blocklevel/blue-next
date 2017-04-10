@@ -13,7 +13,7 @@ const getStylePath = function (dir) {
 }
 
 const getStoreModulePath = function (dir) {
-  return `${dir}/src/app/store/modules`
+  return `${dir}/src/app/data/store`
 }
 
 const getBlue = function () {

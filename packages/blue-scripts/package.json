@@ -51,6 +51,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue-style-loader": "^2.0.0",
+    "vuex-promise-middleware": "^1.0.0",
     "webpack": "^2.2.1",
     "webpack-combine-loaders": "^2.0.3",
     "webpack-dev-server": "^2.2.0",

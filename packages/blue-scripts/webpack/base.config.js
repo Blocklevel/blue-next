@@ -23,13 +23,14 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.css'],
     alias: {
-      mixin: `${paths.appRoot}/mixin`,
-      proxy: `${paths.appRoot}/proxy`,
-      container: `${paths.appRoot}/container`,
-      component: `${paths.appRoot}/component`,
+      core: `${paths.appSrc}/core`,
       page: `${paths.appRoot}/page`,
-      store: `${paths.appRoot}/store/modules`,
-      asset: `${paths.appSrc}/asset`
+      asset: `${paths.appSrc}/asset`,
+      mixin: `${paths.appRoot}/mixin`,
+      proxy: `${paths.appRoot}/data/proxy`,
+      store: `${paths.appRoot}/data/store`,
+      container: `${paths.appRoot}/container`,
+      component: `${paths.appRoot}/component`
     },
     modules: [
       paths.appNodeModules,
