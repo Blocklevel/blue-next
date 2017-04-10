@@ -1,6 +1,27 @@
 import _ from 'lodash'
 
 /**
+ * Returns an object map of components
+ * @param  {Array}   [components=[]]
+ * @return {Object}
+ */
+export function mapComponents (components = []) {
+  const context = require.context('../app', true, /\.vue$/)
+
+  return _.reduce(context.keys(), (collection, component) => {
+    const name = component.split('/')[2]
+
+    if (components.indexOf(name) === -1) {
+      return collection
+    }
+
+    const key = _.camelCase(name)
+
+    return { ...collection, [key]: context(component) }
+  }, {})
+}
+
+/**
  * Returns a resolved page component instance
  * @param  {String}  path
  * @param  {Boolean} [root=true]
