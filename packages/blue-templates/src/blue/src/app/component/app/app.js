@@ -1,0 +1,4 @@
+/**
+ * Main component
+ */
+export default {}

@@ -1,14 +1,9 @@
-import { routeParser } from 'vue-i18n-manager'
+import { pageLoader } from 'core/utils'
 
-/**
- * Pages
- */
-const home = resolve => require(['page/home/home.vue'], resolve)
-
-export default routeParser([
+export default [
   {
     name: 'home',
     path: '/',
-    component: home
+    component: pageLoader('home')
   }
-])
+]

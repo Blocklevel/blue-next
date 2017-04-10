@@ -14,7 +14,7 @@ const blueConfigDefaults = {
  * Returns bcli.config.js content
  * @return {Object}
  */
-const getBlueConfig = function () {
+function getBlueConfig () {
   return fs.existsSync(paths.appConfig) ? require(paths.appConfig) : {}
 }
 
@@ -58,10 +58,39 @@ function webpackConfigModifierHandler (modifier, data, arrayToMap) {
  */
 function getHelpers (config, type, nodeEnv = getNodeEnv()) {
   const envConfig = config[nodeEnv] || {}
-  // get helpers for each environment
+  // get helpers for the root or the environment object
   const helpers = [config, envConfig].map(currConfig => _.get(currConfig, type))
   // remove undefined values
   return _.compact(helpers)
+}
+
+/**
+ * [pluginsHelper description]
+ * @param  {[type]}   webpackConfig [description]
+ * @param  {Function} callback      [description]
+ * @return {[type]}                 [description]
+ */
+function rulesHelper (webpackConfig, callback) {
+  webpackConfig.module.rules = webpackConfigModifierHandler(callback, webpackConfig.module.rules, function () {
+    return fs.readdirSync(paths.webpackRules).reduce((map, filename) => {
+      const name = filename.replace('.js', '')
+      return _.assignIn(map, {
+        [name]: require(`${paths.webpackRules}/${filename}`)
+      })
+    }, {})
+  })
+}
+
+/**
+ * [rulesHelper description]
+ * @param  {[type]}   webpackConfig [description]
+ * @param  {Function} callback      [description]
+ * @return {[type]}                 [description]
+ */
+function pluginsHelper (webpackConfig, callback) {
+  webpackConfig.plugins = webpackConfigModifierHandler(callback, webpackConfig.plugins, function () {
+    return  _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
+  })
 }
 
 /**
@@ -70,7 +99,7 @@ function getHelpers (config, type, nodeEnv = getNodeEnv()) {
  * @param  {Object} webpack
  * @return {Object}
  */
-function applyWebpackConfigModifiers (config, webpackConfig) {
+function applyWebpackConfigHelpers (config, webpackConfig) {
   const webpackHelpers = getHelpers(config, 'webpack')
   const plugins = getHelpers(config, 'webpackHelper.plugins')
   const rules = getHelpers(config, 'webpackHelper.rules')
@@ -78,27 +107,14 @@ function applyWebpackConfigModifiers (config, webpackConfig) {
   // notify if webpack changed via blue.config.js
   isConfigurationModified = [].concat(plugins, rules, webpackHelpers).length > 0
 
-  plugins.forEach(helper => {
-    // generates a constructor name based map
-    webpackConfig.plugins = webpackConfigModifierHandler(helper, webpackConfig.plugins, function () {
-      return  _.keyBy(webpackConfig.plugins, plugin => plugin.constructor.name)
-    })
-  })
+  // apply changes on webpack plugins
+  plugins.forEach(helper => pluginsHelper(webpackConfig, helper))
 
-  rules.forEach(helper => {
-    // generates a file name based map
-    webpackConfig.module.rules = webpackConfigModifierHandler(helper, webpackConfig.module.rules, function () {
-      return fs.readdirSync(paths.webpackRules).reduce((map, filename) => {
-        const name = filename.replace('.js', '')
-        return _.assignIn(map, {
-          [name]: require(`${paths.webpackRules}/${filename}`)
-        })
-      }, {})
-    })
-  })
+  // apply changes on webpack modules rules
+  rules.forEach(helper => rulesHelper(webpackConfig, helper))
 
+  // directly change webpack configuration object
   webpackHelpers.forEach(helper => {
-    // directly change webpack configuration object
     webpackMerge.smart(helper(webpackConfig), webpackConfig)
   })
 }
@@ -113,7 +129,7 @@ const get = function (nodeEnv = getNodeEnv()) {
   const blueConfig = _.merge({}, blueConfigDefaults, getBlueConfig())
   const webpackConfig = require(`../webpack/env/${nodeEnv}`)
 
-  applyWebpackConfigModifiers(blueConfig, webpackConfig)
+  applyWebpackConfigHelpers(blueConfig, webpackConfig)
 
   return {
     // Webpack only configurations
@@ -130,7 +146,7 @@ const get = function (nodeEnv = getNodeEnv()) {
   }
 }
 
-const getPreProcessor = function () {
+function getPreProcessor () {
   const config = getBlueConfig()
   const allowed = ['postcss', 'scss']
 
