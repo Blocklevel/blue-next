@@ -17,6 +17,11 @@ export function mapComponents (components = []) {
 
     const key = _.camelCase(name)
 
+    if (collection[key]) {
+      console.error(`[Blue/utils/mapComponents] Component "${name}" already exists. Please make sure to always use unique names.`)
+      return collection
+    }
+
     return { ...collection, [key]: context(component) }
   }, {})
 }
