@@ -9,10 +9,12 @@ module.exports = function (vorpal) {
   const chalk = vorpal.chalk
 
   vorpal
-    .command('component [name] [type]', 'create a component')
+    .command('component <name>', 'create a component')
     .option('-f, --force', 'Force file overwrite')
+    .option('-t, --types', 'Show component types')
     .option('--hooks', 'Add basic component hooks')
-    .alias('c')
+    .alias('page')
+    .alias('container')
     .action(function (args, callback) {
       // the command needs to run in the root of the project
       utils.canCommandRun()
@@ -20,18 +22,7 @@ module.exports = function (vorpal) {
       this.prompt([
         {
           when: function () {
-            return !args.name
-          },
-          type: 'input',
-          name: 'name',
-          message: 'What\'s the name of your component?',
-          validate: function (answer) {
-            return answer !== ''
-          }
-        },
-        {
-          when: function () {
-            return typeof args.type !== 'undefined' && !utils.isComponentType(args.type)
+            return args.options.types
           },
           type: 'list',
           name: 'type',
@@ -51,15 +42,6 @@ module.exports = function (vorpal) {
             }
           ],
           default: 'component'
-        },
-        {
-          when: function () {
-            return !args.options.hooks
-          },
-          type: 'confirm',
-          name: 'basic',
-          message: 'Would you like some basic Vue hooks?',
-          default: false
         }
       ])
 
@@ -68,12 +50,13 @@ module.exports = function (vorpal) {
         // It's not possible to know whether data is passed via command line options
         // or via questions. Both results needs to be merged so in any cases
         // a name and a type will always be available
-        let mergedResult = _.assignIn({}, promptResult, args)
+        let mergedResult = _.assignIn({}, promptResult, { basic: args.options.hooks }, args)
 
-        // It's not possible to pass a default value if a question is skipped,
-        // so in case the type of component is undefuned: type is 'component'
+        // the type of component is not mandatory so if not defined we can use the alias used
+        // to call the command and assign that value as default component type
+        // @example: `bcli page my-page` will evaluate the default type with the value of `page`
         if (!mergedResult.type) {
-          mergedResult.type = 'component'
+          mergedResult.type = process.argv[0]
         }
 
         const { name, type } = mergedResult
