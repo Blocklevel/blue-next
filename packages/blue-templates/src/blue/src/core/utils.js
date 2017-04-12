@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { connect } from 'vuex-connect'
 
 /**
  * Returns an object map of components
@@ -18,12 +19,29 @@ export function mapComponents (components = []) {
     const key = _.camelCase(name)
 
     if (collection[key]) {
-      console.error(`[Blue/utils/mapComponents] Component "${name}" already exists. Please make sure to always use unique names.`)
+      console.error(`[utils/mapComponents] Component "${name}" already exists. Please make sure to always use unique names.`)
       return collection
     }
 
     return { ...collection, [key]: context(component) }
   }, {})
+}
+
+/**
+ * Returns a component connected to the Vuex store
+ * @param  {String} name            component name
+ * @param  {Object} vuexConnectData vuex-connect property object
+ * @return {Object}
+ */
+export function connectComponent (name, vuexConnectData) {
+  const component = mapComponents([name])
+  const key = Object.keys(component)[0]
+
+  if (!key) {
+    throw new Error(`[utils/connectComponent] Component "${name}" doesn't exist`).message
+  }
+
+  return connect(vuexConnectData)(name, component[key])
 }
 
 /**
