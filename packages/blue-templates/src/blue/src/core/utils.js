@@ -19,9 +19,9 @@ export function mapComponents (components = []) {
     const key = _.camelCase(name)
 
     if (collection[key]) {
-      /* eslint-disabled */
+      /* eslint-disable */
       console.error(`[utils] Component "${name}" already exists. Please make sure to always use unique names.`)
-      /* eslint-enabled */
+      /* eslint-enable */
       return collection
     }
 
@@ -40,7 +40,7 @@ export function connectComponent (name, vuexConnectData) {
   const key = Object.keys(component)[0]
 
   if (!key) {
-    throw new Error(`[utils/connectComponent] Component "${name}" doesn't exist`).message
+    throw new Error(`[utils] Component "${name}" doesn't exist`).message
   }
 
   return connect(vuexConnectData)(name, component[key])
@@ -55,17 +55,4 @@ export function connectComponent (name, vuexConnectData) {
 export function pageLoader (path, root = true) {
   const name = root ? `${path}/${path}` : path
   return resolve => require([`page/${name}.vue`], resolve)
-}
-
-/**
- * Returns an object map of all json files in the /asset/lang folder
- * @return {Object}
- */
-export function getTranslations () {
-  const context = require.context('../asset/lang', true, /\.json$/)
-
-  return _.reduce(context.keys(), (translations, language) => {
-    const name = language.split('.')[1].replace('/', '')
-    return { ...translations, [name]: context(language) }
-  }, {})
 }

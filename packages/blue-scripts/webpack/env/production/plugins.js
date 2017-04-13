@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 const imageminMozjpeg = require('imagemin-mozjpeg')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = [
   new webpack.DefinePlugin({
@@ -70,6 +71,8 @@ module.exports = [
   new webpack.optimize.OccurrenceOrderPlugin(),
 
   new WebpackManifestPlugin(),
+
+  new LodashModuleReplacementPlugin(),
 
   new CopyWebpackPlugin([
     {

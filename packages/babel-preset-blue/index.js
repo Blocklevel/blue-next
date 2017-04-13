@@ -61,5 +61,8 @@ module.exports = {
       ]
     }],
     'stage-2'
-  ]
+  ],
+  // reduces the size of lodash in the bundle
+  // https://github.com/lodash/babel-plugin-lodash
+  plugins: ['lodash']
 }

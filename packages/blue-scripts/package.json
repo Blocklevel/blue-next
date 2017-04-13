@@ -44,6 +44,7 @@
     "imagemin-webpack-plugin": "^1.4.4",
     "ip": "^1.1.5",
     "lodash": "^4.17.4",
+    "lodash-webpack-plugin": "^0.11.2",
     "normalize.css": "^5.0.0",
     "ora": "^1.1.0",
     "portfinder": "^1.0.13",

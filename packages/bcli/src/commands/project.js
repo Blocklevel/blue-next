@@ -16,13 +16,15 @@ module.exports = function (vorpal) {
     .command('project <name>', 'create a new project with Blue <3')
     .option('-f, --force', 'Force file overwrite')
     .option('--sass', 'Use Sass pre-processor')
+    .option('-y, --yarn', 'Force installation with Yarn')
+    .option('-n, --npm', 'Force installation with NPM')
     .option('--nocommit', 'Avoid git first commit')
     .option('--verbose')
     .alias('p')
     .action(function (args, callback) {
       const dest = `${cwd}/${args.name}`
       const dirExists = fs.existsSync(dest)
-      const hasYarn = detectInstalled.sync('yarn')
+      const hasYarn = args.options.yarn || detectInstalled.sync('yarn')
       const projectData = {
         dest,
         name: args.name,
@@ -32,7 +34,7 @@ module.exports = function (vorpal) {
       }
 
       if (dirExists && !args.options.force) {
-        log.error(`Folder ${dest} already exists. Pass --force flag to overwrite it.`)
+        log.error(`Folder ${dest} already exists. Pass --force or -f flag to overwrite it.`)
       }
 
       this.log('')
