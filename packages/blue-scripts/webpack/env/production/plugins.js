@@ -30,22 +30,18 @@ module.exports = [
   }),
 
   new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true,
-    compressor: {
+    compress: {
+      screw_ie8: true,
       warnings: false,
-      conditionals: true,
-      unused: true,
-      comparisons: true,
-      sequences: true,
-      dead_code: true,
-      evaluate: true,
-      if_return: true,
-      join_vars: true,
-      negate_iife: false
+    },
+    mangle: {
+      screw_ie8: true,
     },
     output: {
-      comments: false
-    }
+      comments: false,
+      screw_ie8: true,
+    },
+    sourceMap: true
   }),
 
   new CompressionPlugin({
@@ -58,13 +54,10 @@ module.exports = [
 
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
-    minChunks: function (module, count) {
-      // any required modules inside node_modules are extracted to vendor
-      return (
-        module.resource &&
-        /\.js$/.test(module.resource) &&
-        module.resource.indexOf(paths.appNodeModules) === 0
-      )
+    minChunks (module, count) {
+      // look for every required node_modules
+      var context = module.context;
+      return context && context.indexOf('node_modules') >= 0;
     }
   }),
 

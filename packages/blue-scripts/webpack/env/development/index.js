@@ -5,7 +5,7 @@ const plugins = require('./plugins')
 const merge = require('webpack-merge')
 
 module.exports = merge.smart({}, config, {
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-source-map',
   devServer: serverOptions,
   plugins: config.plugins.concat(plugins)
 })
