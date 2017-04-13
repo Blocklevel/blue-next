@@ -13,7 +13,9 @@ Vue.use(VueI18nManager, {
       return axios.get(`/static/lang/${translationKey}.json`, options)
         .then(response => response.data)
         .catch(() => {
+          /* eslint-disable */
           console.error(`Translation file "${translationKey}.json" not found.`)
+          /* eslint-enable */
           return {}
         })
     }
