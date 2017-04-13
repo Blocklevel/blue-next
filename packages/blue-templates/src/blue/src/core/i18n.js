@@ -17,7 +17,7 @@ Vue.use(VueI18nManager, {
           return {}
         })
     }
-  },
+  }
 })
 
 export default {
