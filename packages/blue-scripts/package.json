@@ -1,6 +1,6 @@
 {
   "name": "blue-scripts",
-  "version": "1.0.0-beta.28",
+  "version": "1.0.0-beta.29",
   "description": "Configuration and scripts for Blue",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "main": "./index.js",
@@ -24,8 +24,8 @@
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
     "babel-polyfill": "^6.23.0",
-    "babel-preset-blue": "^1.0.0-beta.13",
-    "blue-templates": "^1.0.0-beta.28",
+    "babel-preset-blue": "^1.0.0-beta.29",
+    "blue-templates": "^1.0.0-beta.29",
     "chalk": "^1.1.3",
     "compression-webpack-plugin": "^0.3.2",
     "copy-webpack-plugin": "^4.0.1",
