@@ -19,7 +19,9 @@ export function mapComponents (components = []) {
     const key = _.camelCase(name)
 
     if (collection[key]) {
-      console.error(`[utils/mapComponents] Component "${name}" already exists. Please make sure to always use unique names.`)
+      /* eslint-disabled */
+      console.error(`[utils] Component "${name}" already exists. Please make sure to always use unique names.`)
+      /* eslint-enabled */
       return collection
     }
 
