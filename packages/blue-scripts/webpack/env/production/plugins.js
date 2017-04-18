@@ -110,7 +110,7 @@ module.exports = [
       })
     ],
     pngquant: {
-      quality: '95-100'
+      quality: '85-90'
     }
   })
 ]
