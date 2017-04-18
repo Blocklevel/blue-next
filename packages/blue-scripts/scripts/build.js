@@ -43,7 +43,8 @@ if (config.webpackVerboseOutput) {
 
 compile.run(function (error, stats) {
   if (error) {
-    console.log(chalk.red(error))
+    spinner.fail()
+    console.log(`\n${chalk.red(error)}`)
     process.exit(1)
   }
 
