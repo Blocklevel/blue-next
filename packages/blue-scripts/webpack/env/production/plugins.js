@@ -16,7 +16,8 @@ module.exports = [
     'process.env': {
       // Essential for Vue to build a smaller bundle
       // https://vue-loader.vuejs.org/en/workflow/production.html
-      NODE_ENV: '"production"'
+      NODE_ENV: '"production"',
+      BASE_URL: JSON.stringify(paths.appPublicPath)
     }
   }),
 

@@ -10,6 +10,9 @@ const resolveApp = function (relativePath) {
 // see Blocklevel/blue-next/issues/38
 const appBuildHash = process.env.VERSION_STRING || 'dist'
 
+// see Blocklevel/blue-next/issues/67
+const appPublicPath = process.env.BASE_URL || '/'
+
 // we are in the ./config folder in the root of the project
 module.exports = {
   appDirectory: resolveApp('.'),
@@ -24,7 +27,8 @@ module.exports = {
   appStatic: resolveApp('./static'),
   appHTMLIndex: resolveApp('./index.html'),
   webpackRules: resolveApp('./config/webpack/rules'),
-  appBuildHash: appBuildHash
+  appBuildHash,
+  appPublicPath
 }
 
 // @remove-on-eject-begin
@@ -49,6 +53,7 @@ module.exports = {
   blueScripts: resolveApp('node_modules/blue-scripts'),
   webpackRules: resolveOwn('./webpack/rules'),
   ownNodeModules: resolveOwn('node_modules'),
-  appBuildHash: appBuildHash
+  appBuildHash,
+  appPublicPath
 }
 // @remove-on-eject-end

@@ -6,7 +6,8 @@ module.exports = [
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: '"development"',
-      VUE_ENV: '"client"'
+      VUE_ENV: '"client"',
+      BASE_URL: '"/"'
     }
   }),
 
