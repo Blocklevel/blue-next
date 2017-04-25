@@ -40,7 +40,7 @@ module.exports = {
     'no-debugger': applyDevSeverity(),
 
     'no-unused-vars': 1,
-    'no-use-before-define': 1,
+    'no-use-before-define': 0,
     'max-len': [2, { 'code': 130, 'ignoreUrls': true }],
     'vue/jsx-uses-vars': 2
   }
