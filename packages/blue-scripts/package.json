@@ -1,6 +1,6 @@
 {
   "name": "blue-scripts",
-  "version": "1.0.0-beta.30",
+  "version": "1.0.0-beta.31",
   "description": "Configuration and scripts for Blue",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "main": "./index.js",
@@ -31,7 +31,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "eslint": "^3.13.0",
-    "eslint-config-blue": "^1.0.0-beta.23",
+    "eslint-config-blue": "^1.0.0-beta.31",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-friendly-formatter": "^2.0.7",
     "eslint-loader": "^1.6.1",
