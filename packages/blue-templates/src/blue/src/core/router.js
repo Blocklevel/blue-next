@@ -9,6 +9,7 @@ import routes from '../app/routes'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  base: process.env.BASE_URL,
   mode: 'history',
   // Apply routes with language route parser.
   // The routeParser helper will inject the `params.lang` object

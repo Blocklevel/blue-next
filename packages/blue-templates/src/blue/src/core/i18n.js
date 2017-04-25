@@ -9,7 +9,7 @@ Vue.use(VueI18nManager, {
   router,
   proxy: {
     getTranslation ({ translationKey }) {
-      const options = { baseURL: '/' }
+      const options = { baseURL: process.env.BASE_URL }
       return axios.get(`/static/lang/${translationKey}.json`, options)
         .then(response => response.data)
         .catch(() => {
