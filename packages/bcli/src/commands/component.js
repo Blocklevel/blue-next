@@ -59,10 +59,9 @@ module.exports = function (vorpal) {
           mergedResult.type = process.argv[0]
         }
 
-
         const nameArray = mergedResult.name.split('/')
-        const name = getComponentName(nameArray)
         const hasCustomPath = nameArray.length > 1
+        const name = hasCustomPath ? nameArray[nameArray.length - 1] : nameArray[0]
         const componentPath = `${process.cwd()}/src/app/${mergedResult.type}`
         const dest = hasCustomPath ? `${componentPath}/${nameArray.join('/')}` : `${componentPath}/${name}`
 
@@ -99,12 +98,8 @@ module.exports = function (vorpal) {
 
       // Done!
       .then(result => {
-        const { type, name } = result
-
         this.log('')
-        this.log(`   ${_.startCase(type)}`, chalk.yellow.bold(name), 'was created successfully!')
-        this.log('')
-        this.log(chalk.italic(`    import ${_.camelCase(name)} from '${type}/${name}/${name}.vue'`))
+        this.log(`   ${_.startCase(result.type)}`, chalk.yellow.bold(result.name), 'was created successfully!')
         this.log('')
 
         // exit from vorpal delimiter
@@ -124,8 +119,4 @@ module.exports = function (vorpal) {
       this.log('')
       process.exit(1)
     })
-}
-
-function getComponentName (array) {
-  return array.length > 1 ? array[array.length - 1] : array[0]
 }

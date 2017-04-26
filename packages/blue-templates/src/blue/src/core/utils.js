@@ -10,7 +10,8 @@ export function mapComponents (components = []) {
   const context = require.context('../app', true, /\.vue$/)
 
   return _.reduce(context.keys(), (collection, component) => {
-    const name = component.split('/')[2]
+    const nameArray = component.split('/')
+    const name = nameArray[nameArray.length - 2]
 
     if (components.indexOf(name) === -1) {
       return collection
