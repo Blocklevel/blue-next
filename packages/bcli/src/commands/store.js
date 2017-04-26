@@ -100,9 +100,8 @@ module.exports = function (vorpal) {
         this.log('   The module is autoloaded in your application!')
         this.log('')
 
-        // When the component is generated we need to fire the callback
-        // provided by the action to bring the terminal back to the delimiter
-        callback()
+        // exit from vorpal delimiter
+        process.exit(0)
       })
 
       .catch(error => {

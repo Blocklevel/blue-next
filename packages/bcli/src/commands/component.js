@@ -59,8 +59,13 @@ module.exports = function (vorpal) {
           mergedResult.type = process.argv[0]
         }
 
-        const { name, type } = mergedResult
-        const dest = `${process.cwd()}/src/app/${type}/${name}`
+
+        const nameArray = mergedResult.name.split('/')
+        const name = getComponentName(nameArray)
+        const hasCustomPath = nameArray.length > 1
+        const componentPath = `${process.cwd()}/src/app/${mergedResult.type}`
+        const dest = hasCustomPath ? `${componentPath}/${nameArray.join('/')}` : `${componentPath}/${name}`
+
         const exists = fs.existsSync(dest)
         const overwriteQuestion = _.assignIn({
           when: function () {
@@ -76,7 +81,7 @@ module.exports = function (vorpal) {
             process.exit(1)
           }
 
-          return _.assignIn({ dest }, args, mergedResult)
+          return _.assignIn(args, { dest }, { name, type: mergedResult.type })
         })
       })
 
@@ -102,9 +107,8 @@ module.exports = function (vorpal) {
         this.log(chalk.italic(`    import ${_.camelCase(name)} from '${type}/${name}/${name}.vue'`))
         this.log('')
 
-        // When the component is generated we need to fire the callback
-        // provided by the action to bring the terminal back to the delimiter
-        callback()
+        // exit from vorpal delimiter
+        process.exit(0)
       })
 
       .catch(error => {
@@ -120,4 +124,8 @@ module.exports = function (vorpal) {
       this.log('')
       process.exit(1)
     })
+}
+
+function getComponentName (array) {
+  return array.length > 1 ? array[array.length - 1] : array[0]
 }
