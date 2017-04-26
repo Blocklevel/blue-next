@@ -11,8 +11,7 @@
    <img src="https://img.shields.io/npm/dm/blue-scripts.svg?label=blue-scripts" />
 </p>
 
-## Documentation
-coming soon
+Documentation available at [here](https://blocklevel.gitbooks.io/blue-next/content/)
 
 ## Installation
 
