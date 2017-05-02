@@ -48,7 +48,7 @@
 .uppercase { text-transform: uppercase; }
 .lowercase { text-transform: lowercase; }
 .italic { text-transform: italic; }
-.bold { text-transform: bold; }
+.bold { font-weight: bold; }
 
 /* Colors
    ========================================================================== */
