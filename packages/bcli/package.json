@@ -48,6 +48,7 @@
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "tar.gz": "^1.0.5",
+    "temp-dir": "^1.0.0",
     "vorpal": "^1.11.4"
   },
   "devDependencies": {

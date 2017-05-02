@@ -37,10 +37,12 @@ module.exports = function (vorpal) {
     .option('--verbose')
     .alias('p')
     .action(function (args, callback) {
+      const hasYarn = args.options.yarn || detectInstalled.sync('yarn')
+
       const dest = `${cwd}/${args.name}`
       const dirExists = fs.existsSync(dest)
-      const hasYarn = args.options.yarn || detectInstalled.sync('yarn')
-      const tmpPath = path.resolve(__dirname, '../../_tmp')
+
+      const tmpPath = require('temp-dir')
       const tmpPackagePath = `${tmpPath}/package`
       const archivePath = `${tmpPath}/blue-template.tar.gz`
 
@@ -54,7 +56,7 @@ module.exports = function (vorpal) {
         {
           title: 'Delete existing project folder',
           enabled: () => dirExists,
-          task: () => del(dest)
+          task: () => del(dest, { force: true })
         },
         {
           title: 'Create project folder',
@@ -63,11 +65,7 @@ module.exports = function (vorpal) {
         {
           title: 'Download templates',
           task: ctx => {
-            return del(tmpPackagePath, { force: true }).then(() => {
-              return fetch('http://registry.npmjs.org/blue-templates').then(response => {
-                return response.json()
-              })
-            })
+            return fetch('http://registry.npmjs.org/blue-templates').then(response => response.json())
             .then(package => {
               const { major } = args.options
               const versions = Object.keys(package.versions)

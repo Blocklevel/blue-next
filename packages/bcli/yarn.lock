@@ -251,9 +251,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blue-templates@^1.0.0-beta.33:
-  version "1.0.0-beta.33"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.0.0-beta.33.tgz#1f3c4b9b1e3d5d97f3479f1d44644796cdac884a"
+blue-templates@^1.0.0-rc.1:
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.0.0-rc.1.tgz#da39f3a1d1e1e40e1c16fddb337ac881029362c2"
 
 bluebird@^2.9.34:
   version "2.11.0"
@@ -2042,6 +2042,10 @@ tar@^2.1.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
+
+temp-dir@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/temp-dir/-/temp-dir-1.0.0.tgz#0a7c0ea26d3a39afa7e0ebea9c1fc0bc4daa011d"
 
 text-encoding@0.6.4:
   version "0.6.4"
