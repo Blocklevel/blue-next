@@ -52,7 +52,16 @@ module.exports = function (vorpal) {
 
       const tasks = new Listr([
         {
-          title: 'Get templates',
+          title: 'Delete existing project folder',
+          enabled: () => dirExists,
+          task: () => del(dest)
+        },
+        {
+          title: 'Create project folder',
+          task: () => fs.mkdirSync(dest)
+        },
+        {
+          title: 'Download templates',
           task: ctx => {
             return del(tmpPackagePath, { force: true }).then(() => {
               return fetch('http://registry.npmjs.org/blue-templates').then(response => {
@@ -95,20 +104,11 @@ module.exports = function (vorpal) {
           }
         },
         {
-          title: 'Delete existing project folder',
-          enabled: () => dirExists,
-          task: () => del(dest)
-        },
-        {
-          title: 'Create project folder',
-          task: () => fs.mkdirSync(dest)
-        },
-        {
           title: 'Scaffold project',
           task: ctx => scaffold.project(ctx.projectData)
         },
         {
-          title: 'Install dependencies', // with npm
+          title: 'Install dependencies',
           enabled: () => !hasYarn,
           task: () => {
             process.chdir(dest)
@@ -116,7 +116,7 @@ module.exports = function (vorpal) {
           }
         },
         {
-          title: 'Install dependencies', // with yarn
+          title: 'Install dependencies with ' + chalk.italic('yarn'),
           enabled: () => hasYarn,
           task: () => {
             process.chdir(dest)
