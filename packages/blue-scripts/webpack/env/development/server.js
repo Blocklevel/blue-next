@@ -6,6 +6,10 @@ module.exports = {
   hot: true,
   inline: false,
   clientLogLevel: 'info',
+
+  // prevents error serving the application via IP address
+  disableHostCheck: true,
+
   watchOptions: {
     ignored: /node_modules/,
     aggregateTimeout: 300,
