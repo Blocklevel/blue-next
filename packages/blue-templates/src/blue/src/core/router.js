@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routeParser } from 'vue-i18n-manager'
-import { sync } from 'vuex-router-sync'
 
 import store from './vuex'
 import routes from '../app/routes'
@@ -16,8 +15,5 @@ const router = new VueRouter({
   // in every listed route.
   routes: routeParser(routes)
 })
-
-// Sync routes with Vuex store
-sync(store, router)
 
 export default router
