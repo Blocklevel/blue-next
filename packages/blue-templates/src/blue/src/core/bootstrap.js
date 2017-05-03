@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import VueConfigManager from 'vue-config-manager'
+import { sync } from 'vuex-router-sync'
 import axios from 'axios'
 import app from 'component/app/app.vue'
 
@@ -17,6 +18,9 @@ Vue.use(VueConfigManager, {
     }
   }
 })
+
+// Sync routes with Vuex store
+sync(store, router)
 
 // Set axios defaults
 axios.defaults.headers.common.Accept = 'application/json'
