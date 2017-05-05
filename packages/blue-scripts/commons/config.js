@@ -131,6 +131,11 @@ const get = function (nodeEnv = getNodeEnv()) {
 
   applyWebpackConfigHelpers(blueConfig, webpackConfig)
 
+  const { publicPath } = webpackConfig.output
+  if (publicPath !== paths.publicPath && process.env.BASE_URL) {
+    process.env.BASE_URL = publicPath
+  }
+
   return {
     // Webpack only configurations
     // This object will be directly merged with webpack and it's a very strict
