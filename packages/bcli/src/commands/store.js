@@ -45,7 +45,7 @@ module.exports = function (vorpal) {
           },
           type: 'input',
           name: 'events',
-          message: 'Add a comma separeted string (i.e. `get id` becomes `GET_ID`)',
+          message: 'Add a comma separated string (i.e. `get id` becomes `GET_ID`)',
           validate: function (answer) {
             return answer !== ''
           }
