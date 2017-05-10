@@ -6,20 +6,18 @@
     "eject": "blue-scripts eject"
   },
   "dependencies": {
+    "axios": "^0.15.3",
+    "blue-scripts": "^{{ blueScriptsVersion }}",
     "vue": "^2.1.10",
-    "vuex": "^2.1.2",
-    "vuex-router-sync": "^4.1.2",
+    "vue-template-compiler": "^2.1.10",
+    "vue-loader": "^11.1.4",
     "vue-i18n-manager": "^3.2.1",
     "vue-router": "^2.2.0",
     "vue-config-manager": "^0.1.3",
-    "axios": "^0.15.3",
     "vue-types": "^0.6.5",
+    "vuex": "^2.1.2",
+    "vuex-connect": "^1.2.0",
     "vuex-promise-middleware": "^1.0.0",
-    "vuex-connect": "^1.2.0"
-  },
-  "devDependencies": {
-    "blue-scripts": "^{{ blueScriptsVersion }}",
-    "vue-template-compiler": "^2.1.10",
-    "vue-loader": "^11.1.4"
+    "vuex-router-sync": "^4.1.2"
   }
 }
