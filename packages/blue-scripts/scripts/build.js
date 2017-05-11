@@ -16,9 +16,12 @@ const ora = require('ora')
 const chalk = require('chalk')
 const Progress = require('webpack/lib/ProgressPlugin')
 
+const log = require('../commons/log')
 const paths = require('../commons/paths')
 const config = require('../commons/config').get()
 const spinner = ora()
+
+log.clean()
 
 console.log('')
 console.log(`Build ${chalk.bold.yellow(config.projectName)} project`)
@@ -44,6 +47,7 @@ if (config.webpackVerboseOutput) {
 compile.run(function (error, stats) {
   if (error) {
     spinner.fail()
+    log.write(error)
     console.log(`\n${chalk.red(error)}`)
     process.exit(1)
   }

@@ -16,8 +16,11 @@ const WebpackDevServer = require('webpack-dev-server')
 const portfinder = require('portfinder')
 const ip = require('ip')
 
+const log = require('../commons/log')
 const utils = require('../commons/utils')
 const config = require('../commons/config').get()
+
+log.clean()
 
 portfinder.basePort = 8080
 

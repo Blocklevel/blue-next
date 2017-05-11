@@ -2,22 +2,6 @@ const path = require('path')
 const _ = require('lodash')
 const fs = require('fs')
 
-const writeLog = function (error) {
-  const filename = 'blue-error.log'
-  const dest = process.cwd()
-  const filePath = `${dest}/${filename}`
-
-  if (fs.existsSync(filePath)) {
-    fs.unlink(filePath)
-  }
-
-  if (!error) {
-    return
-  }
-
-  fs.writeFileSync(filePath, JSON.stringify(error.message, null, 2))
-}
-
 /**
  * Checks if the platform is windows
  * @return {Boolean}
@@ -63,6 +47,5 @@ const requireFromFolder = function (folder) {
 module.exports = {
   requireFromFolder,
   isWindows,
-  getHost,
-  writeLog
+  getHost
 }
