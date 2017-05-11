@@ -6,9 +6,12 @@
     <img src="https://travis-ci.org/Blocklevel/blue-next.svg?branch=master" />
   </a>
   <br />
+  <a href="https://www.npmjs.com/package/bcli">
    <img src="https://img.shields.io/npm/dm/bcli.svg?label=bcli" />
-   
+   </a>
+   <a href="https://www.npmjs.com/package/blue-scripts">
    <img src="https://img.shields.io/npm/dm/blue-scripts.svg?label=blue-scripts" />
+   </a>
 </p>
 
 Documentation available at [here](https://blocklevel.gitbooks.io/blue-next/content/)
