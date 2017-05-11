@@ -60,8 +60,7 @@ module.exports = {
         'es6.weak-set'
       ]
     }],
-    'stage-2',
-    'stage-3'
+    'stage-2'
   ],
   // reduces the size of lodash in the bundle
   // https://github.com/lodash/babel-plugin-lodash
