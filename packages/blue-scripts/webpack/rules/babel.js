@@ -1,7 +1,7 @@
 module.exports = {
   test: /\.js$/,
   loader: 'babel-loader',
-  exclude: /node_modules|build/,
+  exclude: /node_modules/,
   options: {
     // every blue preset is maintaned directly in the custom blue preset
     // https://github.com/Blocklevel/blue-next/tree/master/packages/babel-preset-blue
