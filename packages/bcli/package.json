@@ -1,6 +1,6 @@
 {
   "name": "bcli",
-  "version": "1.0.0-rc.3",
+  "version": "1.0.0-rc.4",
   "description": "Blue Command Line Interface",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.0",
-    "blue-templates": "^1.0.0-rc.3",
+    "blue-templates": "^1.0.0-rc.4",
     "chai": "^3.5.0",
     "chai-fs": "^1.0.0",
     "eslint": "^3.18.0",
