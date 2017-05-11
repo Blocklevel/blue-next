@@ -11,7 +11,10 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default
 const imageminMozjpeg = require('imagemin-mozjpeg')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
-module.exports = [
+const argv = require('minimist')(process.argv.slice(2))
+const hasImageOptimization = !argv['skip-image-optimization']
+
+const plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       // Essential for Vue to build a smaller bundle
@@ -34,14 +37,14 @@ module.exports = [
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       screw_ie8: true,
-      warnings: false,
+      warnings: false
     },
     mangle: {
-      screw_ie8: true,
+      screw_ie8: true
     },
     output: {
       comments: false,
-      screw_ie8: true,
+      screw_ie8: true
     },
     sourceMap: true
   }),
@@ -80,39 +83,45 @@ module.exports = [
       from: './static',
       to: './static'
     }
-  ]),
-
-  new FaviconsWebpackPlugin({
-    logo: `${paths.appStatic}/image/favicon.png`,
-    prefix: `static/favicon/`,
-    persistentCache: false,
-    inject: true,
-    background: '#fff',
-    icons: {
-      android: true,
-      appleIcon: true,
-      appleStartup: false,
-      coast: false,
-      favicons: true,
-      firefox: false,
-      opengraph: false,
-      twitter: false,
-      yandex: false,
-      windows: false
-    }
-  }),
-
-  new ImageminPlugin({
-    disable: false,
-    plugins: [
-      imageminMozjpeg({
-        quality: 65,
-        progressive: true
-      })
-    ],
-    pngquant: {
-      quality: 65,
-      verbose: true
-    }
-  })
+  ])
 ]
+
+if (hasImageOptimization) {
+  plugins.push(
+    new FaviconsWebpackPlugin({
+      logo: `${paths.appStatic}/image/favicon.png`,
+      prefix: `static/favicon/`,
+      persistentCache: false,
+      inject: true,
+      background: '#fff',
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: false,
+        coast: false,
+        favicons: true,
+        firefox: false,
+        opengraph: false,
+        twitter: false,
+        yandex: false,
+        windows: false
+      }
+    }),
+
+    new ImageminPlugin({
+      disable: false,
+      plugins: [
+        imageminMozjpeg({
+          quality: 65,
+          progressive: true
+        })
+      ],
+      pngquant: {
+        quality: 65,
+        verbose: true
+      }
+    })
+  )
+}
+
+module.exports = plugins
