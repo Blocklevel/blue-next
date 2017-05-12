@@ -7,7 +7,7 @@
   </a>
   <br />
   <a href="https://www.npmjs.com/package/bcli">
-   <img src="https://img.shields.io/npm/dm/bcli.svg?label=bcli" />
+   <img src="https://img.shields.io/npm/dm/bcli.svg?label=blue-cli" />
    </a>
    <a href="https://www.npmjs.com/package/blue-scripts">
    <img src="https://img.shields.io/npm/dm/blue-scripts.svg?label=blue-scripts" />
@@ -25,7 +25,7 @@ npm install -g bcli
 ## Packages state
 <p>
   <a href="https://www.npmjs.com/package/bcli">
-    <img src="https://img.shields.io/npm/v/bcli.svg?label=bcli" alt="npm version">
+    <img src="https://img.shields.io/npm/v/bcli.svg?label=blue-cli" alt="npm version">
   </a><br>
   <a href="https://www.npmjs.com/package/blue-scripts">
     <img src="https://img.shields.io/npm/v/blue-scripts.svg?label=blue-scripts" alt="npm version">
