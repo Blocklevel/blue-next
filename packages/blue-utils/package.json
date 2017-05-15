@@ -1,0 +1,38 @@
+{
+  "name": "blue-utils",
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "version": "0.0.0",
+  "description": "",
+  "bugs": {
+    "url": "https://github.com/matteogabriele/blue-utils/issues"
+  },
+  "repository": "https://github.com/matteogabriele/blue-utils",
+  "scripts": {
+    "dev": "node ./config/scripts/dev.js",
+    "build": "node ./config/scripts/build.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "main": "./dist/blue-utils.js",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-blue": "^1.0.0-beta.29",
+    "compression-webpack-plugin": "^0.4.0",
+    "friendly-errors-webpack-plugin": "^1.6.1",
+    "jest": "^20.0.0",
+    "ora": "^1.2.0",
+    "vue": "^2.3.3",
+    "vuex": "^2.3.1",
+    "vuex-connect": "^1.2.0",
+    "webpack": "^2.5.0",
+    "webpack-merge": "^4.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "files": [
+    "dist"
+  ]
+}
