@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routeParser } from 'vue-i18n-manager'
 
-import store from './vuex'
 import routes from '../app/routes'
 
 Vue.use(VueRouter)
