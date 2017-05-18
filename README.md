@@ -14,7 +14,7 @@
    </a>
 </p>
 
-Documentation available at [here](https://blocklevel.gitbooks.io/blue-next/content/)
+Documentation available [here](https://blocklevel.gitbooks.io/blue-next/content/)
 
 ## Installation
 
