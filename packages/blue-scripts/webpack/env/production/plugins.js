@@ -76,7 +76,10 @@ const plugins = [
 
   new WebpackManifestPlugin(),
 
-  new LodashModuleReplacementPlugin(),
+  new LodashModuleReplacementPlugin({
+    collections: true,
+    shorthands: true
+  }),
 
   new CopyWebpackPlugin([
     {
