@@ -16,22 +16,23 @@ const WebpackDevServer = require('webpack-dev-server')
 const portfinder = require('portfinder')
 const ip = require('ip')
 
-const log = require('../commons/log')
-const utils = require('../commons/utils')
-const config = require('../commons/config').get()
+const config = require('../config').getConfig()
+const isWin = process.platform === 'win32'
 
-log.clean()
-
-portfinder.basePort = 8080
+portfinder.basePort = config.webpack.devServer.port || 8080
 
 portfinder.getPortPromise().then(port => {
   const webpackConfig = config.webpack
-  const host = utils.getHost(webpackConfig.devServer.host)
-  const serverUrl = `http://${host.value}:${port}`
+  const { host } = webpackConfig.devServer
+  const hostParams = {
+    // see https://github.com/Blocklevel/blue-next/issues/25
+    display: (host === '0.0.0.0' && isWin) ? 'localhost' : host,
+    value: host
+  }
+  const serverUrl = `http://${hostParams.value}:${port}`
 
   const messages = [
-    // see https://github.com/Blocklevel/blue-next/issues/25
-    `Project ${chalk.bold.blue(config.projectName)} is running on http://${host.display}:${port}\n`,
+    `Project ${chalk.bold.blue(config.projectName)} is running on http://${hostParams.display}:${port}\n`,
     `Your current ip address ${ip.address()}\n`
   ]
 
@@ -56,8 +57,7 @@ portfinder.getPortPromise().then(port => {
 
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
 
-  // Start the server!
-  server.listen(port, host.value, function () {
+  server.listen(port, hostParams.value, function () {
     console.log('')
     console.log('Starting the server...')
   })

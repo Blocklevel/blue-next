@@ -1,18 +1,12 @@
-/**
- * Returns Blue configuration object
- * @return {Object}
- */
-function getConfig () {
-  return require('./commons/config').get()
-}
+const config = require('./config').getConfig()
 
 /**
  * Returns final webpack configuration object based on the current NODE_ENV value
- * The configuration is the merge between the current environment and bcli.config.js options 
+ * The configuration is the merge between the current environment and bcli.config.js options
  * @return {Object}
  */
 function getWebpackConfig () {
-  return getConfig().webpack
+  return config.webpack
 }
 
 module.exports = {

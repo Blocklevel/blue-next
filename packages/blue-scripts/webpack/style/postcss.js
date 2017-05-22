@@ -1,4 +1,4 @@
-const paths = require('../../commons/paths')
+const paths = require('../../config/paths')
 const variables = require(`${paths.appStyle}/config/variables.js`)
 
 module.exports = {

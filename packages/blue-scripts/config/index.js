@@ -125,7 +125,7 @@ function applyWebpackConfigHelpers (config, webpackConfig) {
  * @param  {String} [nodeEnv=process.env.NODE_ENV]
  * @return {Object}
  */
-const get = function (nodeEnv = getNodeEnv()) {
+function getConfig (nodeEnv = getNodeEnv()) {
   const blueConfig = _.merge({}, blueConfigDefaults, getBlueConfig())
   const webpackConfig = require(`../webpack/env/${nodeEnv}`)
 
@@ -164,7 +164,7 @@ function getPreProcessor () {
 }
 
 module.exports = {
-  get,
+  getConfig,
   getPreProcessor,
   getNodeEnv
 }

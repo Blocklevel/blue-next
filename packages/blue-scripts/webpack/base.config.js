@@ -1,6 +1,6 @@
 'use strict'
-const paths = require('../commons/paths')
-const utils = require('../commons/utils')
+const paths = require('../config/paths')
+const fs = require('fs')
 
 /**
  * Flag that removes the issue on webpack/utils-loader
@@ -47,9 +47,9 @@ module.exports = {
   },
   // @remove-on-eject-end
   module: {
-    rules: utils.requireFromFolder(paths.webpackRules)
+    rules: fs.readdirSync(paths.webpackRules).map(rule => {
+      return require(`${paths.webpackRules}/${rule}`)
+    })
   },
-  plugins: [
-    // leave it empty if no plugins are added
-  ]
+  plugins: [/* empty array */]
 }

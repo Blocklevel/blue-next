@@ -1,4 +1,4 @@
-const paths = require('../../commons/paths')
+const paths = require('../../config/paths')
 
 module.exports = {
   test: /\.js$/,

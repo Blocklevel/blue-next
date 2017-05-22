@@ -3,8 +3,7 @@ const fs = require('fs')
 const chalk = require('chalk')
 const path = require('path')
 const _ = require('lodash')
-const paths = require('../commons/paths')
-const log = require('../commons/log')
+const paths = require('../config/paths')
 const blueScriptPackage = require('../package.json')
 const projectPackage = require(paths.appPackageJSON)
 const ownPath = path.resolve(__dirname, '..')
@@ -13,8 +12,6 @@ const folders = [
   'commons', 'scripts', 'webpack', 'webpack/rules', 'webpack/style',
   'webpack/env', 'webpack/env/development', 'webpack/env/production'
 ]
-
-log.clean()
 
 // flatten the package folder structure
 const files = folders.reduce((files, folder) => {
