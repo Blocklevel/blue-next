@@ -4,23 +4,10 @@ const path = require('path')
 const del = require('del')
 const Listr = require('listr')
 const utils = require('../commons/utils')
-const targz = require('tar.gz')
 const log = require('../commons/log')
 const execa = require('execa')
-const fetch = require('node-fetch')
 const detectInstalled = require('detect-installed')
-const semver = require('semver')
-
-/**
- * Create a Promise that resolves when a stream ends and rejects when an error occurs
- * @param {WritableStream|ReadableStream} stream
- * @returns {Promise}
- */
-const whenStreamDone = (stream) => new Promise((resolve, reject) => {
-  stream.on('end', resolve)
-  stream.on('finish', resolve)
-  stream.on('error', reject)
-})
+const extractPackage = require('extract-package')
 
 module.exports = function (vorpal) {
   const chalk = vorpal.chalk
@@ -42,10 +29,6 @@ module.exports = function (vorpal) {
       const dest = `${cwd}/${args.name}`
       const dirExists = fs.existsSync(dest)
 
-      const tmpPath = require('temp-dir')
-      const tmpPackagePath = `${tmpPath}/package`
-      const archivePath = `${tmpPath}/blue-template.tar.gz`
-
       if (dirExists && !args.options.force) {
         log.error(`Folder ${dest} already exists. Pass --force or -f flag to overwrite it.`)
       }
@@ -65,31 +48,12 @@ module.exports = function (vorpal) {
         {
           title: 'Download templates',
           task: ctx => {
-            return fetch('http://registry.npmjs.org/blue-templates').then(response => response.json())
-            .then(package => {
-              const { major } = args.options
-              const versions = Object.keys(package.versions)
-              const version = major ? semver.maxSatisfying(versions, `^${major}.0.0`) : package['dist-tags'].latest
-
-              if (!version) {
-                log.error(`Major version ${major} doesn't exist.`)
-                process.exit(1)
-              }
-
-              return package.versions[version].dist.tarball
-            })
-            .then(packageURL => {
-              return fetch(packageURL).then(response => {
-                const dest = fs.createWriteStream(archivePath)
-                response.body.pipe(dest)
-
-                return whenStreamDone(response.body).then(() => {
-                  return targz().extract(archivePath, tmpPath)
-                })
-              })
-            })
-            .then(response => {
-              const blueTemplates = require(tmpPackagePath)
+            return extractPackage({
+              name: 'blue-templates',
+              version: args.options.major
+            }, true)
+            .then(packagePath => {
+              const blueTemplates = require(packagePath)
 
               ctx.projectData = {
                 dest,
