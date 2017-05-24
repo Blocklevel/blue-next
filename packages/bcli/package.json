@@ -52,12 +52,9 @@
     "vorpal": "^1.11.4"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.0",
     "blue-templates": "^1.0.2",
     "chai": "^3.5.0",
     "chai-fs": "^1.0.0",
-    "eslint": "^3.18.0",
-    "eslint-config-blue": "^1.0.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "mock-fs": "^4.2.0",
