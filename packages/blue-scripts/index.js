@@ -10,6 +10,6 @@ function getWebpackConfig () {
 }
 
 module.exports = {
-  getConfig,
+  config,
   getWebpackConfig
 }

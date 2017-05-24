@@ -2,7 +2,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 
-module.exports = [
+const isServer = process.env.VUE_ENV
+
+const plugins = [
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: '"development"',
@@ -17,10 +19,6 @@ module.exports = [
     inject: true
   }),
 
-  new webpack.HotModuleReplacementPlugin(),
-
-  new webpack.NoEmitOnErrorsPlugin(),
-
   new webpack.NamedModulesPlugin(),
 
   new webpack.LoaderOptionsPlugin({
@@ -31,3 +29,12 @@ module.exports = [
     }
   })
 ]
+
+if (!isServer) {
+  plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  )
+}
+
+module.exports = plugins

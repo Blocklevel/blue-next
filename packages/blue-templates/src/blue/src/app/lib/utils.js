@@ -6,8 +6,8 @@ import { connect } from 'vuex-connect'
  * @param  {Array}   [components=[]]
  * @return {Object}
  */
-export function mapComponents (components = []) {
-  const context = require.context('../app', true, /\.vue$/)
+export const mapComponents = (components = []) => {
+  const context = require.context('../', true, /(\/(component|container)\/).*(\.vue$)/)
 
   return _.reduce(context.keys(), (collection, component) => {
     const nameArray = component.split('/')
@@ -20,10 +20,7 @@ export function mapComponents (components = []) {
     const key = _.camelCase(name)
 
     if (collection[key]) {
-      /* eslint-disable */
-      console.error(`[utils] Component "${name}" already exists. Please make sure to always use unique names.`)
-      /* eslint-enable */
-      return collection
+      throw new Error(`[utils] Component "${name}" already exists. Please make sure to always use unique names.`).message
     }
 
     return { ...collection, [key]: context(component) }
@@ -36,7 +33,7 @@ export function mapComponents (components = []) {
  * @param  {Object} vuexConnectData vuex-connect property object
  * @return {Object}
  */
-export function connectComponent (name, vuexConnectData) {
+export const connectComponent = (name, vuexConnectData) => {
   const component = mapComponents([name])
   const key = Object.keys(component)[0]
 

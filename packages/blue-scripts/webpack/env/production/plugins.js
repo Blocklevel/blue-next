@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 const CompressionPlugin = require('compression-webpack-plugin')
-const paths = require('../../../commons/paths')
+const paths = require('../../../config/paths')
 const WebpackManifestPlugin = require('webpack-manifest-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
@@ -20,6 +20,7 @@ const plugins = [
       // Essential for Vue to build a smaller bundle
       // https://vue-loader.vuejs.org/en/workflow/production.html
       NODE_ENV: '"production"',
+      VUE_ENV: '"client"',
       BASE_URL: JSON.stringify(paths.appPublicPath)
     }
   }),

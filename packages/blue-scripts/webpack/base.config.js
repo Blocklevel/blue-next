@@ -28,6 +28,7 @@ module.exports = {
       asset: `${paths.appSrc}/asset`,
       mixin: `${paths.appRoot}/mixin`,
       type: `${paths.appRoot}/data/type`,
+      lib: `${paths.appRoot}/lib`,
       proxy: `${paths.appRoot}/data/proxy`,
       store: `${paths.appRoot}/data/store`,
       container: `${paths.appRoot}/container`,
