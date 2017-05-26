@@ -4,7 +4,7 @@
 <template>
   <div :class="$style.page">
     <div :class="$style.links">
-      <a target="_blank" :class="$style.link" href="https://github.com/Blocklevel/blue-next">Documentation</a>
+      <a target="_blank" :class="$style.link" href="https://blocklevel.gitbooks.io/blue-next/content">Documentation</a>
       <a target="_blank" :class="$style.link" href="https://github.com/Blocklevel/blue-next">Repository</a>
     </div>
     <div :class="$style.content">
