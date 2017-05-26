@@ -1,9 +1,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
-import VueFire from 'vuefire'
 
 import getTitle from 'lib/get-title'
-
 import createApp from 'core/create-app'
 
 const { app, router, store } = createApp()
@@ -11,8 +9,6 @@ const { app, router, store } = createApp()
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__)
 }
-
-Vue.use(VueFire)
 
 Vue.mixin({
   ...getTitle,
