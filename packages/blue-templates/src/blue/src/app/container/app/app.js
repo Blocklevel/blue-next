@@ -1,4 +1,6 @@
 /**
  * Main component
  */
-export default {}
+export default {
+  name: 'app'
+}
