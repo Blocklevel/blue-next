@@ -45,7 +45,6 @@ const component = co.wrap(function * (inputs) {
 const storeModule = co.wrap(function * (inputs) {
   const data = _.assignIn({}, inputs, {
     author: yield utils.getGitUser(),
-    noEvents: !inputs.addEvents,
     events: utils.getEvents(inputs.events)
   })
 

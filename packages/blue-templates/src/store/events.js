@@ -1,11 +1,12 @@
 /**
- * {{ name }} events
+ * <%= name %> events
  */
 export default {
-{{#each events}}
-  {{value}}: '{{../name}}/{{value}}'{{#if isNotLastItem}},{{/if}}
-{{/each}}
-{{#if noEvents}}
-  // FOO: '{{name}}/FOO'
-{{/if}}
+<%_ if (events.length > 0) { _%>
+  <%_ for (var i = 0, l = events.length; i < l; i++) { _%>
+  <%= events[i] %>: '<%= name %>/<%= events[i] %>'<%= (i === (events.length - 1)) ? '' : ',' %>
+  <%_ } _%>
+<%_ } else { _%>
+  // FOO: '<%= name %>/FOO'
+<%_ } _%>
 }

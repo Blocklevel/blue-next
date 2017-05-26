@@ -2,14 +2,10 @@
  * @name <%= name %> <%= type %>
  * @author <%= author.name %> <<%= author.email %>>
  */
-<% if (!hooks) { %>
-export default {
-  nane: '<%= name %>'
-}
-<% } else { %>
-export default {
-  name: '<%= name %>',
 
+export default {
+  name: '<%= name %>'<%= hooks ? ',' : '' %>
+<% if (hooks) { %>
   props: {
 
   },
@@ -27,5 +23,5 @@ export default {
   methods: {
 
   }
+<%_ } _%>
 }
-<% } %>

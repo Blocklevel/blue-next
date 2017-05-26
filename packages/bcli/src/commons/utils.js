@@ -123,15 +123,12 @@ const getEvents = function (events) {
     return []
   }
 
-  const array = events.split(',')
-
-  return _.map(array, (item, i) => {
+  return events.split(',').map((item, i) => {
     const trimValue = _.trim(item)
     const snakeCaseValue = _.snakeCase(trimValue)
     const value = snakeCaseValue.toUpperCase()
-    const isNotLastItem = i !== array.length - 1
 
-    return { value, isNotLastItem }
+    return value
   })
 }
 
