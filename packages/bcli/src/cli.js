@@ -9,10 +9,12 @@ process.on('unhandledRejection', err => {
 // Add all commands
 vorpal.use(require('./commands/project'))
 vorpal.use(require('./commands/component'))
+vorpal.use(require('./commands/page'))
+vorpal.use(require('./commands/container'))
 vorpal.use(require('./commands/store'))
+vorpal.use(require('./commands/ssr'))
 vorpal.use(require('./commands/share'))
 vorpal.use(require('./commands/version'))
-vorpal.use(require('./commands/ssr'))
 
 // shows the current vorlap instance with delimiter
 vorpal.delimiter('bcli$').show()

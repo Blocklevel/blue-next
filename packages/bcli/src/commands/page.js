@@ -1,7 +1,7 @@
 module.exports = function (vorpal) {
   return require('../commons/create-component')(vorpal, {
-    type: 'component',
-    command: 'component <name>',
-    description: 'Create a new component'
+    type: 'page',
+    command: 'page <name>',
+    description: 'Create a new page'
   })
 }
