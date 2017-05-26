@@ -1,6 +1,6 @@
 {
   "name": "bcli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Blue Command Line Interface",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "repository": {
@@ -51,7 +51,7 @@
     "vorpal": "^1.11.4"
   },
   "devDependencies": {
-    "blue-templates": "^2.0.1",
+    "blue-templates": "^2.0.2",
     "chai": "^3.5.0",
     "chai-fs": "^1.0.0",
     "istanbul": "^0.4.5",
