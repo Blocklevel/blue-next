@@ -13,7 +13,7 @@ const serverConfig = require('./webpack.server.config')
 const resolve = file => path.resolve(__dirname, file)
 const isProd = process.env.NODE_ENV === 'production'
 const app = express()
-const template = fs.readFileSync(resolve('../index.html'), 'utf-8')
+const template = fs.readFileSync(resolve('../index.ssr.html'), 'utf-8')
 
 const baseDir = serverConfig.output.path
 
@@ -49,7 +49,7 @@ app.use('/dist', serve('../dist', true))
 
 function render (req, res) {
   const context = {
-    title: 'ssr title',
+    title: '<%= name %>',
     url: req.url
   }
 
@@ -73,6 +73,6 @@ app.get('*', isProd ? render : (req, res) => {
 const port = process.env.PORT || 8080
 app.listen(port, function () {
   /* eslint-disable */
-  console.log(`server started at http://localhost:${port}`)
+  console.log(`Server started at http://localhost:${port}`)
   /* eslint-enable */
 })
