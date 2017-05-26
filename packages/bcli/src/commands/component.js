@@ -16,7 +16,6 @@ module.exports = function (vorpal) {
     .alias('page')
     .alias('container')
     .action(function (args, callback) {
-      // the command needs to run in the root of the project
       utils.canCommandRun()
 
       this.prompt([

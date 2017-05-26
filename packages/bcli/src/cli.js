@@ -12,6 +12,7 @@ vorpal.use(require('./commands/component'))
 vorpal.use(require('./commands/store'))
 vorpal.use(require('./commands/share'))
 vorpal.use(require('./commands/version'))
+vorpal.use(require('./commands/ssr'))
 
 // shows the current vorlap instance with delimiter
 vorpal.delimiter('bcli$').show()
