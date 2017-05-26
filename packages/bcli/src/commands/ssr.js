@@ -1,5 +1,7 @@
+const fs = require('fs')
 const scaffold = require('../commons/scaffold')
 const utils = require('../commons/utils')
+const log = require('../commons/log')
 const Listr = require('listr')
 const detectInstalled = require('detect-installed')
 
@@ -12,7 +14,10 @@ module.exports = function (vorpal) {
     'webpack-dev-middleware',
     'express',
     'webpack-merge',
-    'webpack-node-externals'
+    'webpack-node-externals',
+    'friendly-errors-webpack-plugin',
+    'cross-env',
+    'rimraf'
   ]
 
   vorpal
@@ -48,15 +53,37 @@ module.exports = function (vorpal) {
               dest: process.cwd()
             })
           }
+        },
+        {
+          title: 'Update package.json scripts',
+          task: () => {
+            const packageJsonPath = `${process.cwd()}/package.json`
+            const projectPackage = require(packageJsonPath)
+
+            // TODO improve the package scripts
+            projectPackage.scripts = Object.assign({}, projectPackage.scripts, {
+              'dev': 'cross-env NODE_ENV=development node server/start-server.js',
+              'start': 'cross-env NODE_ENV=production node server/start-server.js',
+              'build': 'rimraf dist & npm run build:client & npm run build:server',
+              'build:client': 'cross-env NODE_ENV=production webpack --config server/webpack.client.config.js --progress --hide-modules',
+              'build:server': 'cross-env NODE_ENV=production webpack --config server/webpack.server.config.js --progress --hide-modules'
+            })
+
+            fs.writeFileSync(packageJsonPath, JSON.stringify(projectPackage, null, '\t'))
+          }
         }
       ])
 
       tasks.run()
         .then(() => {
-          console.log('done!')
+          console.log('')
+          console.log('   SSR added successfully!')
+          console.log('')
+
+          process.exit(0)
         })
-        .catch(() => {
-          console.log('Error')
+        .catch(error => {
+          log.error(error, true)
         })
     })
 }
