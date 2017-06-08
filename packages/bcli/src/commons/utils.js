@@ -1,6 +1,3 @@
-// required by any-observable package to run shortcuts
-require('any-observable/register/rxjs-all')
-
 const log = require('./log')
 const co = require('co')
 const execa = require('execa')
@@ -9,9 +6,6 @@ const _ = require('lodash')
 const fetch = require('node-fetch')
 const semver = require('semver')
 const bcliVersion = require('../../package.json').version
-const Observable = require('any-observable')
-const streamToObservable = require('stream-to-observable')
-const split = require('split')
 
 /**
  * Detects if the blue.config.js file exists, so we know we are in the root of a project
@@ -27,20 +21,6 @@ const canCommandRun = function () {
   return true
 }
 
-/**
- * Streaming stdout with `execa`
- * @param  {String} cmd
- * @param  {Array<String>} args
- * @return {Observable}
- */
-const exec = function (cmd, args) {
-  const cp = execa(cmd, args)
-
-  return Observable.merge(
-    streamToObservable(cp.stdout.pipe(split()), {await: cp}),
-    streamToObservable(cp.stderr.pipe(split()), {await: cp})
-  ).filter(Boolean)
-}
 /**
  * Get the credentials of the current git user
  * @return {Object}
@@ -181,6 +161,5 @@ module.exports = {
   getSemverFromPackage,
   replaceFilesName,
   isComponentType,
-  exec,
   canCommandRun
 }

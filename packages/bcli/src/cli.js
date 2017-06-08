@@ -1,26 +1,28 @@
-const vorpal = require('vorpal')()
+const prog = require('caporal')
+const createProject = require('./commands/project')
 
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them
-process.on('unhandledRejection', err => {
-  throw err
-})
+prog.version(require('../package.json').version)
 
-// Add all commands
-vorpal.use(require('./commands/project'))
-vorpal.use(require('./commands/component'))
-vorpal.use(require('./commands/page'))
-vorpal.use(require('./commands/container'))
-vorpal.use(require('./commands/store'))
-vorpal.use(require('./commands/ssr'))
-vorpal.use(require('./commands/share'))
-vorpal.use(require('./commands/version'))
+prog
+  .command('project', 'Create a new project')
+  .alias('engage')
+  .argument('<name>', 'The name of the project')
+  .option('--major <version>', 'Install templates based on the major version')
+  .option('--yarn', 'Install using yarn')
+  .option('--npm', 'Install using npm')
+  .option('-f, --force', 'Force new project creation')
+  .option('--skip-deps', 'Skip dependencies installation')
+  .option('--skip-git', 'Skip git initialization')
+  .option('--skip-git-commit', 'Skip first git commit')
+  .option('--use-local-templates', 'Use local template folder. Only for development purposes')
+  .action(createProject)
 
-// shows the current vorlap instance with delimiter
-vorpal.delimiter('bcli$').show()
+prog
+  .command('component', 'Create a new component')
+  .argument('<name>', 'The name of the project')
+  .action(function (inputs, flags, logger) {
 
-// process the given inputs
-vorpal.parse(process.argv)
+  })
 
-// workaround to kill node with CTRL + C
-process.on('SIGINT', () => process.exit(2))
+
+prog.parse(process.argv)

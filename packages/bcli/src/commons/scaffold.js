@@ -7,7 +7,7 @@ const _ = require('lodash')
 /**
  * Scaffolds a Blue project
  */
-const project = co.wrap(function * (inputs) {
+const createProject = co.wrap(function * (inputs) {
   const data = {
     name: inputs.name,
     author: yield utils.getGitUser(),
@@ -15,7 +15,7 @@ const project = co.wrap(function * (inputs) {
   }
 
   yield copy(inputs.template, inputs.dest, { data, clean: false })
-  yield copy(inputs.cssTemplate, inputs.templateCssFolder, { data, clean: false })
+  yield copy(inputs.cssTemplate, inputs.cssDest, { data, clean: false })
 
   utils.replaceFilesName(inputs.dest, [
     // see Blocklevel/blue-next/issues/41
@@ -28,7 +28,7 @@ const project = co.wrap(function * (inputs) {
 /**
  * Scaffold a component
  */
-const component = co.wrap(function * (inputs) {
+const createComponent = co.wrap(function * (inputs) {
   const data = _.assignIn({}, {
     author: yield utils.getGitUser(),
     hooks: !!inputs.options.hooks
@@ -42,7 +42,7 @@ const component = co.wrap(function * (inputs) {
 /**
  * Scaffolds a Vuex store module
  */
-const storeModule = co.wrap(function * (inputs) {
+const createStoreModule = co.wrap(function * (inputs) {
   const data = _.assignIn({}, inputs, {
     author: yield utils.getGitUser(),
     events: utils.getEvents(inputs.events)
@@ -51,7 +51,7 @@ const storeModule = co.wrap(function * (inputs) {
   yield copy(inputs.template, inputs.dest, { data })
 })
 
-const ssr = co.wrap(function * (inputs) {
+const createSSR = co.wrap(function * (inputs) {
   const { template, dest } = inputs
   const { name } = require(`${process.cwd()}/blue.config.js`)
   const data = _.assignIn({}, inputs, { name })
@@ -60,8 +60,8 @@ const ssr = co.wrap(function * (inputs) {
 })
 
 module.exports = {
-  project,
-  component,
-  storeModule,
-  ssr
+  createProject,
+  createComponent,
+  createStoreModule,
+  createSSR
 }
