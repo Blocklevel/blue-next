@@ -45,7 +45,7 @@ const createComponent = co.wrap(function * (inputs) {
 const createStoreModule = co.wrap(function * (inputs) {
   const data = _.assignIn({}, inputs, {
     author: yield utils.getGitUser(),
-    events: utils.getEvents(inputs.events)
+    events: inputs.events
   })
 
   yield copy(inputs.template, inputs.dest, { data })

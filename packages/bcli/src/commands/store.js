@@ -1,120 +1,82 @@
-const _ = require('lodash')
+const chalk = require('chalk')
 const fs = require('fs')
-const questions = require('../commons/questions')
-const scaffold = require('../commons/scaffold')
-const utils = require('../commons/utils')
-const log = require('../commons/log')
+const inquirer = require('inquirer')
+const { createStoreModule } = require('../commons/scaffold')
 
-module.exports = function (vorpal) {
-  const chalk = vorpal.chalk
+module.exports = function storeModule (args, options, logger) {
+  const cwd = process.cwd()
+  const blueTemplates = require(`${cwd}/node_modules/blue-templates`)
+  const storeFolder = blueTemplates.getStoreModulePath(cwd)
+  const dest = `${storeFolder}/${args.name}`
+  const moduleDirExists = fs.existsSync(dest)
 
-  vorpal
-    .command('store [name]', 'create a vuex store module')
-    .option('-f, --force', 'Force file overwrite')
-    .alias('s')
-    .action(function (args, callback) {
-      // the command needs to run in the root of the project
-      utils.canCommandRun()
+  logger.debug(chalk.gray('Current working directory: ' + cwd))
+  logger.debug(chalk.gray('Module name: ' + args.name))
+  logger.debug(chalk.gray('Module destination: ' + dest))
+  logger.debug(chalk.gray('Module exists? ' + moduleDirExists))
 
-      const blueTemplates = require(`${process.cwd()}/node_modules/blue-templates`)
+  return inquirer.prompt([
+    {
+      type: 'input',
+      name: 'overwrite',
+      message: 'The module already exists, please type the name to confirm',
+      validate: function (answer) {
+        const done = this.async()
 
-      this.prompt([
-        {
-          when: function () {
-            return !args.name
-          },
-          type: 'input',
-          name: 'name',
-          message: 'What\'s the name of your module?',
-          validate: function (answer) {
-            return answer !== ''
-          }
-        },
-        {
-          when: function () {
-            return !args.options.hooks
-          },
-          type: 'confirm',
-          name: 'addEvents',
-          message: 'Would you like to add events, actions and mutations?',
-          default: false
-        },
-        {
-          when: function (answer) {
-            return answer.addEvents
-          },
-          type: 'input',
-          name: 'events',
-          message: 'Add a comma separated string (i.e. `get id` becomes `GET_ID`)',
-          validate: function (answer) {
-            return answer !== ''
-          }
+        if (answer !== args.name) {
+          done(chalk.red('The name is not correct! You can try again or give up!'))
+          return
         }
-      ])
 
-      // Check if the folder is not already there, so we can ask for to overwrite or not
-      .then(promptResult => {
-        // It's not possible to know whether data is passed via command line options
-        // or via questions. Both results needs to be merged so in any cases
-        // a name and a type will always be available
-        const mergedResult = _.assignIn({}, promptResult, args)
-        const dest = `${blueTemplates.getStoreModulePath(process.cwd())}/${mergedResult.name}`
-        const exists = fs.existsSync(dest)
-        const overwriteQuestion = _.assignIn({
-          when: function () {
-            return exists && !args.options.force
-          }
-        }, questions.overwrite)
-
-        return this.prompt(overwriteQuestion).then(answer => {
-          if (answer.overwrite === false) {
-            this.log('')
-            this.log('   Ok thanks bye!')
-            this.log('')
-            process.exit(1)
-          }
-
-          return _.assignIn({ dest }, args, mergedResult)
-        })
-      })
-
-      // Collecting all data from all questions
-      .then(result => {
-        return _.assignIn({
-          template: blueTemplates.getStoreModule()
-        }, result, result.options)
-      })
-
-      // Here the store module is actually generated!
-      .then(result => {
-        return scaffold.storeModule(result).then(() => {
-          // pass data to the final step
-          return result
-        })
-      })
-
-      // Done!
-      .then((result) => {
-        this.log('')
-        this.log(`   Vuex store module ${chalk.yellow.bold(result.name)} created!`)
-        this.log('   The module is autoloaded in your application!')
-        this.log('')
-
-        // exit from vorpal delimiter
-        process.exit(0)
-      })
-
-      .catch(error => {
-        this.log('')
-        log.error(error, true)
-      })
+        return done(null, true)
+      },
+      when: function () {
+        return moduleDirExists && !options.force
+      }
+    },
+    {
+      when: function () {
+        return !options.skipAll
+      },
+      type: 'confirm',
+      name: 'addEvents',
+      message: 'Would you like to add events, actions and mutations?',
+      default: false
+    },
+    {
+      when: function (answer) {
+        return answer.addEvents
+      },
+      type: 'input',
+      name: 'events',
+      message: 'Add a comma separated string of camelcased values',
+      validate: function (answer) {
+        return answer !== ''
+      }
+    }
+  ])
+  .then(({ events = '' }) => {
+    return createStoreModule({
+      dest,
+      name: args.name,
+      template: blueTemplates.getStoreModule(),
+      events: events
+        .split(',')
+        .map(event => event.trim())
+        .filter(event => event !== '')
     })
-
-    // We need to kill all process if during the questions ctrl+c is called
-    // otherwise the application might crashes
-    // see dthree/vorpal/issues/220
-    .cancel(function (args) {
-      this.log('')
-      process.exit(1)
-    })
+  })
+  .then(result => {
+    logger.info(`
+      Vuex store module ${chalk.green(args.name)} created
+    `)
+  })
+  .catch(error => {
+    logger.error(chalk.red(`
+      Opps! Something bad happened! :(
+      ${chalk.bold(error.message)}
+    `))
+    logger.debug(error.stack)
+    process.exit(1)
+  })
 }

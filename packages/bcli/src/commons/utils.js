@@ -93,26 +93,6 @@ const renameFilesFromDir = function (dir, newName) {
 }
 
 /**
- * Returns an array of event objects in the correct format so we can loop over it later
- * It also determines whether the items need a comma
- * @param  {String} events
- * @return {Object}
- */
-const getEvents = function (events) {
-  if (!events) {
-    return []
-  }
-
-  return events.split(',').map((item, i) => {
-    const trimValue = _.trim(item)
-    const snakeCaseValue = _.snakeCase(trimValue)
-    const value = snakeCaseValue.toUpperCase()
-
-    return value
-  })
-}
-
-/**
  * Get the most satisfying semver from a list of versions
  * @param  {Array<String>} versions - list of version number
  * @param  {String} baseVersion - the major version to compare
@@ -156,7 +136,6 @@ module.exports = {
   getGitUser,
   renameFiles,
   renameFilesFromDir,
-  getEvents,
   getSemverFromMajor,
   getSemverFromPackage,
   replaceFilesName,
