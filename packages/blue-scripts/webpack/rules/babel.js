@@ -7,8 +7,6 @@ module.exports = {
     // https://github.com/Blocklevel/blue-next/tree/master/packages/babel-preset-blue
     presets: [require.resolve('babel-preset-blue')],
     // no needs to look for a babelrc file in the root folder
-    babelrc: false,
-    // you might want to disable cacheDirectory during development
-    cacheDirectory: true
+    babelrc: false
   }
 }

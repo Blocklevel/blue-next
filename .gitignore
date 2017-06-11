@@ -7,3 +7,4 @@ npm-debug.log
 etc/
 yarn-error.log
 coverage/
+package-lock.json
