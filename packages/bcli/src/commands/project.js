@@ -85,6 +85,16 @@ module.exports = function project (args, options, logger) {
       }
     },
     {
+      title: 'Initialize git',
+      enabled: () => !options.skipGit,
+      task: () => execa.shell('git init')
+    },
+    {
+      title: 'Initial commit',
+      enabled: () => !options.skipGitCommit && !options.skipGit,
+      task: () => execa.shell('git add . && git commit -m "chore: initial commit"')
+    },
+    {
       title: 'Create packages symlink',
       enabled: () => options.symlinkPackages,
       task: ctx => {
