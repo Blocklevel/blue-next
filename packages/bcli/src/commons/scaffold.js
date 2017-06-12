@@ -30,8 +30,7 @@ const createProject = co.wrap(function * (inputs) {
  */
 const createComponent = co.wrap(function * (inputs) {
   const data = _.assignIn({}, {
-    author: yield utils.getGitUser(),
-    hooks: !!inputs.options.hooks
+    author: yield utils.getGitUser()
   }, inputs)
 
   yield copy(inputs.template, inputs.dest, { data })

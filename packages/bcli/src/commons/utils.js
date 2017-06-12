@@ -6,6 +6,8 @@ const _ = require('lodash')
 const fetch = require('node-fetch')
 const semver = require('semver')
 const bcliVersion = require('../../package.json').version
+const path = require('path')
+const recursive = require('recursive-readdir')
 
 /**
  * Detects if the blue.config.js file exists, so we know we are in the root of a project
@@ -19,6 +21,34 @@ const canCommandRun = function () {
   }
 
   return true
+}
+
+/**
+ * Check if a component already exists in the application
+ * If the component exists it throws an error
+ * The component needs to be unique!
+ * @param  {String} name component name
+ */
+function componentNameExists (name) {
+  const dir = path.resolve(process.cwd(), './src/app')
+  return recursive(dir, ['*.js', '*.css', '.gitkeep', '*.html'])
+  .then(files => {
+    return files.map(f => {
+      const splitPath = f.split('/')
+      return splitPath[splitPath.length - 1].replace(/\.vue$/, '')
+    })
+  })
+  .then(files => {
+    if (files.indexOf(name) === -1) {
+      return
+    }
+
+    console.log(`
+      This name is already used for a component.
+      Please make sure to always use unique names.
+    `)
+    process.exit(1)
+  })
 }
 
 /**
@@ -140,5 +170,6 @@ module.exports = {
   getSemverFromPackage,
   replaceFilesName,
   isComponentType,
-  canCommandRun
+  canCommandRun,
+  componentNameExists
 }

@@ -25,10 +25,10 @@ module.exports = function project (args, options, logger) {
   const dest = `${cwd}/${args.name}`
   const projectDirExists = fs.existsSync(dest)
 
-  logger.debug(chalk.gray('Current working directory: ' + cwd))
-  logger.debug(chalk.gray('Project name: ' + args.name))
-  logger.debug(chalk.gray('Project destination: ' + dest))
-  logger.debug(chalk.gray('Project exists? ' + projectDirExists))
+  logger.debug(chalk.gray(`Current working directory: ${cwd}`))
+  logger.debug(chalk.gray(`Project name: ${args.name}`))
+  logger.debug(chalk.gray(`Project destination: ${dest}`))
+  logger.debug(chalk.gray(`Project exists? ${projectDirExists}`))
 
   const tasks = new Listr([
     {

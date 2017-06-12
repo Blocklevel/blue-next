@@ -4,8 +4,8 @@
  */
 
 export default {
-  name: '<%= name %>'<%= hooks ? ',' : '' %>
-<% if (hooks) { %>
+  name: '<%= name %>'<%= boilerplate ? ',' : '' %>
+<% if (boilerplate) { %>
   props: {
 
   },

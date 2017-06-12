@@ -8,6 +8,8 @@ const getStylePath = dir => `${dir}/src/asset/style`
 
 const getStoreModulePath = dir => `${dir}/src/app/data/store`
 
+const getComponentPath = (dir, type) => `${dir}/src/app/${type}`
+
 const getBlue = () => getPath('./src/blue')
 
 const getComponent = () => getPath('./src/component')
@@ -23,5 +25,6 @@ module.exports = {
   getStoreModule,
   getStylePath,
   getStoreModulePath,
+  getComponentPath,
   getSSR
 }
