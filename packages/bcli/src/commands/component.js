@@ -2,12 +2,24 @@ const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
 const inquirer = require('inquirer')
-const recursive = require('recursive-readdir')
-
+const argv = require('minimist')(process.argv.slice(2))
 const { createComponent } = require('../commons/scaffold')
 
-module.exports = function component (type, { args, options, logger }) {
+module.exports = function component (args, options, logger) {
+  // because we use the trick of the alias to retrieve the component type
+  // we have to grab it from the arguments
+  // there's no way yet to know which alias is used in Caporal
+  const type = argv._[0]
   const cwd = process.cwd()
+
+  if (!fs.existsSync(`${cwd}/blue.config.js`)) {
+    logger.error(chalk.red(`
+      Blue configuration file not found.
+      You need to run the command in the root folder of your Blue project.
+    `))
+    process.exit(1)
+  }
+
   const blueTemplates = require(`${cwd}/node_modules/blue-templates`)
   const nameAsPath = args.name.split('/')
   const hasCustomPath = nameAsPath.length > 1
@@ -17,7 +29,7 @@ module.exports = function component (type, { args, options, logger }) {
   const componentExists = fs.existsSync(dest)
 
   logger.debug(chalk.gray(`Current working directory: ${cwd}`))
-  logger.debug(chalk.gray(`Component name: ${args.name}`))
+  logger.debug(chalk.gray(`Component name: ${name}`))
   logger.debug(chalk.gray(`Component destination: ${dest}`))
   logger.debug(chalk.gray(`Component exists? ${componentExists}`))
 
@@ -29,7 +41,7 @@ module.exports = function component (type, { args, options, logger }) {
       validate: function (answer) {
         const done = this.async()
 
-        if (answer !== args.name) {
+        if (answer !== name) {
           done(chalk.red('The name is not correct! You can try again or give up!'))
           return
         }
@@ -43,16 +55,16 @@ module.exports = function component (type, { args, options, logger }) {
   ])
   .then(() => {
     return createComponent({
-      dest,
-      type,
       boilerplate: options.boilerplate,
       template: blueTemplates.getComponent(),
-      name: args.name
+      dest,
+      type,
+      name
     })
   })
-  .then(result => {
+  .then(() => {
     logger.info(`
-      Component ${chalk.green(args.name)} created
+      Component ${chalk.green(name)} created
     `)
   })
   .catch(error => {

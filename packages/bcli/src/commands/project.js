@@ -6,19 +6,9 @@ const fs = require('fs')
 const path = require('path')
 const del = require('del')
 const chalk = require('chalk')
-const utils = require('../commons/utils')
+const { yarnWithFallback, symlinkPackages, bootstrapBlue } = require('../commons/utils')
 const kopy = require('kopy')
 const { createProject } = require('../commons/scaffold')
-
-/**
- * It runs all commands with Yarn but it fallsback to Npm if Yarn is not installed
- * or maybe because Yarn is not globally accessable
- * @param  {Array<String>} cmds list of commands
- * @return {Promise}
- */
-function yarnWithFallback (cmds) {
-  return execa('yarn', cmds).catch(() => execa('npm', cmds))
-}
 
 module.exports = function project (args, options, logger) {
   const cwd = process.cwd()
@@ -97,32 +87,12 @@ module.exports = function project (args, options, logger) {
     {
       title: 'Create packages symlink',
       enabled: () => options.symlinkPackages,
-      task: ctx => {
-        const packagesFolder = path.resolve(__dirname, '../../..')
-        const packages = fs.readdirSync(packagesFolder).filter(item => {
-          return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory()
-        })
-        const symlinks = packages.map(folder => {
-          process.chdir(`${packagesFolder}/${folder}`)
-          return yarnWithFallback(['link'])
-        })
-
-        return Promise.all(symlinks).then(() => {
-          process.chdir(dest)
-          return Promise.all(
-            packages.map(pack => yarnWithFallback(['link', pack]))
-          )
-        })
-      }
+      task: ctx => symlinkPackages(dest)
     },
     {
       title: 'Bootstrap packages',
       enabled: () => options.lernaBootstrap,
-      task: () => {
-        const blueNextRootFolder = path.resolve(__dirname, '../../../../')
-        process.chdir(blueNextRootFolder)
-        return execa('lerna', ['bootstrap'])
-      }
+      task: () => bootstrapBlue()
     }
   ])
 

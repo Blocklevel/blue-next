@@ -1,5 +1,6 @@
 const log = require('./log')
 const co = require('co')
+const chalk = require('chalk')
 const execa = require('execa')
 const fs = require('fs')
 const _ = require('lodash')
@@ -33,22 +34,15 @@ function componentNameExists (name) {
   const dir = path.resolve(process.cwd(), './src/app')
   return recursive(dir, ['*.js', '*.css', '.gitkeep', '*.html'])
   .then(files => {
-    return files.map(f => {
-      const splitPath = f.split('/')
-      return splitPath[splitPath.length - 1].replace(/\.vue$/, '')
+    return files.map(file => {
+      const splitPath = file.split('/')
+      return {
+        location: file,
+        name: splitPath[splitPath.length - 1].replace(/\.vue$/, '')
+      }
     })
   })
-  .then(files => {
-    if (files.indexOf(name) === -1) {
-      return
-    }
-
-    console.log(`
-      This name is already used for a component.
-      Please make sure to always use unique names.
-    `)
-    process.exit(1)
-  })
+  .then(files => files.filter(file => file.name === name))
 }
 
 /**
@@ -154,12 +148,37 @@ const getSemverFromPackage = co.wrap(function * (pkg, baseVersion = bcliVersion)
 })
 
 /**
- * Returns true if the type of component is supported
- * @param  {String} type
- * @return {Boolean}
+ * It runs all commands with Yarn but it fallsback to Npm if Yarn is not installed
+ * or maybe because Yarn is not globally accessable
+ * @param  {Array<String>} cmds list of commands
+ * @return {Promise}
  */
-const isComponentType = function (type) {
-  return ['component', 'page', 'container'].indexOf(type) !== -1
+function yarnWithFallback (cmds) {
+  return execa('yarn', cmds).catch(() => execa('npm', cmds))
+}
+
+function symlinkPackages (dest) {
+  const packagesFolder = path.resolve(__dirname, '../../..')
+  const packages = fs.readdirSync(packagesFolder).filter(item => {
+    return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory()
+  })
+  const symlinks = packages.map(folder => {
+    process.chdir(`${packagesFolder}/${folder}`)
+    return yarnWithFallback(['link'])
+  })
+
+  return Promise.all(symlinks).then(() => {
+    process.chdir(dest)
+    return Promise.all(
+      packages.map(pack => yarnWithFallback(['link', pack]))
+    )
+  })
+}
+
+function bootstrapBlue () {
+  const blueNextRootFolder = path.resolve(__dirname, '../../../../')
+  process.chdir(blueNextRootFolder)
+  return execa('lerna', ['bootstrap'])
 }
 
 module.exports = {
@@ -169,7 +188,9 @@ module.exports = {
   getSemverFromMajor,
   getSemverFromPackage,
   replaceFilesName,
-  isComponentType,
   canCommandRun,
-  componentNameExists
+  componentNameExists,
+  yarnWithFallback,
+  symlinkPackages,
+  bootstrapBlue
 }
