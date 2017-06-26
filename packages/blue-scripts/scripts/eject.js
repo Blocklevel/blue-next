@@ -51,9 +51,9 @@ files.forEach(file => {
 // create new package.json scripts that point on the new config fodler
 projectPackage.scripts = { dev: 'node config/scripts/start.js', build: 'node config/scripts/build.js' }
 // remove blue-scripts, now all dependencies are added to the project itself
-delete projectPackage.devDependencies['blue-scripts']
+delete projectPackage.dependencies['blue-scripts']
 // add all blue-scripts dependencies to the devDependencies of the project
-projectPackage.devDependencies = _.merge({}, blueScriptPackage.dependencies, projectPackage.devDependencies)
+projectPackage.dependencies = _.merge({}, blueScriptPackage.dependencies, projectPackage.dependencies)
 
 fs.writeFileSync(paths.appPackageJSON, JSON.stringify(projectPackage, null, '\t'))
 
