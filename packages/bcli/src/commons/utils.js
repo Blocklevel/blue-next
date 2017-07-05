@@ -160,7 +160,7 @@ function yarnWithFallback (cmds) {
 function symlinkPackages (dest) {
   const packagesFolder = path.resolve(__dirname, '../../..')
   const packages = fs.readdirSync(packagesFolder).filter(item => {
-    return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory()
+    return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory() && item !== 'bcli'
   })
   const symlinks = packages.map(folder => {
     process.chdir(`${packagesFolder}/${folder}`)
