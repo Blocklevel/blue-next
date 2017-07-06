@@ -5,6 +5,7 @@ const createStoreModule = require('./commands/store')
 const createComponent = require('./commands/component')
 const createSymlink = require('./commands/symlink')
 const addSSR = require('./commands/ssr')
+const share = require('./commands/share')
 
 prog.version(require('../package.json').version)
 
@@ -53,5 +54,10 @@ prog
   .command('symlink-packages', 'Symlink local Blue packages. (Only for development)')
   .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages. (Only for development)')
   .action(createSymlink)
+
+prog
+  .command('share', 'Share localhost with a secure tunnel')
+  .argument('<port>')
+  .action(share)
 
 prog.parse(process.argv)
