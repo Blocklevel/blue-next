@@ -11,7 +11,8 @@ const { createProject } = require('../commons/scaffold')
 const {
   yarnWithFallback,
   symlinkPackages,
-  bootstrapBlue
+  bootstrapBlue,
+  getOverwritePrompt
 } = require('../commons/utils')
 
 module.exports = function project (args, options, logger) {
