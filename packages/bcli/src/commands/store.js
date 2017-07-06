@@ -2,8 +2,11 @@ const chalk = require('chalk')
 const fs = require('fs')
 const inquirer = require('inquirer')
 const { createStoreModule } = require('../commons/scaffold')
+const { checkBlueContext } = require('../commons/utils')
 
 module.exports = function storeModule (args, options, logger) {
+  checkBlueContext()
+
   const cwd = process.cwd()
   const blueTemplates = require(`${cwd}/node_modules/blue-templates`)
   const storeFolder = blueTemplates.getStoreModulePath(cwd)

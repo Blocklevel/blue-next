@@ -150,11 +150,12 @@ const getSemverFromPackage = co.wrap(function * (pkg, baseVersion = bcliVersion)
 /**
  * It runs all commands with Yarn but it fallsback to Npm if Yarn is not installed
  * or maybe because Yarn is not globally accessable
- * @param  {Array<String>} cmds list of commands
+ * @param  {Array<String>} cmds          list of commands
+ * @param  {Array<String>} fallsbackCmds list of fallback commands
  * @return {Promise}
  */
-function yarnWithFallback (cmds) {
-  return execa('yarn', cmds).catch(() => execa('npm', cmds))
+function yarnWithFallback (cmds, fallsbackCmds) {
+  return execa('yarn', cmds).catch(() => execa('npm', fallsbackCmds || cmds))
 }
 
 function symlinkPackages (dest) {
@@ -178,10 +179,52 @@ function symlinkPackages (dest) {
 function bootstrapBlue () {
   const blueNextRootFolder = path.resolve(__dirname, '../../../../')
   process.chdir(blueNextRootFolder)
-  return execa('lerna', ['bootstrap'])
+
+  try {
+    return execa('lerna', ['bootstrap'])
+  } catch (e) {
+    console.error(chalk.red(
+      'Please install Lerna globally in your machine before start development. \n' +
+      'https://lernajs.io/'
+    ))
+    process.exit(1)
+  }
+}
+
+function checkBlueContext () {
+  if (!fs.existsSync(`${process.cwd()}/blue.config.js`)) {
+    console.error(chalk.red(`
+      Blue configuration file not found.
+      You need to run the command in the root folder of your Blue project.
+    `))
+    process.exit(1)
+  }
+}
+
+function getOverwritePrompt (name, shouldPrompt = false) {
+  return {
+    type: 'input',
+    name: 'overwrite',
+    message: 'The file or folder already exists, please type the name to confirm',
+    validate: function (answer) {
+      const done = this.async()
+
+      if (answer !== name) {
+        done(chalk.red('The name is not correct! You can try again or give up!'))
+        return
+      }
+
+      return done(null, true)
+    },
+    when: function () {
+      return shouldPrompt
+    }
+  }
 }
 
 module.exports = {
+  getOverwritePrompt,
+  checkBlueContext,
   getGitUser,
   renameFiles,
   renameFilesFromDir,

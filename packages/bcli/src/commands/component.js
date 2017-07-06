@@ -4,21 +4,16 @@ const fs = require('fs')
 const inquirer = require('inquirer')
 const argv = require('minimist')(process.argv.slice(2))
 const { createComponent } = require('../commons/scaffold')
+const { getOverwritePrompt, checkBlueContext } = require('../commons/utils')
 
 module.exports = function component (args, options, logger) {
+  checkBlueContext()
+
   // because we use the trick of the alias to retrieve the component type
   // we have to grab it from the arguments
   // there's no way yet to know which alias is used in Caporal
   const type = argv._[0]
   const cwd = process.cwd()
-
-  if (!fs.existsSync(`${cwd}/blue.config.js`)) {
-    logger.error(chalk.red(`
-      Blue configuration file not found.
-      You need to run the command in the root folder of your Blue project.
-    `))
-    process.exit(1)
-  }
 
   const blueTemplates = require(`${cwd}/node_modules/blue-templates`)
   const nameAsPath = args.name.split('/')
@@ -34,32 +29,13 @@ module.exports = function component (args, options, logger) {
   logger.debug(chalk.gray(`Component exists? ${componentExists}`))
 
   return inquirer.prompt([
-    {
-      type: 'input',
-      name: 'overwrite',
-      message: 'The component already exists, please type the name to confirm',
-      validate: function (answer) {
-        const done = this.async()
-
-        if (answer !== name) {
-          done(chalk.red('The name is not correct! You can try again or give up!'))
-          return
-        }
-
-        return done(null, true)
-      },
-      when: function () {
-        return componentExists && !options.force
-      }
-    }
+    getOverwritePrompt(name, componentExists && !options.force)
   ])
   .then(() => {
     return createComponent({
+      dest, type, name,
       boilerplate: options.boilerplate,
-      template: blueTemplates.getComponent(),
-      dest,
-      type,
-      name
+      template: blueTemplates.getComponent()
     })
   })
   .then(() => {

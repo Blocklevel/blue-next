@@ -6,9 +6,13 @@ const fs = require('fs')
 const path = require('path')
 const del = require('del')
 const chalk = require('chalk')
-const { yarnWithFallback, symlinkPackages, bootstrapBlue } = require('../commons/utils')
 const kopy = require('kopy')
 const { createProject } = require('../commons/scaffold')
+const {
+  yarnWithFallback,
+  symlinkPackages,
+  bootstrapBlue
+} = require('../commons/utils')
 
 module.exports = function project (args, options, logger) {
   const cwd = process.cwd()
@@ -97,24 +101,7 @@ module.exports = function project (args, options, logger) {
   ])
 
   return inquirer.prompt([
-    {
-      type: 'input',
-      name: 'overwrite',
-      message: 'The folder already exists, please type the name to confirm',
-      validate: function (answer) {
-        const done = this.async()
-
-        if (answer !== args.name) {
-          done(chalk.red('The name is not correct! You can try again or give up!'))
-          return
-        }
-
-        return done(null, true)
-      },
-      when: function () {
-        return projectDirExists && !options.force
-      }
-    }
+    getOverwritePrompt(args.name, projectDirExists && !options.force)
   ])
   .then(() => tasks.run())
   .then(ctx => {
