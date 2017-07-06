@@ -7,13 +7,14 @@ const path = require('path')
 const del = require('del')
 const chalk = require('chalk')
 const kopy = require('kopy')
-const { createProject } = require('../commons/scaffold')
+const { createProject, createSSR } = require('../commons/scaffold')
 const {
   yarnWithFallback,
   symlinkPackages,
   bootstrapBlue,
   getOverwritePrompt
 } = require('../commons/utils')
+const ssr = require('./ssr')
 
 module.exports = function project (args, options, logger) {
   const cwd = process.cwd()
@@ -80,6 +81,32 @@ module.exports = function project (args, options, logger) {
       }
     },
     {
+      title: 'Add Server side rendering',
+      enabled: () => options.ssr,
+      task: ctx => {
+        process.chdir(dest)
+        return yarnWithFallback(
+          ['add', '--dev'].concat(ssr.dependencies),
+          ['install', '--save-dev'].concat(ssr.dependencies)
+        )
+        .then(() => {
+          const { blueTemplates } = ctx
+          return createSSR({
+            template: blueTemplates.getSSR(),
+            dest: process.cwd()
+          })
+        })
+        .then(() => {
+          const packageJsonPath = `${dest}/package.json`
+          const projectPackage = require(packageJsonPath)
+
+          projectPackage.scripts = Object.assign({}, projectPackage.scripts, ssr.scripts)
+
+          fs.writeFileSync(packageJsonPath, JSON.stringify(projectPackage, null, '\t'))
+        })
+      }
+    },
+    {
       title: 'Initialize git',
       enabled: () => !options.skipGit,
       task: () => execa.shell('git init')
@@ -121,6 +148,11 @@ module.exports = function project (args, options, logger) {
       Eject Blue logic ( one way operation )
         run ${chalk.italic('yarn eject')}
     `)
+
+    // if (options.ssr) {
+    //   logger.info(chalk.green('Enabling Server Side Rendering'))
+    //   require('./ssr')(args, options, logger)
+    // }
   })
   .catch(error => {
     logger.error(chalk.red(`

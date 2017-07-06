@@ -18,7 +18,15 @@ const dependencies = [
   'rimraf'
 ]
 
-module.exports = function ssr (args, options, logger) {
+const scripts = {
+  'dev': 'cross-env NODE_ENV=development node server/start-server.js',
+  'start': 'cross-env NODE_ENV=production node server/start-server.js',
+  'build': 'rimraf dist & npm run build:client & npm run build:server',
+  'build:client': 'cross-env NODE_ENV=production webpack --config server/webpack.client.config.js --progress --hide-modules',
+  'build:server': 'cross-env NODE_ENV=production webpack --config server/webpack.server.config.js --progress --hide-modules'
+}
+
+function addSSR (args, options, logger) {
   checkBlueContext()
 
   const cwd = process.cwd()
@@ -47,13 +55,7 @@ module.exports = function ssr (args, options, logger) {
         const packageJsonPath = `${cwd}/package.json`
         const projectPackage = require(packageJsonPath)
 
-        projectPackage.scripts = Object.assign({}, projectPackage.scripts, {
-          'dev': 'cross-env NODE_ENV=development node server/start-server.js',
-          'start': 'cross-env NODE_ENV=production node server/start-server.js',
-          'build': 'rimraf dist & npm run build:client & npm run build:server',
-          'build:client': 'cross-env NODE_ENV=production webpack --config server/webpack.client.config.js --progress --hide-modules',
-          'build:server': 'cross-env NODE_ENV=production webpack --config server/webpack.server.config.js --progress --hide-modules'
-        })
+        projectPackage.scripts = Object.assign({}, projectPackage.scripts, scripts)
 
         fs.writeFileSync(packageJsonPath, JSON.stringify(projectPackage, null, '\t'))
       }
@@ -65,9 +67,6 @@ module.exports = function ssr (args, options, logger) {
     // TODO: add an explanation of all new commands added in the package.json scripts
     logger.info(`
       Server Side Rendering added successfully
-
-      Before run:
-        Remember to add id "app" to the root element of your application
     `)
   })
   .catch(error => {
@@ -78,4 +77,10 @@ module.exports = function ssr (args, options, logger) {
     logger.debug(error.stack)
     process.exit(1)
   })
+}
+
+module.exports = {
+  dependencies,
+  addSSR,
+  scripts
 }
