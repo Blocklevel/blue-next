@@ -1,5 +1,5 @@
 const utils = require('./utils')
-const copy = require('graceful-copy')
+const copy = require('kopy')
 const co = require('co')
 const _ = require('lodash')
 
@@ -29,7 +29,8 @@ const project = co.wrap(function * (inputs) {
  */
 const component = co.wrap(function * (inputs) {
   const data = _.assignIn({}, {
-    author: yield utils.getGitUser()
+    author: yield utils.getGitUser(),
+    hooks: !!inputs.options.hooks
   }, inputs)
 
   yield copy(inputs.template, inputs.dest, { data })

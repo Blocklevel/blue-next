@@ -1,5 +1,5 @@
 {
-  "name": "{{ name }}",
+  "name": "<%= name %>",
   "scripts": {
     "dev": "blue-scripts start",
     "build": "blue-scripts build",
@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "blue-scripts": "^{{ blueScriptsVersion }}",
+    "blue-scripts": "^<%= blueScriptsVersion %>",
     "vue": "^2.1.10",
     "vue-template-compiler": "^2.1.10",
     "vue-loader": "^11.1.4",

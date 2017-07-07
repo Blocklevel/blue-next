@@ -1,10 +1,11 @@
 /**
- * @name {{ name }} {{ type }}
- * @author {{ author.name }} <{{ author.email }}>
+ * @name <%= name %> <%= type %>
+ * @author <%= author.name %> <<%= author.email %>>
  */
-export default {
-  name: '{{ name }}'{{#if basic }},
 
+export default {
+  name: '<%= name %>'<%= hooks ? ',' : '' %>
+<% if (hooks) { %>
   props: {
 
   },
@@ -21,5 +22,6 @@ export default {
 
   methods: {
 
-  }{{/if}}
+  }
+<%_ } _%>
 }

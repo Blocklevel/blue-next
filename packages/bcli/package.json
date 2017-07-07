@@ -40,7 +40,7 @@
     "detect-installed": "^2.0.4",
     "execa": "^0.6.0",
     "global-modules": "^0.2.3",
-    "graceful-copy": "^1.1.0",
+    "kopy": "^7.1.0",
     "listr": "^0.11.0",
     "lodash": "^4.17.4",
     "node-fetch": "^1.6.3",

@@ -1,5 +1,5 @@
 /**
- * {{ name }} default state
+ * <%= name %> default state
  */
 export default {
 
