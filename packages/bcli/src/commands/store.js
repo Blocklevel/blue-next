@@ -13,11 +13,6 @@ module.exports = function storeModule (args, options, logger) {
   const dest = `${storeFolder}/${args.name}`
   const moduleDirExists = fs.existsSync(dest)
 
-  logger.debug(chalk.gray('Current working directory: ' + cwd))
-  logger.debug(chalk.gray('Module name: ' + args.name))
-  logger.debug(chalk.gray('Module destination: ' + dest))
-  logger.debug(chalk.gray('Module exists? ' + moduleDirExists))
-
   return inquirer.prompt([
     {
       type: 'input',

@@ -1,5 +1,6 @@
 const chalk = require('chalk')
 const path = require('path')
+const semver = require('semver')
 const fs = require('fs')
 const inquirer = require('inquirer')
 const argv = require('minimist')(process.argv.slice(2))
@@ -15,11 +16,13 @@ module.exports = function component (args, options, logger) {
   const type = argv._[0]
   const cwd = process.cwd()
 
-  const blueTemplates = require(`${cwd}/node_modules/blue-templates`)
+  const templatesPath = `${cwd}/node_modules/blue-templates`
+  const templates = require(templatesPath)
+  const templateInfo = require(`${templatesPath}/package.json`)
   const nameAsPath = args.name.split('/')
   const hasCustomPath = nameAsPath.length > 1
   const name = hasCustomPath ? nameAsPath[nameAsPath.length - 1] : nameAsPath[0]
-  const componentFolder = blueTemplates.getComponentPath(cwd, type)
+  const componentFolder = templates.getComponentPath(cwd, type)
   const dest = hasCustomPath ? `${componentFolder}/${nameAsPath.join('/')}` : `${componentFolder}/${name}`
   const componentExists = fs.existsSync(dest)
 
@@ -32,10 +35,14 @@ module.exports = function component (args, options, logger) {
     getOverwritePrompt(name, componentExists && !options.force)
   ])
   .then(() => {
+    // https://github.com/Blocklevel/blue-next/issues/84
+    const hasEjs = !semver.satisfies(templateInfo.version, '1.x')
+
     return createComponent({
       dest, type, name,
-      boilerplate: options.boilerplate,
-      template: blueTemplates.getComponent()
+      boilerplate: !!options.boilerplate,
+      // https://github.com/Blocklevel/blue-next/issues/84
+      template: templates.getComponent() + (hasEjs ? '' : '/ejs')
     })
   })
   .then(() => {
