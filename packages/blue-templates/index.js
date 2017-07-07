@@ -1,32 +1,20 @@
 const path = require('path')
 
-const getPath = function (relativePath) {
-  return path.resolve(__dirname, relativePath)
-}
+const getPath = relativePath => path.resolve(__dirname, relativePath)
 
-const getPreProcessor = function (type) {
-  return getPath(`./src/pre-processor/${type}`)
-}
+const getPreProcessor = type => getPath(`./src/pre-processor/${type}`)
 
-const getStylePath = function (dir) {
-  return `${dir}/src/asset/style`
-}
+const getStylePath = dir => `${dir}/src/asset/style`
 
-const getStoreModulePath = function (dir) {
-  return `${dir}/src/app/data/store`
-}
+const getStoreModulePath = dir => `${dir}/src/app/data/store`
 
-const getBlue = function () {
-  return getPath('./src/blue')
-}
+const getBlue = () => getPath('./src/blue')
 
-const getComponent = function () {
-  return getPath('./src/component')
-}
+const getComponent = () => getPath('./src/component')
 
-const getStoreModule = function () {
-  return getPath('./src/store')
-}
+const getComponentPath = (dir, type) => `${dir}/src/app/${type}`
+
+const getStoreModule = () => getPath('./src/store')
 
 module.exports = {
   getBlue,
@@ -34,5 +22,6 @@ module.exports = {
   getComponent,
   getStoreModule,
   getStylePath,
-  getStoreModulePath
+  getStoreModulePath,
+  getComponentPath
 }
