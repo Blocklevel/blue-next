@@ -251,9 +251,9 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-blue-templates@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.0.0-rc.1.tgz#da39f3a1d1e1e40e1c16fddb337ac881029362c2"
+blue-templates@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.1.2.tgz#1cc15180f07e8c1fed2bc637c29cb8f74d06270e"
 
 bluebird@^2.9.34:
   version "2.11.0"
@@ -677,9 +677,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-blue@^1.0.0-beta.31:
-  version "1.0.0-beta.31"
-  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-1.0.0-beta.31.tgz#df6eb5ddab77e9e0e9591ce2bb7bebf4cd42a920"
+eslint-config-blue@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-1.0.7.tgz#b9cccf38dca4bd9b3b14aabbf30a7a1f6b4b905c"
   dependencies:
     eslint-config-standard "^6.2.1"
     eslint-plugin-import "^2.2.0"
@@ -864,6 +864,16 @@ extend-shallow@^2.0.1:
   resolved "https://registry.yarnpkg.com/extend-shallow/-/extend-shallow-2.0.1.tgz#51af7d614ad9a9f610ea1bafbb989d6b1c56890f"
   dependencies:
     is-extendable "^0.1.0"
+
+extract-package@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/extract-package/-/extract-package-1.2.2.tgz#a9006efd9e00f2c9210ce4d1be803fbcec795797"
+  dependencies:
+    del "^2.2.2"
+    node-fetch "^1.6.3"
+    semver "^5.3.0"
+    tar.gz "^1.0.5"
+    temp-dir "^1.0.0"
 
 fast-levenshtein@~2.0.4:
   version "2.0.6"

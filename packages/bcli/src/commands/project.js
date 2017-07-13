@@ -10,6 +10,7 @@ const execa = require('execa')
 const fetch = require('node-fetch')
 const detectInstalled = require('detect-installed')
 const semver = require('semver')
+const extractPackage = require('extract-package')
 
 /**
  * Create a Promise that resolves when a stream ends and rejects when an error occurs
@@ -34,6 +35,7 @@ module.exports = function (vorpal) {
     .option('-n, --npm', 'Force installation with NPM')
     .option('--major <version>', 'Major version of blue-templates package')
     .option('--nocommit', 'Avoid git first commit')
+    .option('--symlink-packages', 'Symlink local Blue packages (only development)')
     .option('--verbose')
     .alias('p')
     .action(function (args, callback) {
@@ -65,45 +67,37 @@ module.exports = function (vorpal) {
         {
           title: 'Download templates',
           task: ctx => {
-            return fetch('http://registry.npmjs.org/blue-templates').then(response => response.json())
-            .then(package => {
-              const { major } = args.options
-              const versions = Object.keys(package.versions)
-              const version = major ? semver.maxSatisfying(versions, `^${major}.0.0`) : package['dist-tags'].latest
-
-              if (!version) {
-                log.error(`Major version ${major} doesn't exist.`)
-                process.exit(1)
+            return new Promise(function (resolve, reject) {
+              if (args.options['symlink-packages']) {
+                // Before we can symlink all packages, we need to create the new project
+                // using the local blue-templates pakcage and install all dependencies
+                const localPath = path.resolve(__dirname, '../../../blue-templates')
+                return resolve(require(localPath))
               }
 
-              return package.versions[version].dist.tarball
-            })
-            .then(packageURL => {
-              return fetch(packageURL).then(response => {
-                const dest = fs.createWriteStream(archivePath)
-                response.body.pipe(dest)
-
-                return whenStreamDone(response.body).then(() => {
-                  return targz().extract(archivePath, tmpPath)
-                })
-              })
-            })
-            .then(response => {
-              const blueTemplates = require(tmpPackagePath)
-
-              ctx.projectData = {
-                dest,
-                name: args.name,
-                template: blueTemplates.getBlue(),
-                cssTemplate: blueTemplates.getPreProcessor(args.options.sass ? 'sass' : 'postcss'),
-                templateCssFolder: blueTemplates.getStylePath(dest)
+              const packageOptions = {
+                name: 'blue-templates',
+                version: args.options.major
               }
+
+              return extractPackage(packageOptions, true)
+                .then(path => resolve(require(path)))
+                .catch(error => reject(error))
             })
+            .then(blueTemplates => ctx.blueTemplates = blueTemplates)
           }
         },
         {
           title: 'Scaffold project',
-          task: ctx => scaffold.project(ctx.projectData)
+          task: ctx => {
+            return scaffold.project({
+              dest,
+              name: args.name,
+              template: ctx.blueTemplates.getBlue(),
+              cssTemplate: ctx.blueTemplates.getPreProcessor(args.options.sass ? 'sass' : 'postcss'),
+              templateCssFolder: ctx.blueTemplates.getStylePath(dest)
+            })
+          }
         },
         {
           title: 'Install dependencies',
@@ -120,6 +114,11 @@ module.exports = function (vorpal) {
             process.chdir(dest)
             return utils.exec('yarn')
           }
+        },
+        {
+          title: 'Create packages symlink',
+          enabled: () => args.options['symlink-packages'],
+          task: ctx => utils.symlinkPackages(dest)
         },
         {
           title: 'Initialize git',

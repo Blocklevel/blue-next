@@ -1,27 +1,23 @@
 const path = require('path')
+const scaffold = require('./src/scaffold')
 
-const getPath = relativePath => path.resolve(__dirname, relativePath)
+/**
+ * This method will take any process from the CLI
+ * and will check first if that command is available
+ * and then will execute it
+ * Moving the brain of the template generator to the template itself
+ * will move all logic locally, removing the need to change the CLI
+ * @param  {String} key
+ * @param  {*}      args
+ */
+function execute (key, args) {
+  const process = scaffold[key]
 
-const getPreProcessor = type => getPath(`./src/pre-processor/${type}`)
+  if (!process) {
+    return
+  }
 
-const getStylePath = dir => `${dir}/src/asset/style`
-
-const getStoreModulePath = dir => `${dir}/src/app/data/store`
-
-const getBlue = () => getPath('./src/blue')
-
-const getComponent = () => getPath('./src/component')
-
-const getComponentPath = (dir, type) => `${dir}/src/app/${type}`
-
-const getStoreModule = () => getPath('./src/store')
-
-module.exports = {
-  getBlue,
-  getPreProcessor,
-  getComponent,
-  getStoreModule,
-  getStylePath,
-  getStoreModulePath,
-  getComponentPath
+  return Promise.resolve(process(args))
 }
+
+module.exports = Object.assign(scaffold, { execute })

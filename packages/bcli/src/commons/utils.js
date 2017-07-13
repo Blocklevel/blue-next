@@ -3,6 +3,7 @@ require('any-observable/register/rxjs-all')
 
 const log = require('./log')
 const co = require('co')
+const path = require('path')
 const execa = require('execa')
 const fs = require('fs')
 const _ = require('lodash')
@@ -175,7 +176,30 @@ const isComponentType = function (type) {
   return ['component', 'page', 'container'].indexOf(type) !== -1
 }
 
+function yarnWithFallback (cmds, fallsbackCmds) {
+  return execa('yarn', cmds).catch(() => execa('npm', fallsbackCmds || cmds))
+}
+
+function symlinkPackages (dest) {
+  const packagesFolder = path.resolve(__dirname, '../../..')
+  const packages = fs.readdirSync(packagesFolder).filter(item => {
+    return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory() && item !== 'bcli'
+  })
+  const symlinks = packages.map(folder => {
+    process.chdir(`${packagesFolder}/${folder}`)
+    return yarnWithFallback(['link'])
+  })
+
+  return Promise.all(symlinks).then(() => {
+    process.chdir(dest)
+    return Promise.all(
+      packages.map(pack => yarnWithFallback(['link', pack]))
+    )
+  })
+}
+
 module.exports = {
+  symlinkPackages,
   getGitUser,
   renameFiles,
   renameFilesFromDir,
