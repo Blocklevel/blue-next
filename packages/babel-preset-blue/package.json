@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-blue",
-  "version": "1.0.7",
+  "version": "1.1.4",
   "description": "Babel preset used by Blue",
   "main": "./index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
