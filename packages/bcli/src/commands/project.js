@@ -21,11 +21,6 @@ module.exports = function project (args, options, logger) {
   const dest = `${cwd}/${args.name}`
   const projectDirExists = fs.existsSync(dest)
 
-  logger.debug(chalk.gray(`Current working directory: ${cwd}`))
-  logger.debug(chalk.gray(`Project name: ${args.name}`))
-  logger.debug(chalk.gray(`Project destination: ${dest}`))
-  logger.debug(chalk.gray(`Project exists? ${projectDirExists}`))
-
   const tasks = new Listr([
     {
       title: 'Delete existing project folder',
@@ -148,11 +143,6 @@ module.exports = function project (args, options, logger) {
       Eject Blue logic ( one way operation )
         run ${chalk.italic('yarn eject')}
     `)
-
-    // if (options.ssr) {
-    //   logger.info(chalk.green('Enabling Server Side Rendering'))
-    //   require('./ssr')(args, options, logger)
-    // }
   })
   .catch(error => {
     logger.error(chalk.red(`

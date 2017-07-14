@@ -39,7 +39,7 @@
     "del": "^2.2.2",
     "detect-installed": "^2.0.4",
     "execa": "^0.6.0",
-    "extract-package": "^1.2.0",
+    "extract-package": "^1.2.2",
     "global-modules": "^0.2.3",
     "inquirer": "^3.0.6",
     "kopy": "^7.0.3",

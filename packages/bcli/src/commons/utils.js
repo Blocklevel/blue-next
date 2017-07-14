@@ -222,6 +222,28 @@ function getOverwritePrompt (name, shouldPrompt = false) {
   }
 }
 
+function yarnWithFallback (cmds, fallsbackCmds) {
+  return execa('yarn', cmds).catch(() => execa('npm', fallsbackCmds || cmds))
+}
+
+function symlinkPackages (dest) {
+  const packagesFolder = path.resolve(__dirname, '../../..')
+  const packages = fs.readdirSync(packagesFolder).filter(item => {
+    return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory() && item !== 'bcli'
+  })
+  const symlinks = packages.map(folder => {
+    process.chdir(`${packagesFolder}/${folder}`)
+    return yarnWithFallback(['link'])
+  })
+
+  return Promise.all(symlinks).then(() => {
+    process.chdir(dest)
+    return Promise.all(
+      packages.map(pack => yarnWithFallback(['link', pack]))
+    )
+  })
+}
+
 module.exports = {
   getOverwritePrompt,
   checkBlueContext,

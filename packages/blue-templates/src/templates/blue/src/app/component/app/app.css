@@ -1,0 +1,30 @@
+@import 'normalize.css';
+
+:root {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+/**
+ * Uncomment this snippet to install all fonts in the /asset/font folder
+ */
+/*@each $font in ($(fonts)) {
+  @font-face {
+    font-family: $font;
+    font-path: '../asset/font/$(font)';
+  }
+}*/
