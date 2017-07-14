@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "blue-scripts start",
     "build": "blue-scripts build",
-    "eject": "blue-scripts eject"
+    "eject": "blue-scripts eject",
+    "lint": "eslint src/**"
   },
   "dependencies": {
     "axios": "^0.15.3",
