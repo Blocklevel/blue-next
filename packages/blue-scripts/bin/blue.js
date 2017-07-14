@@ -6,6 +6,7 @@ switch (script) {
   case 'build':
   case 'start':
   case 'eject':
+  case 'lint':
     require(`../scripts/${script}`)
     break
   default:
