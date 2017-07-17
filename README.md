@@ -39,6 +39,9 @@ npm install -g bcli
   <a href="https://www.npmjs.com/package/babel-preset-blue">
     <img src="https://img.shields.io/npm/v/babel-preset-blue.svg?label=babel-preset-blue" alt="npm version">
   </a><br>
+  <a href="https://www.npmjs.com/package/blue-jest">
+    <img src="https://img.shields.io/npm/v/blue-jest.svg?label=blue-jest" alt="npm version">
+  </a><br>
 </p>
 
 ## Contribution
