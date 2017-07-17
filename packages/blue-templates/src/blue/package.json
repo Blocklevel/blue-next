@@ -4,7 +4,8 @@
     "dev": "blue-scripts start",
     "build": "blue-scripts build",
     "eject": "blue-scripts eject",
-    "lint": "blue-scripts lint"
+    "lint": "blue-scripts lint",
+    "test": "blue-scripts test"
   },
   "dependencies": {
     "axios": "^0.15.3",
