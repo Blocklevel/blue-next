@@ -1,6 +1,6 @@
 {
   "name": "blue-jest",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Jest configuration for Vue",
   "main": "index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
