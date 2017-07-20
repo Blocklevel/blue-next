@@ -8,7 +8,23 @@ const resolveApp = function (relativePath) {
 }
 
 // see Blocklevel/blue-next/issues/38
-const appBuildHash = process.env.VERSION_STRING || 'dist'
+let appBuildHash = process.env.VERSION_STRING || 'dist'
+
+/**
+ * @description
+ * we need a way to move the generated hashed folder to a subfolder if needed.
+ * this probably is not the most elegant way but it works just adding this on the
+ * project package.json scripts object
+ *
+ * @example
+ * HASH_BUILD_PATH=version/ blue-scripts build
+ *
+ * @todo
+ * find a better way
+ */
+if (process.env.HASH_BUILD_PATH) {
+  appBuildHash = process.env.HASH_BUILD_PATH + appBuildHash
+}
 
 // see Blocklevel/blue-next/issues/67
 const appPublicPath = process.env.BASE_URL || '/'
