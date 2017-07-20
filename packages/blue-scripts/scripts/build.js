@@ -17,7 +17,6 @@ const chalk = require('chalk')
 const Progress = require('webpack/lib/ProgressPlugin')
 
 const log = require('../commons/log')
-const paths = require('../commons/paths')
 const config = require('../commons/config').get()
 const spinner = ora()
 
