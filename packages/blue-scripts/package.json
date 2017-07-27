@@ -44,6 +44,7 @@
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-webpack-plugin": "^1.4.4",
     "ip": "^1.1.5",
+    "jest": "20.1.0-alpha.3",
     "lodash": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.2",
     "minimist": "^1.2.0",
