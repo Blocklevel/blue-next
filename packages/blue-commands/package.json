@@ -1,6 +1,6 @@
 {
   "name": "blue-commands",
-  "version": "0.0.1",
+  "version": "1.6.0",
   "description": "BLUE cli commands",
   "main": "./index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
@@ -8,6 +8,15 @@
   "dependencies": {
     "caporal": "^0.7.0",
     "chalk": "^2.1.0",
-    "listr": "^0.12.0"
+    "co": "^4.6.0",
+    "del": "^3.0.0",
+    "execa": "^0.8.0",
+    "extract-package": "^1.2.2",
+    "graceful-copy": "^1.1.0",
+    "inquirer": "^3.2.1",
+    "listr": "^0.12.0",
+    "lodash": "^4.17.4",
+    "node-fetch": "^1.7.2",
+    "recursive-readdir": "^2.2.1"
   }
 }
