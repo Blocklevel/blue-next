@@ -1,23 +1,25 @@
-const vorpal = require('vorpal')()
+const homedir = require('homedir')
+const path = require('path')
+const fs = require('fs')
 
-// Makes the script crash on unhandled rejections instead of silently
-// ignoring them
-process.on('unhandledRejection', err => {
-  throw err
-})
+const info = require('../package.json')
 
-// Add all commands
-vorpal.use(require('./commands/project'))
-vorpal.use(require('./commands/component'))
-vorpal.use(require('./commands/store'))
-vorpal.use(require('./commands/share'))
-vorpal.use(require('./commands/version'))
+const configFilePath = path.resolve(homedir(), '.bluerc')
+const projectConfigFilePath = path.resolve(process.cwd(), 'blue.config.js')
+const configExists = fs.existsSync(configFilePath)
+const isBlue = fs.existsSync(projectConfigFilePath)
 
-// shows the current vorlap instance with delimiter
-vorpal.delimiter('bcli$').show()
+if (!configExists) {
+  fs.writeFileSync(
+    configFilePath, JSON.stringify({ version: info.version }, null, 1)
+  )
+}
 
-// process the given inputs
-vorpal.parse(process.argv)
+const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
+const projecCommandPackage = path.resolve(process.cwd(), './node_modules/blue-commands')
+const commands = require(
+  path.resolve(isBlue ? projecCommandPackage : config.commands)
+)
 
-// workaround to kill node with CTRL + C
-process.on('SIGINT', () => process.exit(2))
+// boom boom boom!
+commands.register(configFilePath)
