@@ -1,0 +1,13 @@
+{
+  "name": "blue-commands",
+  "version": "0.0.1",
+  "description": "BLUE cli commands",
+  "main": "./index.js",
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "license": "MIT",
+  "dependencies": {
+    "caporal": "^0.7.0",
+    "chalk": "^2.1.0",
+    "listr": "^0.12.0"
+  }
+}
