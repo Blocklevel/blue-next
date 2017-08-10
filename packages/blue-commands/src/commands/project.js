@@ -74,6 +74,19 @@ module.exports = function project (args, options, logger) {
       }
     },
     {
+      // We need to manually install blue-commands in new projects because this is a dependency
+      // for the cli v1.6.x only, not for the template.
+      // Adding the dependency in the template will break earlier cli users workflow
+      title: 'Install local commands',
+      task: () => {
+        process.chdir(dest)
+        return yarnWithFallback(
+          ['add', '--dev', 'blue-commands'],
+          ['install', '--save-dev', 'blue-commands']
+        )
+      }
+    },
+    {
       title: 'Initialize git',
       enabled: () => !options.skipGit,
       task: () => execa.shell('git init')
