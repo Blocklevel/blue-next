@@ -6,6 +6,7 @@ const info = require('./package.json')
 const project = require('./src/commands/project')
 const component = require('./src/commands/component')
 const share = require('./src/commands/share')
+const store = require('./src/commands/store')
 const ssr = require('./src/commands/ssr')
 const symlink = require('./src/commands/symlink')
 
@@ -55,6 +56,12 @@ function register (config) {
       .argument('<name>', 'The name of the page')
       .option('-f, --force', 'Force page creation')
       .action(component)
+
+    caporal
+      .command('store', 'Create a Vuex store module')
+      .argument('<name>', 'The name of the store module')
+      .option('-f, --force', 'Force store module creation')
+      .action(store)
 
     caporal
       .command('ssr', 'Add server side rendering scaffold')

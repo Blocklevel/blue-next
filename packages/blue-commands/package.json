@@ -1,7 +1,7 @@
 {
   "name": "blue-commands",
   "version": "1.6.0",
-  "description": "BLUE cli commands",
+  "description": "Blue Command Line Interface pluggable commands",
   "main": "./index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "license": "MIT",

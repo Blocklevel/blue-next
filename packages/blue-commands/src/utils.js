@@ -36,7 +36,7 @@ const getGitUser = co.wrap(function * (name = '', email = '') {
  * @param  {Regexp|String} [substr=/[!@#$%^&*]/g]
  * @param  {String} [newSubstr='']
  */
-const replaceFilesName = function (dir, files, substr = /[!@#$%^&*]/g, newSubstr = '') {
+function replaceFilesName (dir, files, substr = /[!@#$%^&*]/g, newSubstr = '') {
   files.forEach(file => {
     fs.rename(`${dir}/${file}`, `${dir}/${file.replace(substr, newSubstr)}`, error => {
       if (error) {
@@ -52,7 +52,7 @@ const replaceFilesName = function (dir, files, substr = /[!@#$%^&*]/g, newSubstr
  * @param  {Array<String>} files
  * @param  {String} newName
  */
-const renameFiles = function (dir, files, newName) {
+function renameFiles (dir, files, newName) {
   files.forEach(file => {
     const extention = file.split('.')[1]
     const origin = `${dir}/${file}`
@@ -71,7 +71,7 @@ const renameFiles = function (dir, files, newName) {
  * @param  {String} destination
  * @param  {String} filename
  */
-const renameFilesFromDir = function (dir, newName) {
+function renameFilesFromDir (dir, newName) {
   try {
     const files = fs.readdirSync(dir)
     renameFiles(dir, files, newName)
@@ -86,7 +86,7 @@ const renameFilesFromDir = function (dir, newName) {
  * @param  {String} baseVersion - the major version to compare
  * @return {String} semver string
  */
-const getSemverFromMajor = function (versions, baseVersion) {
+function getSemverFromMajor (versions, baseVersion) {
   const majorVersion = semver.major(baseVersion)
   const version = _.findLast(versions, version => {
     return semver.satisfies(version, `${majorVersion}.x`)
@@ -176,9 +176,21 @@ function getOverwritePrompt (name, shouldPrompt = false) {
   }
 }
 
+function getEvents (events) {
+  const array = events.split(',')
+  return array
+    .map(event => event.trim())
+    .filter(event => event !== '')
+    .map((event, i) => ({
+      value: _.snakeCase(event).toUpperCase(),
+      isNotLastItem: i !== array.length - 1
+    }))
+}
+
 module.exports = {
   getOverwritePrompt,
   getGitUser,
+  getEvents,
   renameFiles,
   renameFilesFromDir,
   getSemverFromMajor,
