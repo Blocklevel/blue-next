@@ -17,6 +17,13 @@ if (!configExists) {
 
 const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
 const projecCommandPackage = path.resolve(process.cwd(), './node_modules/blue-commands')
+
+// we need to check if it's a blue project or if the blue-commands exists or both, because if it
+// doesn't exist but it's a blue project it means that it's an old template without blue-commands
+// and we need to install it manually for compatibility
+
+// we need to install blue-commands if there's no project or it's symlinked
+
 const commands = require(
   path.resolve(isBlue ? projecCommandPackage : config.commands)
 )

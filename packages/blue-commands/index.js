@@ -7,7 +7,6 @@ const project = require('./src/commands/project')
 const component = require('./src/commands/component')
 const share = require('./src/commands/share')
 const store = require('./src/commands/store')
-const ssr = require('./src/commands/ssr')
 const symlink = require('./src/commands/symlink')
 
 caporal.version(info.version)
@@ -62,10 +61,6 @@ function register (config) {
       .argument('<name>', 'The name of the store module')
       .option('-f, --force', 'Force store module creation')
       .action(store)
-
-    caporal
-      .command('ssr', 'Add server side rendering scaffold')
-      .action(ssr)
   }
 
   caporal.parse(process.argv)

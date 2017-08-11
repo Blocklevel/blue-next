@@ -51,17 +51,8 @@ const createStoreModule = co.wrap(function * (inputs) {
   yield copy(inputs.template, inputs.dest, { data })
 })
 
-const createSSR = co.wrap(function * (inputs) {
-  const { template, dest } = inputs
-  const { name } = require(`${process.cwd()}/blue.config.js`)
-  const data = _.assignIn({}, inputs, { name })
-
-  yield copy(template, dest, { data })
-})
-
 module.exports = {
   createProject,
   createComponent,
-  createStoreModule,
-  createSSR
+  createStoreModule
 }
