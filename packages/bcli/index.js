@@ -13,4 +13,4 @@ if (!semver.satisfies(currentNodeVersion, '>=6.10.x')) {
   process.exit(1)
 }
 
-require('./src/cli')
+require('./src/cli')()
