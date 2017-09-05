@@ -1,6 +1,6 @@
 {
   "name": "blue-scripts",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Configuration and scripts for Blue",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
   "main": "./index.js",
