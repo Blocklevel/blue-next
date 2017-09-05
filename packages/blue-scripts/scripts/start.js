@@ -9,6 +9,7 @@ process.on('unhandledRejection', err => {
   throw err
 })
 
+const argv = require('minimist')(process.argv.slice(2))
 const chalk = require('chalk')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const webpack = require('webpack')
@@ -28,7 +29,7 @@ portfinder.getPortPromise().then(port => {
   const webpackConfig = config.webpack
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`
-  const serverPort = config.port || port
+  const serverPort = argv.port || config.port || port
 
   const messages = [
     // see https://github.com/Blocklevel/blue-next/issues/25
