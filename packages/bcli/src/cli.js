@@ -9,68 +9,94 @@ const Listr = require('listr')
 const info = require('../package.json')
 const { yarnWithFallback } = require('./utils')
 
-module.exports = co.wrap(function * () {
-  const cwd = process.cwd()
-  const home = homedir()
-  const configFilePath = path.resolve(home, '.bluerc')
-  const projectConfigFilePath = path.resolve(cwd, 'blue.config.js')
-  const projecCommandPackage = path.resolve(cwd, './node_modules/blue-commands')
-  const configExists = fs.existsSync(configFilePath)
-  const isBlue = fs.existsSync(projectConfigFilePath)
+const cwd = process.cwd()
+const home = homedir()
+const configFilePath = path.resolve(home, '.bluerc')
+const projectConfigFilePath = path.resolve(cwd, 'blue.config.js')
+const projectCommandPackage = path.resolve(cwd, './node_modules/blue-commands')
+const configExists = fs.existsSync(configFilePath)
+const isBlue = fs.existsSync(projectConfigFilePath)
 
+/**
+ * Default bluerc template
+ * @type {Object}
+ */
+const bluercTemplate = {
+  version: info.version,
+  commands: null,
+  development: {
+    enabled: false,
+    packages: null
+  }
+}
+
+const installCommands = co.wrap(function * () {
+  const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
+  const bluepackages = path.resolve(home, '.bluepackages')
+  const tasks = new Listr([
+    {
+      title: 'Install cli commands',
+      task: ctx => {
+        if (!fs.existsSync(bluepackages)) {
+          fs.mkdirSync(bluepackages)
+        }
+
+        return extractPackage({ name: 'blue-commands', dest: bluepackages }, true)
+          .then(response => {
+            // store responses
+            ctx.commands = response
+            ctx.version = require(`${response}/package.json`).version
+          })
+          .then(() => {
+            // install dependencies
+            process.chdir(ctx.commands)
+            return yarnWithFallback(['install'])
+          })
+          .then(() => {
+            // bring the context back to the current working directory
+            process.chdir(cwd)
+          })
+      }
+    }
+  ])
+
+  return tasks.run()
+    .then(({ commands, version }) => {
+      const newConfig = Object.assign({}, config, { version, commands })
+
+      fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 1))
+
+      return newConfig
+    })
+    .catch(error => {
+      console.log('Something went wrong! :(')
+    })
+})
+
+module.exports = co.wrap(function * () {
   if (!configExists) {
     fs.writeFileSync(
-      configFilePath, JSON.stringify({ version: info.version }, null, 1)
+      configFilePath, JSON.stringify(bluercTemplate, null, 1)
     )
   }
 
   let config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
+  const isDev = config.development.enabled
 
   if (!config.commands) {
-    const bluepackages = path.resolve(home, '.bluepackages')
-
-    const tasks = new Listr([
-      {
-        title: 'Download dependencies',
-        task: ctx => {
-          if (!fs.existsSync(bluepackages)) {
-            fs.mkdirSync(bluepackages)
-          }
-
-          return extractPackage({ name: 'blue-commands', dest: bluepackages }, true)
-            .then(response => {
-              ctx.commands = response
-              ctx.version = require(`${response}/package.json`).version
-            })
-        }
-      },
-      {
-        title: 'Install dependencies',
-        task: ctx => {
-          process.chdir(ctx.commands)
-          return yarnWithFallback(['install'])
-        }
-      }
-    ])
-
-    yield tasks.run().then(({ commands, version }) => {
-      config = Object.assign({}, config, { version, commands })
-
-      fs.writeFileSync(
-        configFilePath, JSON.stringify(config, null, 1)
-      )
-    })
+    config = yield installCommands()
   }
 
-  const commands = require(
-    path.resolve(isBlue ? projecCommandPackage : config.commands)
-  )
+  const defaultPath = isBlue ? projectCommandPackage : config.commands
+  const packagePath = isDev && config.development.packages
+    ? `${config.development.packages}/blue-commands`
+    : defaultPath
+
+  const commands = require(path.resolve(packagePath))
 
   // boom boom boom!
-  commands.register(configFilePath)
+  commands.register(config)
 })
-
-
 
 // @TODO
 // - check if it's a blue project and the local commands exist

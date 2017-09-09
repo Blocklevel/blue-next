@@ -2,6 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const caporal = require('caporal')
 const info = require('./package.json')
+const chalk = require('chalk')
 
 const project = require('./src/commands/project')
 const component = require('./src/commands/component')
@@ -14,6 +15,10 @@ caporal.version(info.version)
 function register (config) {
   const projectConfigFilePath = path.resolve(process.cwd(), 'blue.config.js')
   const isBlueProject = fs.existsSync(projectConfigFilePath)
+
+  if (config.development && config.development.enabled) {
+    console.log(`\n ${chalk.red('[!] Running in development mode [!]')}\n`)
+  }
 
   caporal
     .command('project', 'Create project')

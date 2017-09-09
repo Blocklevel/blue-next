@@ -11,13 +11,16 @@ const {
   yarnWithFallback,
   symlinkPackages,
   bootstrapBlue,
-  getOverwritePrompt
+  getOverwritePrompt,
+  getConfig
 } = require('../utils')
 
 module.exports = function project (args, options, logger) {
   const cwd = process.cwd()
   const dest = `${cwd}/${args.name}`
   const projectDirExists = fs.existsSync(dest)
+  const config = getConfig()
+  const isDev = config.development && config.development.packages
 
   const tasks = new Listr([
     {
@@ -33,10 +36,8 @@ module.exports = function project (args, options, logger) {
       title: 'Retrieve templates',
       task: ctx => {
         return new Promise(function (resolve, reject) {
-          if (options.symlinkPackages) {
-            // Before we can symlink all packages, we need to create the new project
-            // using the local blue-templates pakcage and install all dependencies
-            const localPath = path.resolve(__dirname, '../../../blue-templates')
+          if (isDev) {
+            const localPath = path.resolve(config.development.packages, './blue-templates')
             return resolve(require(localPath))
           }
 
@@ -98,8 +99,8 @@ module.exports = function project (args, options, logger) {
     },
     {
       title: 'Create packages symlink',
-      enabled: () => options.symlinkPackages,
-      task: ctx => symlinkPackages(dest)
+      enabled: () => isDev,
+      task: ctx => symlinkPackages(dest, config.development.packages)
     },
     {
       title: 'Bootstrap packages',
@@ -122,8 +123,8 @@ module.exports = function project (args, options, logger) {
       Build project:
         run ${chalk.italic('yarn build')}
 
-      Add Server Side Rendering:
-        run ${chalk.italic('yarn ssr')}
+      Unit testing:
+        run ${chalk.italic('yarn test')}
 
       Eject Blue logic ( one way operation )
         run ${chalk.italic('yarn eject')}

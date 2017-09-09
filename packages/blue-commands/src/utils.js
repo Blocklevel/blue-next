@@ -8,6 +8,7 @@ const semver = require('semver')
 const bcliVersion = require('../package.json').version
 const path = require('path')
 const recursive = require('recursive-readdir')
+const homedir = require('homedir')
 
 /**
  * Get the credentials of the current git user
@@ -122,14 +123,13 @@ function yarnWithFallback (cmds, fallsbackCmds) {
   return execa('yarn', cmds).catch(() => execa('npm', fallsbackCmds || cmds))
 }
 
-function symlinkPackages (dest) {
-  const packagesFolder = path.resolve(__dirname, '../..')
-  const packages = fs.readdirSync(packagesFolder).filter(item => {
-    return fs.lstatSync(`${packagesFolder}/${item}`).isDirectory() && item !== 'bcli'
+function symlinkPackages (dest, packagesRoot) {
+  const packages = fs.readdirSync(packagesRoot).filter(item => {
+    return fs.lstatSync(`${packagesRoot}/${item}`).isDirectory() && item !== 'bcli'
   })
 
   const symlinks = packages.map(folder => {
-    process.chdir(`${packagesFolder}/${folder}`)
+    process.chdir(`${packagesRoot}/${folder}`)
     return yarnWithFallback(['link'])
   })
 
@@ -188,7 +188,17 @@ function getEvents (events) {
     }))
 }
 
+function getConfig () {
+  try {
+    const bluercPath = path.resolve(homedir(), '.bluerc')
+    return JSON.parse(fs.readFileSync(bluercPath, 'utf8'))
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 module.exports = {
+  getConfig,
   getOverwritePrompt,
   getGitUser,
   getEvents,
