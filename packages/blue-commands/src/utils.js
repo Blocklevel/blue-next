@@ -188,9 +188,13 @@ function getEvents (events) {
     }))
 }
 
+function getConfigPath () {
+  return path.resolve(homedir(), '.bluerc')
+}
+
 function getConfig () {
   try {
-    const bluercPath = path.resolve(homedir(), '.bluerc')
+    const bluercPath = getConfigPath()
     return JSON.parse(fs.readFileSync(bluercPath, 'utf8'))
   } catch (e) {
     console.log(e)
@@ -199,6 +203,7 @@ function getConfig () {
 
 module.exports = {
   getConfig,
+  getConfigPath,
   getOverwritePrompt,
   getGitUser,
   getEvents,

@@ -9,6 +9,7 @@ const component = require('./src/commands/component')
 const share = require('./src/commands/share')
 const store = require('./src/commands/store')
 const symlink = require('./src/commands/symlink')
+const development = require('./src/commands/development')
 
 caporal.version(info.version)
 
@@ -28,8 +29,8 @@ function register (config) {
     .option('--skip-deps', 'Skip dependencies installation')
     .option('--skip-git', 'Skip git initialization')
     .option('--skip-git-commit', 'Skip first git commit')
-    .option('--symlink-packages', 'Symlink local Blue packages. (Only for development)')
-    .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages. (Only for development)')
+    .option('--symlink-packages', 'Symlink local Blue packages')
+    .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
     .action(project)
 
   caporal
@@ -38,8 +39,14 @@ function register (config) {
     .action(share)
 
   caporal
-    .command('symlink-packages', 'Symlink local Blue packages. (Only for development)')
-    .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages. (Only for development)')
+    .command('dev', 'Configure Blue to work with your local Blue packages')
+    .option('--enable', 'Enable/disable development mode')
+    .option('--path', 'Add the path of your local repository')
+    .action(development)
+
+  caporal
+    .command('symlink-packages', 'Symlink local Blue packages.')
+    .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
     .action(symlink)
 
   if (isBlueProject) {

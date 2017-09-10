@@ -99,11 +99,6 @@ module.exports = co.wrap(function * () {
 })
 
 // @TODO
-// - check if it's a blue project and the local commands exist
-// - check if it's a blue project and if it doesn't have commands, then we need to download it and
-//   add that to the devDependencies
-// - check if we are outside a blue project and then download it in the user home directory and
-//   save the position in the bluerc file
 // - when we install it in the home directory we also need to check the version we are downloading and
 //   compare it to the version written in the bluerc file.
 //   The package needs to be with the same major version as the cli (?) or maybe the
