@@ -83,7 +83,7 @@ const installCommands = co.wrap(function * () {
     .then(({ commands, version }) => {
       const newConfig = Object.assign({}, config, { version, commands })
 
-      fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 1))
+      fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 2))
 
       return newConfig
     })
@@ -96,7 +96,7 @@ const installCommands = co.wrap(function * () {
 module.exports = co.wrap(function * () {
   if (!configExists) {
     fs.writeFileSync(
-      configFilePath, JSON.stringify(bluercTemplate, null, 1)
+      configFilePath, JSON.stringify(bluercTemplate, null, 2)
     )
   }
 

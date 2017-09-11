@@ -52,7 +52,7 @@ module.exports = function development (args, options, logger) {
       }
     })
 
-    fs.writeFileSync(configPath, JSON.stringify(newConfig, null, 1))
+    fs.writeFileSync(configPath, JSON.stringify(newConfig, null, 2))
 
     logger.info(`
       Development setup updated!
