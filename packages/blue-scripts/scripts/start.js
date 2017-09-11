@@ -9,6 +9,7 @@ process.on('unhandledRejection', err => {
   throw err
 })
 
+const argv = require('minimist')(process.argv.slice(2))
 const chalk = require('chalk')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const webpack = require('webpack')
@@ -28,10 +29,11 @@ portfinder.getPortPromise().then(port => {
   const webpackConfig = config.webpack
   const host = utils.getHost(webpackConfig.devServer.host)
   const serverUrl = `http://${host.value}:${port}`
+  const serverPort = argv.port || config.port || port
 
   const messages = [
     // see https://github.com/Blocklevel/blue-next/issues/25
-    `Project ${chalk.bold.blue(config.projectName)} is running on http://${host.display}:${port}\n`,
+    `Project ${chalk.bold.blue(config.projectName)} is running on http://${host.display}:${serverPort}\n`,
     `Your current ip address ${ip.address()}\n`
   ]
 
@@ -57,7 +59,7 @@ portfinder.getPortPromise().then(port => {
   const server = new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
 
   // Start the server!
-  server.listen(port, host.value, function () {
+  server.listen(serverPort, host.value, function () {
     console.log('')
     console.log('Starting the server...')
   })

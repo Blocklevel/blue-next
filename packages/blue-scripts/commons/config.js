@@ -147,7 +147,9 @@ const get = function (nodeEnv = getNodeEnv()) {
     versbose: blueConfig.webpackVerboseOutput,
     // nofity if webpack configuration has been changed
     // in the blue.config.js file
-    isConfigurationModified
+    isConfigurationModified,
+    // force a specific port
+    port: blueConfig.port
   }
 }
 
