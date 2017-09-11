@@ -15,6 +15,7 @@ const configFilePath = path.resolve(home, '.bluerc')
 const projectConfigFilePath = path.resolve(cwd, 'blue.config.js')
 const projectCommandPackage = path.resolve(cwd, './node_modules/blue-commands')
 const configExists = fs.existsSync(configFilePath)
+const hasLocalCommands = fs.existsSync(projectCommandPackage)
 const isBlue = fs.existsSync(projectConfigFilePath)
 
 /**
@@ -30,12 +31,30 @@ const bluercTemplate = {
   }
 }
 
+const installLocalCommands = co.wrap(function * () {
+  const tasks = new Listr([
+    {
+      title: 'Install cli commands in the current project',
+      task: () => yarnWithFallback(
+        ['add', '--dev', 'blue-commands'],
+        ['install', '--save-dev', 'blue-commands']
+      )
+    }
+  ])
+
+  return tasks.run()
+    .catch(error => {
+      console.log('Something went wrong! :(')
+      console.log(error.message)
+    })
+})
+
 const installCommands = co.wrap(function * () {
   const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
   const bluepackages = path.resolve(home, '.bluepackages')
   const tasks = new Listr([
     {
-      title: 'Install cli commands',
+      title: 'Install global cli commands',
       task: ctx => {
         if (!fs.existsSync(bluepackages)) {
           fs.mkdirSync(bluepackages)
@@ -70,6 +89,7 @@ const installCommands = co.wrap(function * () {
     })
     .catch(error => {
       console.log('Something went wrong! :(')
+      console.log(error.message)
     })
 })
 
@@ -83,7 +103,11 @@ module.exports = co.wrap(function * () {
   let config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
   const isDev = config.development.enabled
 
-  if (!config.commands) {
+  if (isBlue && !hasLocalCommands) {
+    yield installLocalCommands()
+  }
+
+  if (!isBlue && !config.commands) {
     config = yield installCommands()
   }
 

@@ -44,12 +44,12 @@ function register (config) {
     .option('--path', 'Add the path of your local repository')
     .action(development)
 
-  caporal
-    .command('symlink-packages', 'Symlink local Blue packages.')
-    .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
-    .action(symlink)
-
   if (isBlueProject) {
+    caporal
+      .command('symlink-packages', 'Symlink local Blue packages.')
+      .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
+      .action(symlink)
+
     caporal
       .command('component', 'Create a component')
       .argument('<name>', 'The name of the component')

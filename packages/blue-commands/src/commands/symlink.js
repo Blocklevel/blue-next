@@ -1,12 +1,13 @@
 const Listr = require('listr')
 const chalk = require('chalk')
-const { symlinkPackages, bootstrapBlue } = require('../utils')
+const { symlinkPackages, bootstrapBlue, getConfig } = require('../utils')
 
 module.exports = function symlink (args, options, logger) {
+  const config = getConfig()
   const tasks = new Listr([
     {
       title: 'Create packages symlink',
-      task: ctx => symlinkPackages(process.cwd())
+      task: ctx => symlinkPackages(process.cwd(), config.development.packages)
     },
     {
       title: 'Bootstrap packages',
