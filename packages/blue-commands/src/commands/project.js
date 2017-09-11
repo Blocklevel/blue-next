@@ -75,9 +75,6 @@ module.exports = function project (args, options, logger) {
       }
     },
     {
-      // We need to manually install blue-commands in new projects because this is a dependency
-      // for the cli >=1.6.0 only, not for the template.
-      // Adding the dependency in the template will break earlier cli users workflow
       title: 'Install local commands',
       task: () => {
         process.chdir(dest)

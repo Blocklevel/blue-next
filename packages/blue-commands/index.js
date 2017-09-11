@@ -18,7 +18,7 @@ function register (config) {
   const isBlueProject = fs.existsSync(projectConfigFilePath)
 
   if (config.development && config.development.enabled) {
-    console.log(`\n ${chalk.red('[!] Running in development mode [!]')}\n`)
+    console.log(`\n   ${chalk.red('[!] Running in development mode')}`)
   }
 
   caporal
