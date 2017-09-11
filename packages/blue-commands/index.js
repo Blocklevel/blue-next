@@ -10,6 +10,7 @@ const share = require('./src/commands/share')
 const store = require('./src/commands/store')
 const symlink = require('./src/commands/symlink')
 const development = require('./src/commands/development')
+const update = require('./src/commands/update')
 
 caporal.version(info.version)
 
@@ -37,6 +38,10 @@ function register (config) {
     .command('share', 'Share localhost with a secure tunnel')
     .argument('<port>')
     .action(share)
+
+  caporal
+    .command('update', 'Update Command-line Interface')
+    .action(update)
 
   caporal
     .command('dev', 'Configure Blue to work with your local Blue packages')

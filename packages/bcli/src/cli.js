@@ -121,8 +121,3 @@ module.exports = co.wrap(function * () {
   // boom boom boom!
   commands.register(config)
 })
-
-// @TODO
-// - when we install it in the home directory we also need to check the version we are downloading and
-//   compare it to the version written in the bluerc file.
-//   The package needs to be with the same major version as the cli (?) or maybe the
