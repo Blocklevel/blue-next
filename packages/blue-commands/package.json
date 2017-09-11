@@ -1,0 +1,25 @@
+{
+  "name": "blue-commands",
+  "version": "1.7.1",
+  "description": "Blue Command Line Interface pluggable commands",
+  "main": "./index.js",
+  "author": "Matteo Gabriele <matteo@blocklevel.nl>",
+  "license": "MIT",
+  "dependencies": {
+    "caporal": "^0.7.0",
+    "chalk": "^2.1.0",
+    "co": "^4.6.0",
+    "del": "^3.0.0",
+    "detect-installed": "^2.0.4",
+    "execa": "^0.8.0",
+    "extract-package": "^1.2.2",
+    "global-modules": "^1.0.0",
+    "graceful-copy": "^1.1.0",
+    "homedir": "^0.6.0",
+    "inquirer": "^3.2.1",
+    "listr": "^0.12.0",
+    "lodash": "^4.17.4",
+    "node-fetch": "^1.7.3",
+    "recursive-readdir": "^2.2.1"
+  }
+}
