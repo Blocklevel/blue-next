@@ -5,7 +5,7 @@ const inquirer = require('inquirer')
 const { getConfigPath, getConfig } = require('../utils')
 
 module.exports = function development (args, options, logger) {
-  const allQuestions = !options.enable && !options.path
+  const allQuestions = !options.setStatus && !options.setPath
 
   return inquirer.prompt([
     {
@@ -23,7 +23,7 @@ module.exports = function development (args, options, logger) {
         return done(null, true)
       },
       when: function () {
-        return allQuestions || options.path
+        return allQuestions || options.setPath
       }
     },
     {
@@ -32,7 +32,7 @@ module.exports = function development (args, options, logger) {
       message: 'Do you want to enable the development mode?',
       default: true,
       when: function () {
-        return allQuestions || options.enable
+        return allQuestions || options.setStatus
       }
     }
   ])

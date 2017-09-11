@@ -40,8 +40,8 @@ function register (config) {
 
   caporal
     .command('dev', 'Configure Blue to work with your local Blue packages')
-    .option('--enable', 'Enable/disable development mode')
-    .option('--path', 'Add the path of your local repository')
+    .option('--set-status', 'Enable/disable development mode')
+    .option('--set-path', 'Add the path of your local repository')
     .action(development)
 
   if (isBlueProject) {
