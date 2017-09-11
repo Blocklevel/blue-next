@@ -2,10 +2,6 @@
   <img  src="http://i.imgur.com/QmJrU0A.png" width="150" />
   <br />
   <br />
-  <a href="https://travis-ci.org/Blocklevel/blue-next">
-    <img src="https://travis-ci.org/Blocklevel/blue-next.svg?branch=master" />
-  </a>
-  <br />
   <a href="https://www.npmjs.com/package/bcli">
    <img src="https://img.shields.io/npm/dm/bcli.svg?label=blue-cli" />
    </a>
