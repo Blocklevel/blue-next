@@ -18,7 +18,7 @@ function register (config) {
   const projectConfigFilePath = path.resolve(process.cwd(), 'blue.config.js')
   const isBlueProject = fs.existsSync(projectConfigFilePath)
 
-  if (config.development && config.development.enabled) {
+  if (config.development.enabled) {
     console.log(`\n   ${chalk.red('[!] Running in development mode')}`)
   }
 
@@ -30,8 +30,6 @@ function register (config) {
     .option('--skip-deps', 'Skip dependencies installation')
     .option('--skip-git', 'Skip git initialization')
     .option('--skip-git-commit', 'Skip first git commit')
-    .option('--symlink-packages', 'Symlink local Blue packages')
-    .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
     .action(project)
 
   caporal
@@ -50,11 +48,6 @@ function register (config) {
     .action(development)
 
   if (isBlueProject) {
-    caporal
-      .command('symlink-packages', 'Symlink local Blue packages.')
-      .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
-      .action(symlink)
-
     caporal
       .command('component', 'Create a component')
       .argument('<name>', 'The name of the component')
@@ -78,6 +71,13 @@ function register (config) {
       .argument('<name>', 'The name of the store module')
       .option('-f, --force', 'Force store module creation')
       .action(store)
+  }
+
+  if (config.development.enabled && config.development.packages) {
+    caporal
+      .command('symlink-packages', 'Symlink local Blue packages.')
+      .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
+      .action(symlink)
   }
 
   caporal.parse(process.argv)

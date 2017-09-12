@@ -1,6 +1,6 @@
 const Listr = require('listr')
 const chalk = require('chalk')
-const { symlinkPackages, bootstrapBlue, getConfig } = require('../utils')
+const { symlinkPackages, getConfig } = require('../utils')
 
 module.exports = function symlink (args, options, logger) {
   const config = getConfig()
@@ -8,11 +8,6 @@ module.exports = function symlink (args, options, logger) {
     {
       title: 'Create packages symlink',
       task: ctx => symlinkPackages(process.cwd(), config.development.packages)
-    },
-    {
-      title: 'Bootstrap packages',
-      enabled: () => options.lernaBootstrap,
-      task: () => bootstrapBlue()
     }
   ])
 
