@@ -141,21 +141,6 @@ function symlinkPackages (dest, packagesRoot) {
   })
 }
 
-function bootstrapBlue () {
-  const blueNextRootFolder = path.resolve(__dirname, '../../../../')
-  process.chdir(blueNextRootFolder)
-
-  try {
-    return execa('lerna', ['bootstrap'])
-  } catch (e) {
-    console.error(chalk.red(
-      'Please install Lerna globally in your machine before start development. \n' +
-      'https://lernajs.io/'
-    ))
-    process.exit(1)
-  }
-}
-
 function getOverwritePrompt (name, shouldPrompt = false) {
   return {
     type: 'input',
@@ -213,6 +198,5 @@ module.exports = {
   getSemverFromPackage,
   replaceFilesName,
   yarnWithFallback,
-  symlinkPackages,
-  bootstrapBlue
+  symlinkPackages
 }

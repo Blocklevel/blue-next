@@ -10,7 +10,6 @@ const { createProject } = require('../scaffold')
 const {
   yarnWithFallback,
   symlinkPackages,
-  bootstrapBlue,
   getOverwritePrompt,
   getConfig
 } = require('../utils')
@@ -20,7 +19,7 @@ module.exports = function project (args, options, logger) {
   const dest = `${cwd}/${args.name}`
   const projectDirExists = fs.existsSync(dest)
   const config = getConfig()
-  const isDev = config.development && config.development.packages
+  const isDev = config.development.enabled && config.development.packages
 
   const tasks = new Listr([
     {
@@ -98,11 +97,6 @@ module.exports = function project (args, options, logger) {
       title: 'Create packages symlink',
       enabled: () => isDev,
       task: ctx => symlinkPackages(dest, config.development.packages)
-    },
-    {
-      title: 'Bootstrap packages',
-      enabled: () => options.lernaBootstrap,
-      task: () => bootstrapBlue()
     }
   ])
 
