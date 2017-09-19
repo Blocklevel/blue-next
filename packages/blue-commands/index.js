@@ -16,7 +16,9 @@ caporal.version(info.version)
 
 function register (config) {
   const projectConfigFilePath = path.resolve(process.cwd(), 'blue.config.js')
+  const customCommandsPath = path.resolve(process.cwd(), 'cli.config.js')
   const isBlueProject = fs.existsSync(projectConfigFilePath)
+  const hasCustomCommands = fs.existsSync(customCommandsPath)
 
   if (config.development.enabled) {
     console.log(`\n   ${chalk.red('[!] Running in development mode')}`)
@@ -78,6 +80,10 @@ function register (config) {
       .command('symlink-packages', 'Symlink local Blue packages.')
       .option('--lerna-bootstrap', 'Use Lerna to bootstrap all Blue packages')
       .action(symlink)
+  }
+
+  if (hasCustomCommands) {
+    require(customCommandsPath)(caporal)
   }
 
   caporal.parse(process.argv)
