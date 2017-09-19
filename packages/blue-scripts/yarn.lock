@@ -1392,9 +1392,9 @@ blue-jest@^1.5.0:
     jest "^20.0.4"
     jest-vue-preprocessor "^1.0.1"
 
-blue-templates@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.5.0.tgz#7a6d690c9b589cb89d251e7958ce408c5dde8dd1"
+blue-templates@^1.7.0-0:
+  version "1.7.0-0"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.7.0-0.tgz#c76c3255c87f308a79769804578abfe916860f63"
 
 bluebird@^2.10.2:
   version "2.11.0"
