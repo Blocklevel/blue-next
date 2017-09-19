@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-blue",
-  "version": "1.5.0",
+  "version": "1.9.2",
   "description": "Eslint configuration used by Blue",
   "main": "src/index.js",
   "author": "Matteo Gabriele <matteo@blocklevel.nl>",
