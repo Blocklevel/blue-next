@@ -1,3 +1,4 @@
+const path = require('path')
 const fs = require('fs')
 const utils = require('./utils')
 const copy = require('graceful-copy')
@@ -8,21 +9,25 @@ const _ = require('lodash')
  * Scaffolds a Blue project
  */
 const createProject = co.wrap(function * (inputs) {
+  // see Blocklevel/blue-next/issues/41
+  const eslintrc = 'module.exports = require(\'eslint-config-blue\')'
+
+  // see Blocklevel/blue-next/issues/44
+  const gitignore = 'node_modules\nbuild\ntest\n*.gz\n*.map'
+
   const data = {
     name: inputs.name,
     author: yield utils.getGitUser(),
     blueScriptsVersion: yield utils.getSemverFromPackage('blue-scripts')
   }
 
-  yield copy(inputs.template, inputs.dest, { data, clean: false })
+  const { dest } = inputs
+
+  yield copy(inputs.template, dest, { data, clean: false })
   yield copy(inputs.cssTemplate, inputs.cssDest, { data, clean: false })
 
-  utils.replaceFilesName(inputs.dest, [
-    // see Blocklevel/blue-next/issues/41
-    `#.eslintrc.js#`,
-    // see Blocklevel/blue-next/issues/44
-    `#.gitignore#`
-  ])
+  fs.writeFileSync(path.resolve(dest, '.eslintrc.js'), eslintrc, 'utf-8')
+  fs.writeFileSync(path.resolve(dest, '.gitignore'), gitignore, 'utf-8')
 })
 
 /**
