@@ -19,7 +19,7 @@
     "inquirer": "^3.2.1",
     "listr": "^0.12.0",
     "lodash": "^4.17.4",
-    "node-fetch": "^1.7.3",
+    "node-fetch": "^2.6.1",
     "recursive-readdir": "^2.2.1"
   }
 }
