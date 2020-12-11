@@ -1392,9 +1392,9 @@ blue-jest@^1.5.0:
     jest "^20.0.4"
     jest-vue-preprocessor "^1.0.1"
 
-blue-templates@^1.7.0-0:
-  version "1.7.0-0"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.7.0-0.tgz#c76c3255c87f308a79769804578abfe916860f63"
+blue-templates@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.9.2.tgz#72bf93e082067f5afdaf47581428b9055e0bb333"
 
 bluebird@^2.10.2:
   version "2.11.0"
@@ -2690,10 +2690,11 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-blue@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-1.5.0.tgz#519cc57f68b6121f19e4b680ef9be6fac39e659c"
+eslint-config-blue@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-1.9.2.tgz#e7f2a8ff8c936d4cbf59757bf9600ecf894d3eef"
   dependencies:
+    eslint "^3.13.0"
     eslint-config-standard "^6.2.1"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-promise "^3.4.0"
@@ -3996,8 +3997,8 @@ inherits@2.0.1:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
 
 ini@~1.3.0:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.4.tgz#0537cb79daf59b59a1a517dff706c86ec039162e"
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
 
 inquirer@^0.12.0:
   version "0.12.0"
