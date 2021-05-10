@@ -1392,9 +1392,9 @@ blue-jest@^1.5.0:
     jest "^20.0.4"
     jest-vue-preprocessor "^1.0.1"
 
-blue-templates@^1.7.0-0:
-  version "1.7.0-0"
-  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.7.0-0.tgz#c76c3255c87f308a79769804578abfe916860f63"
+blue-templates@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/blue-templates/-/blue-templates-1.9.2.tgz#72bf93e082067f5afdaf47581428b9055e0bb333"
 
 bluebird@^2.10.2:
   version "2.11.0"
@@ -2690,10 +2690,11 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-blue@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-1.5.0.tgz#519cc57f68b6121f19e4b680ef9be6fac39e659c"
+eslint-config-blue@^1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-blue/-/eslint-config-blue-1.9.2.tgz#e7f2a8ff8c936d4cbf59757bf9600ecf894d3eef"
   dependencies:
+    eslint "^3.13.0"
     eslint-config-standard "^6.2.1"
     eslint-plugin-import "^2.2.0"
     eslint-plugin-promise "^3.4.0"
@@ -3740,8 +3741,8 @@ home-or-tmp@^2.0.0:
     os-tmpdir "^1.0.1"
 
 hosted-git-info@^2.1.4:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.2.0.tgz#7a0d097863d886c0fabbdcd37bf1758d8becf8a5"
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
 
 hpack.js@^2.1.6:
   version "2.1.6"
